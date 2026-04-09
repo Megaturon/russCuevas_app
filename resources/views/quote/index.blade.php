@@ -17,7 +17,7 @@
 </head>
 <body>
 <header>
-<x-nav-bar></x-nav-bar>
+    <x-nav-bar></x-nav-bar>
 </header>
 
     <main class="quote-page">
