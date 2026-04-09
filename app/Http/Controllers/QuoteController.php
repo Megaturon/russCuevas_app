@@ -18,10 +18,13 @@ class QuoteController extends Controller
     {
         // Validate the incoming form data
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'details' => 'required|string',
-        ]);
+                'name' => 'required|string|max:255',
+                'email' => 'required|email',
+                'details' => 'required|string',
+                'phone' => 'nullable|string',
+                'service-type' => 'required|string',
+                'selected_materials' => 'nullable|string', // Catch the React data here!
+            ]);
 
         // (Optional) Save to Database using a Model here
         // Quote::create($validated);

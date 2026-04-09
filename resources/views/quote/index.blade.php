@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="{{ asset('style2.css') }}">
     <title>Get a Quote - Russ Cuevas Artelier</title>
     
     <!-- React, ReactDOM, and Babel Scripts -->
@@ -18,7 +18,7 @@
     <header>
   <nav class="navbar">
     <a href="RC.php" class="logo">
-      <img src="img/RC_logo.jpg" alt="Russ Cuevas Logo">
+      <img src="{{ asset('img/RC_logo.jpg') }}" alt="Russ Cuevas Logo">
     </a>
 
     <div class="menu-toggle" id="mobile-menu">
@@ -43,7 +43,7 @@
 	<div class="icons">    
 		<div class = "dropdown">
             <a class="login-btn">
-				<img src="img/user.png" alt="User Profile" width="40" height="40">
+				<img src="{{ asset('img/user.png') }}" alt="User Profile" width="40" height="40">
 			</a>
 			<div class = "dropdown-content">
 			 <ul class="dropdown-menu" id="loginDropdown" style="display: none;">
@@ -222,16 +222,7 @@
 
             return (
                 <div className="materials-section mt-0">
-                    <h6 className="text-1xl mb-6 text-gray-1000">Select Materials</h6>
-                        $validated = $request->validate([
-                        'name' => 'required|string|max:255',
-                        'email' => 'required|email',
-                        'details' => 'required|string',
-                        'phone' => 'nullable|string',
-                        'service-type' => 'required|string',
-                        'selected_materials' => 'nullable|string', // Catch the React data here!
-                    ]);
-                    
+                <input type="hidden" name="selected_materials" value={selectedMaterials.join(', ')} />
                     <div className="flex flex-col md:flex-row bg-gray-50 rounded-lg p-6">
                         <div className="materials-list w-full md:w-1/2 pr-0 md:pr-8">
                             <div className="space-y-4">
