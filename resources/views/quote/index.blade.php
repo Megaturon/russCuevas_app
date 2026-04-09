@@ -16,50 +16,8 @@
     <link rel="stylesheet" href="{{ asset('style2.css') }}">
 </head>
 <body>
-    <header>
-  <nav class="navbar">
-    <a href="RC.php" class="logo">
-      <img src="{{ asset('img/RC_logo.jpg') }}" alt="Russ Cuevas Logo">
-    </a>
-
-    <div class="menu-toggle" id="mobile-menu">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </div>
-
-    <div class="navbtns">
-      <a href="RC.php">Gallery</a>
-      <a class="about-btn">About Us</button>
-		<ul class="dropdown-menu" id="aboutDropdown" style="display: none;">
-			
-				<li onclick="location.href = 'faq.php';">FAQ</li>
-				<li onclick="location.href = 'terms.php';">Terms and Conditions</li>
-				<li onclick="location.href = 'privacy.php';">Private Policy</li>
-		</ul>
-      <a href="getAppointment.php">Book Appointment</a>
-      <a href="getAQuote.php">Get A Quote</a>
-    </div>
-	
-	<div class="icons">    
-		<div class = "dropdown">
-            <a class="login-btn">
-				<img src="{{ asset('img/user.png') }}" alt="User Profile" width="40" height="40">
-			</a>
-			<div class = "dropdown-content">
-			 <ul class="dropdown-menu" id="loginDropdown" style="display: none;">
-				<?php if(empty($logged_email)){?>
-					<a href = "login.php"><li>Log In</li></a>
-				<?php } else {?>
-					<a href = "?logOut"><li>Log Out</li></a>
-				<?php }?>
-				<a href = "signup.php"><li>Sign Up</li></a>
-			 </ul>
-			</div>
-		</div>
-    </div>
-
-  </nav>
+<header>
+<x-nav-bar></x-nav-bar>
 </header>
 
     <main class="quote-page">
