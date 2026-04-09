@@ -128,7 +128,7 @@
             {
                 id: 'tulle',
                 name: 'Tulle',
-                image: 'img/tulle.jpg', // Updated path
+                image: '/img/tulle.jpg', // Updated path
                 description: 'A lightweight, fine netting made of various fibers. Soft and ethereal, perfect for creating volume and delicate layering in garments.',
                 characteristics: [
                     'Lightweight',
@@ -140,7 +140,7 @@
             {
                 id: 'chiffon',
                 name: 'Chiffon',
-                image: 'img/chiffon.jpg', // Updated path
+                image: '/img/chiffon.jpg', // Updated path
                 description: 'A sheer, lightweight fabric with a soft flow. Known for its elegant drape and slightly rough texture.',
                 characteristics: [
                     'Extremely lightweight',
@@ -152,7 +152,7 @@
             {
                 id: 'silk',
                 name: 'Silk',
-                image: 'img/silk.jfif', // Updated path
+                image: '/img/silk.jfif', // Updated path
                 description: 'A luxurious natural fiber known for its smooth texture, beautiful luster, and excellent draping qualities.',
                 characteristics: [
                     'Smooth texture',
@@ -164,7 +164,7 @@
             {
                 id: 'mikado',
                 name: 'Mikado',
-                image: 'img/mikado.avif', // Updated path
+                image: '/img/mikado.avif', // Updated path
                 description: 'A heavyweight silk blend fabric with a subtle sheen and structured feel. Perfect for more architectural designs.',
                 characteristics: [
                     'Structured',
@@ -176,7 +176,7 @@
             {
                 id: 'gazar',
                 name: 'Gazar',
-                image: 'img/gazar.jpg', // Updated path
+                image: '/img/gazar.jpg', // Updated path
                 description: 'A crisp, lightweight silk or synthetic fabric with a distinctive structure. Known for its architectural qualities and ability to hold dramatic shapes.',
                 characteristics: [
                     'Crisp texture',
@@ -188,7 +188,7 @@
             {
                 id: 'embroidered-lace',
                 name: 'Embroidered Lace',
-                image: 'img/embroidered-lace.jpg', // Updated path
+                image: '/img/embroidered-lace.jpg', // Updated path
                 description: 'An intricate fabric featuring delicate embroidery on a fine mesh or net background. Adds elegant, detailed texture and romantic quality to garments.',
                 characteristics: [
                     'Intricate detailed design',
