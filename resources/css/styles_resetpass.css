@@ -1,0 +1,85 @@
+ .reset-password-container {
+            max-width: 480px;
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+        
+        .input-field {
+            margin-bottom: 20px;
+        }
+        
+        .password-field {
+            position: relative;
+        }
+        
+        .password-field i {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            cursor: pointer;
+            color: #888;
+        }
+        
+        .password-strength {
+            margin-top: 5px;
+            height: 5px;
+            background: #eee;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+        
+        .password-strength-meter {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .weak {
+            background-color: #e74c3c;
+            width: 25%;
+        }
+        
+        .medium {
+            background-color: #f39c12;
+            width: 50%;
+        }
+        
+        .strong {
+            background-color: #3498db;
+            width: 75%;
+        }
+        
+        .very-strong {
+            background-color: #2ecc71;
+            width: 100%;
+        }
+        
+        .password-info {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .login-button button {
+            width: 100%;
+            padding: 12px;
+            background-color: #5c3d2e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .login-button button:hover {
+            background-color: #4a3223;
+        }
