@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style2.css">
+    <title>FAQ - Russ Cuevas Artelier</title>
+    
+    <!-- React, ReactDOM, and Babel Scripts -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+  <nav class="navbar">
+    <a href="RC.php" class="logo">
+      <img src="img/RC_logo.jpg" alt="Russ Cuevas Logo">
+    </a>
+
+    <div class="menu-toggle" id="mobile-menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+
+    <div class="navbtns">
+      <a href="RC.php">Gallery</a>
+      <a class="about-btn">About Us</button>
+		<ul class="dropdown-menu" id="aboutDropdown" style="display: none;">
+			
+				<li onclick="location.href = 'faq.php';">FAQ</li>
+				<li onclick="location.href = 'terms.php';">Terms and Conditions</li>
+				<li onclick="location.href = 'privacy.php';">Private Policy</li>
+		</ul>
+      <a href="getAppointment.php">Book Appointment</a>
+      <a href="getAQuote.php">Get A Quote</a>
+    </div>
+	
+	<div class="icons">    
+		<div class = "dropdown">
+            <a class="login-btn">
+				<img src="img/user.png" alt="User Profile" width="40" height="40">
+			</a>
+			<div class = "dropdown-content">
+			 <ul class="dropdown-menu" id="loginDropdown" style="display: none;">
+				<?php if(empty($logged_email)){?>
+					<a href = "login.php"><li>Log In</li></a>
+				<?php } else {?>
+					<a href = "?logOut"><li>Log Out</li></a>
+				<?php }?>
+				<a href = "signup.php"><li>Sign Up</li></a>
+			 </ul>
+			</div>
+		</div>
+    </div>
+
+  </nav>
+</header>
+
+    <main class="quote-page">
+        <div class="quote-container">
+		<h1 class="page-title">Terms & Conditions</h1>
+    
+        <p>These Terms govern your use of our site and services. By accessing or using our site, you agree to comply with these Terms.</p>
+    
+        <h2>The Site is an Online Store</h2>
+        <p>The Site is an online store. The Company provides The Site to allow buyers to purchase products listed on the site.</p>
+        <p>You agree to release the Company from any responsibility for any dispute that arises with another user of The Site. You agree that The Company cannot be deemed liable for your use of The Site. You agree to use The Company’s products and services at your own risk.</p>
+    
+        <h2>User Eligibility and Responsibility</h2>
+        <p>The Company’s products and services are available only to persons 18 years of age or older. Please do not use the site if you do not satisfy this condition.</p>
+        <p>The Company reserves the right to refuse service at its own discretion at any time.</p>
+        <p>You agree to the following hyperlinked policies: <a href="#">Privacy Policy</a>.</p>
+        <p>You are responsible for all activity created under your account. You agree to keep your password private and inform The Company if there has been a breach of your account.</p>
+        <p>You agree to keep your account information, and any content you create, accurate, current, and complete.</p>
+        <p>You agree to comply with all applicable domestic and international laws regarding your use of The Site and not to use The Site for illegal activities.</p>
+        <p>You agree not to engage in any activity that negatively impacts The Company’s branding, revenue, or the quality of its products and services.</p>
+    
+        <h2>Buying</h2>
+        <p>You agree to pay for all orders or cancel the order within the time allocated by the seller.</p>
+    
+        <h2>Intellectual Property</h2>
+        <p>The Company reserves the right to remove user-created content that impacts its own intellectual property at its own discretion.</p>
+    
+        <h2>No Guarantee</h2>
+        <p>The Company reserves the right to perform maintenance on The Site as required.</p>
+        <p>The Company does not guarantee continuous, uninterrupted access to The Site.</p>
+        <p>The Company does not guarantee that private information will remain private, as third parties may unlawfully intercept access or private communications and transmissions.</p>
+        <p>You agree not to hold The Company liable for the impact of downtime caused by maintenance or any unscheduled system activity.</p>
+    
+        <h2>Indemnity</h2>
+        <p>You agree to indemnify and hold The Company harmless from any claim or demand arising out of your breach of this agreement or the documents it incorporates by reference, or your violation of any law or the rights of a third party.</p>
+    
+        <h2>No Agency</h2>
+        <p>The terms and provisions of this Agreement shall not be interpreted as creating an agency, partnership, joint venture, employee-employer, or franchisor-franchisee relationship between yourself and The Company. A Member may not bind or obligate The Company without The Company’s prior written consent.</p>
+    
+        <h2>Law of Choice</h2>
+        <p>The Company will comply with the relevant laws and regulations of the Republic of the Philippines.</p>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu').addEventListener('click', function() {
+            document.querySelector('.navbtns').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+		
+		document.querySelector('.login-btn').addEventListener('click', function () {
+    const dropdown = document.getElementById('loginDropdown');
+    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+  });
+  
+  document.querySelector('.about-btn').addEventListener('click', function () {
+    const dropdown = document.getElementById('aboutDropdown');
+    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', function(event) {
+	const isLoginBtn = event.target.closest('.login-btn');
+	const isLoginDropdown = event.target.closest('#loginDropdown');
+	const isAboutBtn = event.target.closest('.about-btn');
+	const isAboutDropdown = event.target.closest('#aboutDropdown');
+    
+    // If click is outside gallery button and dropdown
+	if (!isLoginBtn && !isLoginDropdown) {
+      document.getElementById('loginDropdown').style.display = 'none';
+    }
+	if (!isAboutBtn && !isAboutDropdown) {
+      document.getElementById('aboutDropdown').style.display = 'none';
+    }
+  });
+  
+  
+    </script>
+	
+</body>
+</html>
