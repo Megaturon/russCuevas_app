@@ -15,5 +15,6 @@ class Appointment extends Model
         'date',
         'time',
         'notes',
+        'status',
     ];
 }

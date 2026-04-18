@@ -26,9 +26,19 @@
                 <h1>Get a Custom Quote</h1>
                 <p>Fill out the form below and we'll get back to you with a personalized estimate.</p>
                 
-                @if(session('success'))
+                        @if(session('success'))
                             <div class="alert alert-success" style="color: green; margin-bottom: 15px;">
                                 {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if($errors->any())
+                            <div class="alert alert-danger" style="color: red; margin-bottom: 15px;">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         @endif
 

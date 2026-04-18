@@ -16,5 +16,6 @@ class Quote extends Model
         'service_type',
         'details',
         'selected_materials',
+        'price_quote',
     ];
 }
