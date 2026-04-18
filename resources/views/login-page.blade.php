@@ -19,10 +19,23 @@
   <!-- Login Form -->
   <div class="login-container">
     <h1>Login</h1>
-    <form action="" method="post">
+
+    @if ($errors->any())
+        <div class="alert alert-danger" style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('login') }}" method="post">
+      @csrf
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Enter your email" required
-        autocapitalize="off" autocomplete="off" autocorrect="off" required>
+      <input type="email" id="email" name="email" placeholder="Enter your email" value="{{ old('email') }}" required
+        autocapitalize="off" autocomplete="off" autocorrect="off">
+
 
       <label for="password">Password</label>
       <input type="password" id="password" name="password" placeholder="Enter your password" required

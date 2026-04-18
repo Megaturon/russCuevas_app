@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\AuthController;
 
 Route::redirect('/', '/main');
 
@@ -13,9 +14,12 @@ Route::get('/main/{id}', function (string $id) {
     return view('main-page', ['gallery' => $id]);
 });
 
-Route::get('/login', function () {
-    return view('login-page');
-});
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/signup', [AuthController::class, 'showRegistrationForm'])->name('signup');
+Route::post('/signup', [AuthController::class, 'register']);
 
 Route::get('/reset-password', function () {
     return view('reset-password');
@@ -42,10 +46,6 @@ Route::get('/get-a-quote', [QuoteController::class, 'index'])->name('quote.index
 
 // Submit the quote form (POST request)
 Route::post('/get-a-quote', [QuoteController::class, 'store'])->name('quote.store');
-
-Route::get('/signup', function () {
-    return view('signup-page');
-});
 
 Route::get('/appointments', function () {
     return view('appointments');

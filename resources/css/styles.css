@@ -1,6 +1,6 @@
-:root{
+:root {
     --black: #000000;
-    --white: #ffffff; 
+    --white: #ffffff;
     --gray: #F7F7F7;
     --primary-color: #2a2a36;
     --secondary-color: #37383c;
@@ -9,29 +9,32 @@
     --white-color: #fff;
 }
 
-*{
-    margin:0; padding:0;
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     font-family: "PT Serif", serif;
-    outline: none; border: none;
+    outline: none;
+    border: none;
     text-decoration: none;
     text-transform: capitalize;
     transition: .2s linear;
 }
- 
-html{
+
+html {
     font-size: 70%;
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
     overflow-x: hidden;
 }
 
-section{
+section {
     padding: 2rem 9%;
 }
 
 header {
-    position: relative; /* Required for ::before */
+    position: relative;
+    /* Required for ::before */
     background: linear-gradient(to bottom, #1a1a1a 0%, #000000 80%);
     padding: 2rem 9%;
     display: flex;
@@ -39,18 +42,18 @@ header {
     justify-content: space-between;
     z-index: 1000;
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.3);
-    
+
 }
 
 
-header .logo{
+header .logo {
     font-size: 3rem;
     color: #ccc;
     font-weight: bolder;
 }
 
-header .logo span{
-    color:var(--black);
+header .logo span {
+    color: var(--black);
 }
 
 .header-container {
@@ -85,19 +88,19 @@ header .logo span{
     letter-spacing: 1px;
 }
 
-header .navbar a{
+header .navbar a {
     font-size: 2rem;
-    padding:0 1.5rem;
+    padding: 0 1.5rem;
     color: #ccc;
 }
 
-header .navbar a:hover{
-    color:var(--white);
+header .navbar a:hover {
+    color: var(--white);
     text-decoration: underline;
 }
 
 header .navbar a.active {
-    background-color: #444; 
+    background-color: #444;
     color: var(--white);
     border-radius: 0.5rem;
     padding: 0.5rem 1.5rem;
@@ -108,64 +111,64 @@ header .navbar a.active {
 .dropdown {
     position: relative;
     display: inline-block;
-  }
-  
-  .dropdown-content {
+}
+
+.dropdown-content {
     display: none;
     position: absolute;
     background-color: white;
     min-width: 100px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
     padding: 10px;
     border-radius: 8px;
-  }
-  
-  .dropdown-content a {
+}
+
+.dropdown-content a {
     color: black;
     padding: 8px 12px;
     text-decoration: none;
     display: block;
-  }
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
+}
 
-  
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
 .navbar .dropdown {
     position: relative;
     display: inline-block;
-  }
+}
 
-.navbar .dropdown > a i {
+.navbar .dropdown>a i {
     font-size: 1.2rem;
     margin-left: 0.5rem;
 }
- 
-  .navbar .dropdown-content {
+
+.navbar .dropdown-content {
     display: none;
     position: absolute;
     background-color: #222;
     min-width: 18rem;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 0.5rem;
-  }
-  
-  .navbar .dropdown-content a {
+}
+
+.navbar .dropdown-content a {
     color: white;
     padding: 1rem 1.5rem;
     text-decoration: none;
     display: block;
     font-size: 1.6rem;
-  }
-  
-  .navbar .dropdown:hover .dropdown-content {
+}
+
+.navbar .dropdown:hover .dropdown-content {
     display: block;
-  }
-  
-  .navbar .dropdown-content a:hover {
+}
+
+.navbar .dropdown-content a:hover {
     background-color: #444;
 }
 
@@ -180,7 +183,7 @@ header .navbar a.active {
     right: 0;
     background-color: #222;
     min-width: 100px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,.2);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, .2);
     z-index: 1;
     border-radius: 0.5rem;
 }
@@ -202,13 +205,13 @@ header .navbar a.active {
     display: block;
 }
 
-header .icon a{
+header .icon a {
     font-size: 3rem;
     color: var(--white);
     margin-left: 1.5rem;
 }
 
-header .icons a:hover{
+header .icons a:hover {
     color: #444;
 }
 
@@ -229,15 +232,15 @@ header .icons a:hover{
 }
 
 .user-icon:hover {
-    background-color: #ffffff; 
+    background-color: #ffffff;
     transform: scale(1.1);
 }
 
-header #toggler{
+header #toggler {
     display: none;
 }
 
-header .fa-bars{
+header .fa-bars {
     font-size: 3rem;
     color: #f8f8f8;
     border-radius: .5rem;
@@ -248,11 +251,11 @@ header .fa-bars{
 }
 
 body {
-    background-color: #F7F7F7; 
-  }
-  
+    background-color: #F7F7F7;
+}
 
-.home{
+
+.home {
     position: relative;
     min-height: 100vh;
     overflow: hidden;
@@ -357,8 +360,8 @@ body {
     margin: 2rem 0;
 }
 
-.heading span{
-    color:var(--black);
+.heading span {
+    color: var(--black);
 }
 
 .home .btn {
@@ -383,7 +386,8 @@ body {
 .btn .row {
     display: flex;
     align-items: center;
-    gap: 2rem;;
+    gap: 2rem;
+    ;
     flex-wrap: wrap;
     padding: 2rem 0;
     padding-bottom: 3rem;
@@ -408,7 +412,7 @@ body {
     background-color: white;
     padding: 3rem 4rem;
     border-radius: 1rem;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     max-width: 450px;
     width: 100%;
     position: absolute;
@@ -453,7 +457,8 @@ body {
 #loginbtn {
     width: 100%;
     padding: 15px;
-    font-family: "PT Serif", serif;;
+    font-family: "PT Serif", serif;
+    ;
     background-color: var(--primary-color);
     color: var(--white-color);
     border: none;
@@ -492,9 +497,9 @@ body {
 
 
 #forgot-pass-link {
-   display: block;
-   margin-left: auto;
-   width: fit-content;
+    display: block;
+    margin-left: auto;
+    width: fit-content;
 }
 
 
@@ -518,73 +523,98 @@ body {
 }
 
 .signup-container {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     padding: 3rem 4rem;
-    border-radius: 1rem;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    max-width: 550px;
-    width: 60%;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    max-width: 650px;
+    width: 90%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.6rem;
-}
-
-.signup-container form {
-    display: flex;
-    flex-direction: column;
+    z-index: 10;
 }
 
 .signup-container h1 {
-    font-family: "PT Serif", serif;
     text-align: center;
-    font-size: 3.5rem;
-    color: #111;
+    width: 100%;
     margin-bottom: 2rem;
-    letter-spacing: 2px;
-    text-transform: none;
+    font-size: 3.5rem;
 }
 
-.signup-container label{
-    font-size: 1.6rem;
-    margin-bottom: 0.5rem;
-    display: block;
-    color: #333;
-    text-transform: none;
+.signup-container h1,
+.signup-container span,
+.signup-container label {
+    color: #fff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.signup-container .user-details input{
+
+.signup-container .user-details input {
     width: 100%;
     padding: 1.2rem 1.5rem;
     font-size: 1.6rem;
-    margin-bottom: 0.9rem;
-    border: 1px solid #000;
-    border-radius: 0.5rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.8rem;
     text-transform: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.signup-container .user-details input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.signup-container .user-details input:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #fff;
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
 #create-button {
-    width: 100%;
-    padding: 15px;
-    font-family: "PT Serif", serif;;
-    background-color: var(--primary-color);
-    color: var(--white-color);
+    width: 70%;
+    padding: 8px;
+    font-family: "PT Serif", serif;
+    background-color: #fff;
+    color: #000;
     border: none;
     border-radius: 6px;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    margin: 1.5rem auto 0;
+    display: block;
 }
 
+
 #create-button:hover {
-    background-color: var(--secondary-color);
+    background-color: #ddd;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
+
+.signup-container .login-link {
+    color: #fff !important;
+    text-align: center;
+    display: block;
+    margin-top: 1.5rem;
+    text-decoration: underline;
+}
+
 
 .input-box {
     width: calc(100% / 2 - 20px);
     margin-bottom: 15px;
-  
+
 }
 
 .input-box span {
@@ -593,7 +623,8 @@ body {
     margin-bottom: 5px;
 }
 
-.input-box input, .input-box select {
+.input-box input,
+.input-box select {
     height: 40px;
     width: 100%;
     padding-left: 10px;
@@ -603,7 +634,8 @@ body {
 }
 
 input::placeholder {
-    text-transform: none; /* or lowercase, if needed */
+    text-transform: none;
+    /* or lowercase, if needed */
 }
 
 .pass-box {
@@ -611,13 +643,15 @@ input::placeholder {
     width: 100%;
 }
 
-.user-details{
+.user-details {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
+
 .custom-footer {
-    background: #fff8f5; /* subtle off-white background */
+    background: #fff8f5;
+    /* subtle off-white background */
     border-top: 1px solid #ccc;
     padding: 40px 10%;
     font-family: 'Playfair Display', serif;
@@ -731,7 +765,7 @@ input::placeholder {
 }
 
 .faq-item {
-    background: #F7F7F7; 
+    background: #F7F7F7;
     font-size: 1.9rem;
     padding: 1.5rem 2rem;
     margin-bottom: 1.5rem;
@@ -769,7 +803,7 @@ input::placeholder {
 }
 
 .faq-item.open h2::after {
-    transform: rotate(180deg); 
+    transform: rotate(180deg);
 }
 
 .faq-item p {
@@ -778,11 +812,11 @@ input::placeholder {
     line-height: 1.5;
     text-align: left;
     margin-top: 1rem;
-    display: none; 
+    display: none;
 }
 
 .faq-item.open p {
-    display: block; 
+    display: block;
 }
 
 .page-content {
@@ -829,21 +863,21 @@ input::placeholder {
     background: #ffffff;
     padding: 2rem;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     border-radius: 12px;
-}  
+}
 
 .card:hover {
     transform: translateY(-5px);
     transition: all 0.3s ease;
 }
-  
+
 
 .forgotpass-container {
     background-color: white;
     padding: 3rem 4rem;
     border-radius: 1rem;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     max-width: 550px;
     width: 60%;
     position: absolute;
@@ -852,7 +886,7 @@ input::placeholder {
     transform: translate(-50%, -50%);
     font-size: 1.6rem;
 }
-  
+
 .forgotpass-container h1 {
     font-size: 3rem;
     font-family: Playfair Display, serif;
@@ -860,12 +894,12 @@ input::placeholder {
     margin-bottom: 20px;
     color: #333;
 }
-  
+
 .forgotpass-container form {
     display: flex;
     flex-direction: column;
 }
-  
+
 .forgotpass-container label {
     font-size: 1.9rem;
     color: #555;
@@ -873,7 +907,7 @@ input::placeholder {
     text-align: left;
     text-transform: none;
 }
-  
+
 .forgotpass-container input[type="email"] {
     padding: 12px;
     margin-bottom: 0px;
@@ -881,11 +915,11 @@ input::placeholder {
     border-radius: 6px;
     font-size: 18px;
 }
-  
+
 .forgotpass-container .login-links {
     margin-bottom: 20px;
 }
-  
+
 .forgotpass-container .login-link {
     display: inline-block;
     font-size: 18px;
@@ -893,7 +927,7 @@ input::placeholder {
     text-decoration: underline;
     margin-bottom: 10px;
 }
-  
+
 .forgotpass-container .login-link:hover {
     color: #000;
 }
@@ -911,36 +945,36 @@ input::placeholder {
     margin-bottom: 20px;
     transition: background-color 0.3s ease;
 }
-  
+
 .forgotpass-container button:hover {
     background-color: #444;
 }
-  
+
 
 
 
 
 /*media queries */
-@media (max-width:991px){
+@media (max-width:991px) {
 
-    html{
+    html {
         font-size: 55%;
     }
 
-    header{
+    header {
         padding: 2rem;
     }
 
-    section{
-        padding:2rem;
+    section {
+        padding: 2rem;
     }
 
-    .home{
+    .home {
         background-position: left;
     }
 }
 
-@media (max-width:768px){
+@media (max-width:768px) {
 
     .navbar .dropdown-content,
     .icons .dropdown-content {
@@ -978,32 +1012,35 @@ input::placeholder {
         background-color: black;
         position: relative;
     }
+
     .navbar .dropdown {
         position: relative;
     }
 
 
-    header .fa-bars{
+    header .fa-bars {
         display: block;
     }
 
-    header .navbar{
+    header .navbar {
         position: absolute;
-        top: 0; left:0; right:0;
-        background: #aaa; 
-        border-top:0.2rem solid rgb(238, 234, 234);
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #aaa;
+        border-top: 0.2rem solid rgb(238, 234, 234);
         clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     }
 
-    header #toggler:checked ~ .navbar{
-        clip-path:polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    header #toggler:checked~.navbar {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
     }
 
-    header .navbar a{
-        margin:1.5rem;
-        padding:1.5rem;
+    header .navbar a {
+        margin: 1.5rem;
+        padding: 1.5rem;
         background: #444;
-        border:0.3rem solid rgb(235, 231, 231);
+        border: 0.3rem solid rgb(235, 231, 231);
         display: block;
     }
 
@@ -1015,26 +1052,26 @@ input::placeholder {
 
 @media (max-width: 450px) {
     .topbar {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      padding: 1rem;
-      position: relative;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        padding: 1rem;
+        position: relative;
     }
-  
+
     .menu-icon {
-      justify-self: start;
+        justify-self: start;
     }
-  
+
     .logo-box {
-      justify-self: center;
-      text-align: center;
+        justify-self: center;
+        text-align: center;
     }
-  
+
     .user-icon {
-      justify-self: end;
+        justify-self: end;
     }
-  }
+}
 
 /* Background Carousel for Login */
 .login-bg-carousel {
@@ -1085,5 +1122,3 @@ input::placeholder {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
-  
