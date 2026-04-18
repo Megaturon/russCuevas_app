@@ -15,6 +15,7 @@
 <header>
   <x-nav-bar></x-nav-bar>
 </header>
+
 <main class="home">
   
   <!-- Gallery Section -->
@@ -307,6 +308,18 @@
 
   // Initialize slider on page load
   reloadSlider();
+
+  @if( $gallery == "wedding" )
+    loadGallery('Wedding Gown');
+  @elseif( $gallery == "sponsor" )
+    loadGallery('Principal Sponsor');
+  @elseif( $gallery == "evening" )
+    loadGallery('Evening Gown');
+  @elseif( $gallery == "formal" )
+    loadGallery('Formal Wear');
+  @elseif( $gallery == "prom" )
+    loadGallery('Prom');
+  @endif
 </script>
 
 </body>

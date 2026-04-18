@@ -3,8 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuoteController;
 
-Route::get('/', function () {
-    return view('main-page');
+Route::redirect('/', '/main');
+
+Route::get('/main', function () {
+    return view('main-page', ['gallery' => 'none']);
+});
+
+Route::get('/main/{id}', function (string $id) {
+    return view('main-page', ['gallery' => $id]);
 });
 
 Route::get('/login', function () {

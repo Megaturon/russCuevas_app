@@ -16,17 +16,17 @@
       <ul class="dropdown-menu" id="galleryDropdown" style="display: none;">
         <li>Bridal ⯆
           <ul class="sub-menu">
-            <li>Wedding Gown</li>
-            <li>Principal Sponsor</li>
+            <li onclick="location.href = '/main/wedding';">Wedding Gown</li>
+            <li onclick="location.href = '/main/sponsor';">Principal Sponsor</li>
           </ul>
         </li>
         <li>Evening Wear ⯆
           <ul class="sub-menu">
-            <li>Evening Gown</li>
-            <li>Formal Wear</li>
+            <li onclick="location.href = '/main/evening';">Evening Gown</li>
+            <li onclick="location.href = '/main/formal';">Formal Wear</li>
           </ul>
         </li>
-        <li>Prom</li>
+        <li onclick="location.href = '/main/prom';">Prom</li>
         
       </ul>
 	  <a class="about-btn">About Us</button>
