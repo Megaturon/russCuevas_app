@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Quote;
 
 class QuoteController extends Controller
 {
@@ -26,11 +26,19 @@ class QuoteController extends Controller
                 'selected_materials' => 'nullable|string', // Catch the React data here!
             ]);
 
-        // (Optional) Save to Database using a Model here
-        // Quote::create($validated);
+        // Save to Database
+        Quote::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'service_type' => $validated['service-type'],
+            'details' => $validated['details'],
+            'selected_materials' => $validated['selected_materials'],
+        ]);
 
-        // Send Email (Replacing your PHPMailer logic)
+        // (Optional) Send Email
         // Mail::to('admin@example.com')->send(new \App\Mail\QuoteRequested($validated));
+
 
         // Redirect back with a success message
         return back()->with('success', 'Your quote request has been sent successfully!');

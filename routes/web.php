@@ -47,6 +47,17 @@ Route::get('/get-a-quote', [QuoteController::class, 'index'])->name('quote.index
 // Submit the quote form (POST request)
 Route::post('/get-a-quote', [QuoteController::class, 'store'])->name('quote.store');
 
-Route::get('/appointments', function () {
-    return view('appointments');
+use App\Http\Controllers\AppointmentController;
+
+Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
+Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+
+use App\Http\Controllers\AdminController;
+
+Route::prefix('admin')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::post('/appointment-action', [AdminController::class, 'appointmentAction'])->name('admin.appointment.action');
+    Route::post('/quote-action', [AdminController::class, 'quoteAction'])->name('admin.quote.action');
+    Route::post('/user-action', [AdminController::class, 'userAction'])->name('admin.user.action');
+    Route::post('/filter-appointments', [AdminController::class, 'filterAppointments'])->name('admin.filter.appointments');
 });

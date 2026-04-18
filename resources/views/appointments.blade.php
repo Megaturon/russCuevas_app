@@ -34,7 +34,8 @@
   <main class="main-container">
     <div class="appointment-container">
       <h2>Book an Appointment</h2>
-      <form action="" method="POST">
+      <form action="{{ route('appointments.store') }}" method="POST">
+        @csrf
         <label for="name">Name</label>
         <input type="text" id="name" name="name" value="<?php echo (isset($logged_fname))?$logged_fname:'';?>" required>
 
