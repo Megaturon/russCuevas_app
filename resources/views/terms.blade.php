@@ -13,11 +13,11 @@
         <x-nav-bar></x-nav-bar>
     </header>
 
-<main class="py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 md:p-14 text-gray-700">
+<main class="flex-grow pt-24 pb-12 px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center">
+        <div class="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-8 md:p-14 text-gray-700 mt-8">
             <h1 class="text-4xl font-bold text-center text-gray-900 mb-10 font-serif">Terms & Conditions</h1>
     
-            <p class="text-lg leading-relaxed mb-8 text-gray-600">These Terms govern your use of our site and services. By accessing or using our site, you agree to comply with these Terms.</p>
+            <p class="text-lg leading-relaxed mb-8 text-center text-gray-600">These Terms govern your use of our site and services. By accessing or using our site, you agree to comply with these Terms.</p>
         
             <h2 class="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">The Site is an Online Store</h2>
             <p class="leading-relaxed mb-4">The Site is an online store. The Company provides The Site to allow buyers to purchase products listed on the site.</p>
@@ -27,6 +27,7 @@
             <ul class="list-disc pl-6 space-y-3 leading-relaxed mb-6">
                 <li>The Company’s products and services are available only to persons 18 years of age or older. Please do not use the site if you do not satisfy this condition.</li>
                 <li>The Company reserves the right to refuse service at its own discretion at any time.</li>
+                <li>You agree to the following hyperlinked policies: <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a>.</li>
                 <li>You are responsible for all activity created under your account. You agree to keep your password private and inform The Company if there has been a breach of your account.</li>
                 <li>You agree to keep your account information, and any content you create, accurate, current, and complete.</li>
                 <li>You agree to comply with all applicable domestic and international laws regarding your use of The Site and not to use The Site for illegal activities.</li>
@@ -57,5 +58,7 @@
             <p class="leading-relaxed mb-6">The Company will comply with the relevant laws and regulations of the Republic of the Philippines.</p>
         </div>
     </main>
+
+    <x-footer></x-footer>
 </body>
 </html>
