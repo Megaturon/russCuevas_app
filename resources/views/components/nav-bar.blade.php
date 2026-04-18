@@ -43,7 +43,7 @@
     <div class="icons">    
 		<div class = "dropdown">
             <a class="login-btn">
-				<img src="/images/user.png" alt="User Profile" width="40" height="40">
+				<img src="/img/user.png" alt="User Profile" width="40" height="40" class="user-icon-img">
 			</a>
 			<div class = "dropdown-content">
 			 <ul class="dropdown-menu" id="loginDropdown" style="display: none;">

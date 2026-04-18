@@ -8,6 +8,14 @@
   @vite(['resources/css/styles.css'])
 </head>
 <body>
+  <!-- Background Carousel -->
+  <div class="login-bg-carousel">
+    <div class="carousel-item active" style="background-image: url('/img/slide1.jpg');"></div>
+    <div class="carousel-item" style="background-image: url('/img/slide2.webp');"></div>
+    <div class="carousel-item" style="background-image: url('/img/slide3.jpg');"></div>
+    <div class="bg-overlay"></div>
+  </div>
+
   <!-- Login Form -->
   <div class="login-container">
     <h1>Login</h1>
@@ -31,6 +39,19 @@
       </div>
   </form>
 </div>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.carousel-item');
+  
+  function nextSlide() {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+  }
+  
+  setInterval(nextSlide, 5000);
+</script>
 
 </body>
 </html>
