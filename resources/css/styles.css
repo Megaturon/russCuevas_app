@@ -408,40 +408,22 @@ body {
     text-transform: none;
 }
 
-.login-container {
-    background-color: white;
-    padding: 3rem 4rem;
-    border-radius: 1rem;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    max-width: 450px;
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-transform: none;
-}
-
-.login-container form {
-    display: flex;
-    flex-direction: column;
-    text-transform: none;
-}
-
 .login-container h1 {
     font-family: Playfair Display, serif;
     text-align: center;
     font-size: 3.5rem;
-    color: #111;
+    color: #fff;
     margin-bottom: 2rem;
     letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .login-container label {
     font-size: 1.6rem;
     margin-bottom: 0.5rem;
     display: block;
-    color: black;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .login-container input {
@@ -449,28 +431,50 @@ body {
     padding: 1.2rem 1.5rem;
     font-size: 1.6rem;
     margin-bottom: 1.5rem;
-    border: 1px solid #000;
-    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.8rem;
     text-transform: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.login-container input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.login-container input:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #fff;
+    outline: none;
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 
 #loginbtn {
     width: 100%;
-    padding: 15px;
+    padding: 12px;
     font-family: "PT Serif", serif;
-    ;
-    background-color: var(--primary-color);
-    color: var(--white-color);
+    background-color: #fff;
+    color: #000;
     border: none;
     border-radius: 6px;
     font-size: 18px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 #loginbtn:hover {
-    background-color: var(--secondary-color);
+    background-color: #ddd;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
+
+.login-container .login-link {
+    color: #fff !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
 
 .login-links {
     margin-top: 1rem;
@@ -1110,15 +1114,19 @@ input::placeholder {
 }
 
 .login-container {
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     padding: 3rem 4rem;
     border-radius: 1.5rem;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    max-width: 450px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    max-width: 650px;
     width: 90%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-size: 1.6rem;
+    z-index: 10;
 }
