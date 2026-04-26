@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -5,24 +7,24 @@
   <title>Login | Russ Cuevas</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  @vite(['resources/css/styles.css'])
+  @vite(['resources/css/styles2.css'])
 </head>
-<body>
-  <!-- Background Carousel -->
-  <div class="login-bg-carousel">
+<body class="auth-page">
+  <a href="/" class="close-auth"><i class="fas fa-times"></i></a>
+
+  <div class="auth-bg-carousel">
     <div class="carousel-item active" style="background-image: url('/img/slide1.jpg');"></div>
     <div class="carousel-item" style="background-image: url('/img/slide2.webp');"></div>
     <div class="carousel-item" style="background-image: url('/img/slide3.jpg');"></div>
-    <div class="bg-overlay"></div>
+    <div class="auth-overlay"></div>
   </div>
 
-  <!-- Login Form -->
-  <div class="login-container">
+  <div class="auth-card">
     <h1>Login</h1>
 
     @if ($errors->any())
-        <div class="alert alert-danger" style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
-            <ul>
+        <div class="alert alert-danger" style="color: #721c24; background-color: rgba(248, 215, 218, 0.8); border: 1px solid #f5c6cb; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 0.8rem;">
+            <ul style="list-style: none; padding: 0;">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -30,28 +32,28 @@
         </div>
     @endif
 
-    <form action="{{ route('login') }}" method="post">
+    <form action="{{ route('login') }}" method="post" class="auth-form">
       @csrf
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Enter your email" value="{{ old('email') }}" required
-        autocapitalize="off" autocomplete="off" autocorrect="off">
-
-
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="Enter your password" required
-        autocapitalize="off" autocomplete="off" autocorrect="off" required>
-
-      <div class="login-links">
-          <a href="/forget-password" id="forgot-pass-link" class="login-link">Forgot your password?</a> 
-
-      <div class="login-button">
-          <button type="submit" name="login" id="loginbtn">Login</button>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="email@example.com" value="{{ old('email') }}" required
+          autocapitalize="off" autocomplete="off" autocorrect="off">
       </div>
-          <a href="/signup" id="signup-link" class="login-link">Sign up for an account?</a>
-          <a href="/" id="signup-link" class="login-link">Return to Homepage</a>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" required>
       </div>
-  </form>
-</div>
+
+      <button type="submit" class="auth-btn">Login</button>
+
+      <div class="auth-footer">
+          <a href="/forget-password">Forgot your password?</a> 
+          <a href="/signup">Don't have an account? Sign up</a>
+          <a href="/">Return to Homepage</a>
+      </div>
+    </form>
+  </div>
 
 <script>
   let currentSlide = 0;
