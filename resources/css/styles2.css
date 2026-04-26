@@ -1398,6 +1398,59 @@ header.scrolled .navbtns a:hover {
     gap: 20px;
 }
 
+/* User Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--white-color);
+    min-width: 200px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 15px 0;
+    z-index: 2000;
+    list-style: none;
+    margin-top: 15px;
+    display: none;
+    text-align: left;
+}
+
+.dropdown-menu a {
+    color: var(--text-color) !important;
+    text-decoration: none !important;
+    display: block !important;
+    padding: 12px 25px !important;
+    font-size: 0.7rem !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    opacity: 1 !important;
+    transition: background 0.3s ease !important;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f9f9f9 !important;
+    color: var(--primary-color) !important;
+}
+
+.dropdown-menu li {
+    padding: 12px 25px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.dropdown-menu li:first-child {
+    font-weight: 600;
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 10px;
+}
+
 @media (max-width: 600px) {
     .signup-grid {
         grid-template-columns: 1fr;

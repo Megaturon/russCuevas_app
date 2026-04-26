@@ -59,37 +59,3 @@
       <span class="bar"></span>
     </div>
 </nav>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Dropdown toggle for user icon
-    const loginBtn = document.querySelector('.login-btn');
-    const loginDropdown = document.getElementById('loginDropdown');
-    
-    if (loginBtn && loginDropdown) {
-        loginBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            loginDropdown.style.display = loginDropdown.style.display === 'none' ? 'block' : 'none';
-        });
-        
-        document.addEventListener('click', function() {
-            loginDropdown.style.display = 'none';
-        });
-    }
-
-    // Mobile menu toggle
-    const mobileMenu = document.getElementById('mobile-menu');
-    const navLeft = document.querySelector('.nav-left');
-    const navRight = document.querySelector('.nav-right');
-
-    if (mobileMenu) {
-      mobileMenu.addEventListener('click', function() {
-        this.classList.toggle('is-active');
-        // Add active classes for mobile view if CSS handles it via .active
-        navLeft?.classList.toggle('active');
-        navRight?.classList.toggle('active');
-      });
-    }
-  });
-</script>
