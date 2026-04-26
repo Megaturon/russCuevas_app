@@ -3,7 +3,8 @@
 :root {
     --primary-color: #000000;
     --secondary-color: #1a1a1a;
-    --background-color: #faf9f6; /* Warm off-white from reference */
+    --background-color: #faf9f6;
+    /* Warm off-white from reference */
     --card-bg: #ffffff;
     --text-color: #000000;
     --text-muted: #666666;
@@ -75,7 +76,10 @@ header {
     justify-content: flex-end;
 }
 
-.nav-left a, .nav-left button, .nav-right a, .nav-right button {
+.nav-left a,
+.nav-left button,
+.nav-right a,
+.nav-right button {
     background: none;
     border: none;
     color: var(--text-color);
@@ -90,7 +94,10 @@ header {
     opacity: 0.7;
 }
 
-.nav-left a:hover, .nav-left button:hover, .nav-right a:hover, .nav-right button:hover {
+.nav-left a:hover,
+.nav-left button:hover,
+.nav-right a:hover,
+.nav-right button:hover {
     opacity: 1;
 }
 
@@ -139,7 +146,7 @@ header {
     visibility: hidden;
     transform: translateY(10px);
     transition: var(--transition-smooth);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
 }
 
 .dropdown-wrapper:hover .luxury-dropdown {
@@ -180,14 +187,14 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: var(--transition-smooth);
 }
 
 .chatbot-fab:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
 .chatbot-fab svg {
@@ -204,7 +211,7 @@ header {
     height: 450px;
     background-color: var(--white-color);
     border: 1px solid var(--border-light);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
     display: none;
     flex-direction: column;
     overflow: hidden;
@@ -261,17 +268,26 @@ header {
 }
 
 @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px) scale(0.9); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
-header.scrolled .navbtns a, 
-header.scrolled .navbtns .gallery-btn, 
+header.scrolled .navbtns a,
+header.scrolled .navbtns .gallery-btn,
 header.scrolled .navbtns .about-btn {
     color: var(--text-color);
 }
 
-.navbtns a::after, .navbtns .gallery-btn::after, .navbtns .about-btn::after {
+.navbtns a::after,
+.navbtns .gallery-btn::after,
+.navbtns .about-btn::after {
     content: '';
     position: absolute;
     bottom: 5px;
@@ -282,17 +298,21 @@ header.scrolled .navbtns .about-btn {
     transition: var(--transition-smooth);
 }
 
-header.scrolled .navbtns a::after, 
-header.scrolled .navbtns .gallery-btn::after, 
+header.scrolled .navbtns a::after,
+header.scrolled .navbtns .gallery-btn::after,
 header.scrolled .navbtns .about-btn::after {
     background-color: var(--primary-color);
 }
 
-.navbtns a:hover::after, .navbtns .gallery-btn:hover::after, .navbtns .about-btn:hover::after {
+.navbtns a:hover::after,
+.navbtns .gallery-btn:hover::after,
+.navbtns .about-btn:hover::after {
     width: 100%;
 }
 
-.navbtns a:hover, .navbtns .gallery-btn:hover, .navbtns .about-btn:hover {
+.navbtns a:hover,
+.navbtns .gallery-btn:hover,
+.navbtns .about-btn:hover {
     opacity: 1;
 }
 
@@ -351,7 +371,7 @@ header.scrolled .navbtns a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.1));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -965,12 +985,12 @@ header.scrolled .navbtns a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     transition: var(--transition-smooth);
 }
 
 .gallery-item:hover::after {
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .gallery-item img {
@@ -1158,13 +1178,20 @@ header.scrolled .navbtns a:hover {
 /* Authentication Pages */
 .auth-page {
     min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    background-color: var(--background-color);
+}
+
+.auth-centered-wrapper {
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
+    width: 100%;
     position: relative;
-    overflow: hidden;
-    background-color: var(--secondary-color);
+    z-index: 5;
 }
 
 .auth-bg-carousel {
@@ -1218,8 +1245,15 @@ header.scrolled .navbtns a:hover {
 }
 
 @keyframes authFadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .auth-card h1 {
@@ -1339,6 +1373,24 @@ header.scrolled .navbtns a:hover {
     transform: rotate(90deg);
 }
 
+.auth-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.auth-link {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+.auth-link:hover {
+    color: var(--primary-color);
+}
+
 /* Signup specific */
 .signup-grid {
     display: grid;
@@ -1350,7 +1402,7 @@ header.scrolled .navbtns a:hover {
     .signup-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .auth-card {
         padding: 40px 30px;
         margin: 20px;
@@ -1363,16 +1415,24 @@ header.scrolled .navbtns a:hover {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px 60px;
 }
 
 .quote-container {
+    position: relative;
+    z-index: 10;
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 20px;
     max-width: 1000px;
     width: 95%;
-    margin: 120px auto 60px;
+    margin: 0;
     padding: 60px;
 }
 
@@ -1402,7 +1462,7 @@ header.scrolled .navbtns a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(5px);
     z-index: 3000;
     align-items: center;
@@ -1423,7 +1483,7 @@ header.scrolled .navbtns a:hover {
     border-radius: 15px;
     position: relative;
     overflow-y: auto;
-    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .close-size-modal {
