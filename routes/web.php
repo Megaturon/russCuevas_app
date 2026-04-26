@@ -49,4 +49,4 @@ Route::post('/get-a-quote', [QuoteController::class, 'store'])->name('quote.stor
 
 Route::get('/appointments', function () {
     return view('appointments');
-});
+})->name('appointments.index');
