@@ -10,6 +10,9 @@
   @vite(['resources/css/styles2.css'])
 </head>
 <body class="auth-page">
+  <header>
+    <x-nav-bar></x-nav-bar>
+  </header>
   <a href="/" class="close-auth"><i class="fas fa-times"></i></a>
 
   <div class="auth-bg-carousel">
