@@ -23,6 +23,7 @@ class QuoteController extends Controller
                 'details' => 'required|string',
                 'phone' => 'nullable|string',
                 'service-type' => 'required|string',
+                'size' => 'required|string',
                 'selected_materials' => 'nullable|string', // Catch the React data here!
             ]);
 
