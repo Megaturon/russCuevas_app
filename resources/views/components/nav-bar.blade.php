@@ -37,26 +37,20 @@
           </a>
           <div class="dropdown-content">
             <ul class="dropdown-menu" id="loginDropdown" style="display: none;">
+              @guest
               <a href="/login"><li>Log In</li></a>
-              @auth
-              <li onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</li>
+              <a href="/signup"><li>Sign Up</li></a>
+              @else
+              <li style="padding: 10px 20px; font-weight: 600; font-size: 0.7rem; border-bottom: 1px solid #eee;">{{ auth()->user()->name }}</li>
+              <li onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="cursor: pointer; padding: 10px 20px;">Log Out</li>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
               </form>
-              @endauth
-              <a href="/signup"><li>Sign Up</li></a>
+              @endguest
             </ul>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="navbtns">
-      <a href="/">Home</a>
-      <a href="#" onclick="loadGallery('Wedding Gown')">Gallery</a>
-      <a href="/faq">About</a>
-      <a href="{{ route('quote.index') }}">Get a Quote</a>
-      <a href="{{ route('appointments.index') }}">Book Now</a>
     </div>
 
     <div class="menu-toggle" id="mobile-menu">
@@ -65,3 +59,37 @@
       <span class="bar"></span>
     </div>
 </nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Dropdown toggle for user icon
+    const loginBtn = document.querySelector('.login-btn');
+    const loginDropdown = document.getElementById('loginDropdown');
+    
+    if (loginBtn && loginDropdown) {
+        loginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            loginDropdown.style.display = loginDropdown.style.display === 'none' ? 'block' : 'none';
+        });
+        
+        document.addEventListener('click', function() {
+            loginDropdown.style.display = 'none';
+        });
+    }
+
+    // Mobile menu toggle
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLeft = document.querySelector('.nav-left');
+    const navRight = document.querySelector('.nav-right');
+
+    if (mobileMenu) {
+      mobileMenu.addEventListener('click', function() {
+        this.classList.toggle('is-active');
+        // Add active classes for mobile view if CSS handles it via .active
+        navLeft?.classList.toggle('active');
+        navRight?.classList.toggle('active');
+      });
+    }
+  });
+</script>
