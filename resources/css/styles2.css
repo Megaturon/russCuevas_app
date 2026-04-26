@@ -1291,13 +1291,24 @@ header.scrolled .navbtns a:hover {
     text-align: center;
 }
 
+.footer-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 .auth-footer a {
-    display: block;
+    display: inline-block;
     font-size: 0.75rem;
     color: var(--text-muted);
     text-decoration: none;
-    margin-bottom: 10px;
     transition: var(--transition-smooth);
+}
+
+.auth-footer .back-link {
+    display: block;
+    margin-top: 10px;
 }
 
 .auth-footer a:hover {

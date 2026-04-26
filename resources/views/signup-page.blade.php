@@ -74,7 +74,7 @@
 
       <div class="auth-footer">
           <a href="/login">Already have an account? Login</a>
-          <a href="/">Return to Homepage</a>
+          <a href="/" class="back-link">Return to Homepage</a>
       </div>
     </form>
   </div>

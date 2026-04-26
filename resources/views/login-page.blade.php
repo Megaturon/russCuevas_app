@@ -51,9 +51,11 @@
       <button type="submit" class="auth-btn">Login</button>
 
       <div class="auth-footer">
-          <a href="/forget-password">Forgot your password?</a> 
-          <a href="/signup">Don't have an account? Sign up</a>
-          <a href="/">Return to Homepage</a>
+          <div class="footer-links">
+            <a href="/signup">Don't have an account? Sign up</a>
+            <a href="/forget-password">Forgot your password?</a> 
+          </div>
+          <a href="/" class="back-link">Return to Homepage</a>
       </div>
     </form>
   </div>
