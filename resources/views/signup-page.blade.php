@@ -40,28 +40,33 @@
       
       <div class="signup-grid">
         <div class="form-group">
-          <label for="fullname">Full Name</label>
-          <input type="text" id="fullname" name="fullname" placeholder="John Doe" value="{{ old('fullname') }}" required>
+          <label for="fullname">Full Name <span class="required-asterisk">*</span></label>
+          <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" value="{{ old('fullname') }}" required>
         </div>
 
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="email">Email <span class="required-asterisk">*</span></label>
           <input type="email" id="email" name="email" placeholder="email@example.com" value="{{ old('email') }}" required>
         </div>
 
         <div class="form-group">
-          <label for="contact">Contact Number</label>
+          <label for="contact">Contact Number <span class="required-asterisk">*</span></label>
           <input type="number" id="contact" name="contact" placeholder="09123456789" value="{{ old('contact') }}" required>
         </div>
 
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Password <span class="required-asterisk">*</span></label>
           <input type="password" id="password" name="password" placeholder="••••••••" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password_confirmation">Confirm Password <span class="required-asterisk">*</span></label>
+          <input type="password" id="password_confirmation" name="password_confirmation" placeholder="••••••••" required>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="address">Address</label>
+        <label for="address">Address <span class="required-asterisk">*</span></label>
         <input type="text" id="address" name="address" placeholder="Enter your full address" value="{{ old('address') }}" required>
       </div>
 

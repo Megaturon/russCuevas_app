@@ -38,13 +38,13 @@
     <form action="{{ route('login') }}" method="post" class="auth-form">
       @csrf
       <div class="form-group">
-        <label for="email">Email Address</label>
+        <label for="email">Email Address <span class="required-asterisk">*</span></label>
         <input type="email" id="email" name="email" placeholder="email@example.com" value="{{ old('email') }}" required
           autocapitalize="off" autocomplete="off" autocorrect="off">
       </div>
 
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">Password <span class="required-asterisk">*</span></label>
         <input type="password" id="password" name="password" placeholder="••••••••" required>
       </div>
 

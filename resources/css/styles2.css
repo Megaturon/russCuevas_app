@@ -1244,6 +1244,11 @@ header.scrolled .navbtns a:hover {
     color: var(--text-muted);
 }
 
+.required-asterisk {
+    color: #ff4d4d;
+    margin-left: 3px;
+}
+
 .auth-form input {
     width: 100%;
     background: transparent;
