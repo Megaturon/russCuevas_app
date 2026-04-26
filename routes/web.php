@@ -5,6 +5,9 @@ use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\AuthController;
 
 Route::redirect('/', '/main');
+Route::redirect('/login-page', '/login');
+Route::redirect('/signup-page', '/signup');
+Route::redirect('/forgot-password', '/forget-password');
 
 Route::get('/main', function () {
     return view('main-page', ['gallery' => 'none']);
@@ -21,13 +24,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/signup', [AuthController::class, 'showRegistrationForm'])->name('signup');
 Route::post('/signup', [AuthController::class, 'register']);
 
-Route::get('/reset-password', function () {
-    return view('reset-password');
-});
+Route::get('/reset-password', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
-Route::get('/forget-password', function () {
-    return view('forget-password');
-});
+Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('password.request');
+Route::post('/forget-password', [AuthController::class, 'sendVerificationCode'])->name('password.email');
+Route::post('/verify-otp', [AuthController::class, 'verifyCode'])->name('password.verify');
 
 Route::get('/faq', function () {
     return view('faq');

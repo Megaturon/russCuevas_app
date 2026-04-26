@@ -43,7 +43,7 @@
         <div class="signup-grid">
             <div class="form-group">
                 <label for="fullname">Full Name <span class="required-asterisk">*</span></label>
-                <input type="text" id="fullname" name="name" value="{{ old('name') }}" required placeholder="Enter your name">
+                <input type="text" id="fullname" name="fullname" value="{{ old('fullname') }}" required placeholder="Enter your name">
             </div>
 
             <div class="form-group">
