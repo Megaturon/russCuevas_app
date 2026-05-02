@@ -47,6 +47,7 @@ Route::get('/get-a-quote', [QuoteController::class, 'index'])->name('quote.index
 // Submit the quote form (POST request)
 Route::post('/get-a-quote', [QuoteController::class, 'store'])->name('quote.store');
 
+<<<<<<< HEAD
 use App\Http\Controllers\AppointmentController;
 
 Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
@@ -61,3 +62,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/user-action', [AdminController::class, 'userAction'])->name('admin.user.action');
     Route::post('/filter-appointments', [AdminController::class, 'filterAppointments'])->name('admin.filter.appointments');
 });
+=======
+Route::get('/appointments', function () {
+    return view('appointments');
+})->name('appointments.index');
+>>>>>>> ui-polish-fixes

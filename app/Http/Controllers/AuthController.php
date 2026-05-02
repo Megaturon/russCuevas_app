@@ -21,7 +21,16 @@ class AuthController extends Controller
             'address' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'contact' => 'required|string|max:20',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
+        ], [
+            'fullname.required' => 'Please provide your full name.',
+            'address.required' => 'An address is required for our records.',
+            'email.required' => 'A valid email address is mandatory.',
+            'email.unique' => 'This email is already registered with us.',
+            'contact.required' => 'Please enter a contact number.',
+            'password.required' => 'A secure password is required.',
+            'password.min' => 'Your password must be at least 8 characters long.',
+            'password.confirmed' => 'Password confirmation does not match.',
         ]);
 
         $user = User::create([
