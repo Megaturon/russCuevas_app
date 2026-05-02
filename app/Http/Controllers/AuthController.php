@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ResetPasswordCode;
 
 class AuthController extends Controller
 {
@@ -74,5 +76,90 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/main');
+    }
+
+    // --- Forgot Password Flow ---
+
+    public function showForgetPasswordForm()
+    {
+        return view('forget-password');
+    }
+
+    public function sendVerificationCode(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+        ], [
+            'email.exists' => 'This email is not registered in our system.'
+        ]);
+
+        $code = rand(100000, 999999);
+        
+        // Store in session
+        $request->session()->put('reset_code', $code);
+        $request->session()->put('reset_email', $request->email);
+        $request->session()->put('reset_code_expires_at', now()->addMinutes(10));
+
+        // Send Real Email
+        try {
+            Mail::to($request->email)->send(new ResetPasswordCode($code));
+        } catch (\Exception $e) {
+            return back()->withErrors(['email' => 'Failed to send email. Please check your configuration. ' . $e->getMessage()]);
+        }
+
+        return back()->with('status', 'code_sent')->with('success', "A verification code has been sent to your email.");
+    }
+
+    public function verifyCode(Request $request)
+    {
+        $request->validate(['otp' => 'required|numeric|digits:6']);
+
+        $storedCode = $request->session()->get('reset_code');
+        $expiresAt = $request->session()->get('reset_code_expires_at');
+        
+        if (!$storedCode || now()->greaterThan($expiresAt)) {
+            return redirect('/forget-password')->withErrors(['email' => 'Verification code expired. Please request a new one.']);
+        }
+
+        if ($request->otp == $storedCode) {
+            $request->session()->put('password_reset_verified', true);
+            return redirect('/reset-password')->with('success', 'Code verified! You can now reset your password.');
+        }
+
+        return back()->withErrors(['otp' => 'The verification code is incorrect.']);
+    }
+
+    public function showResetPasswordForm(Request $request)
+    {
+        if (!$request->session()->get('password_reset_verified')) {
+            return redirect('/forget-password')->withErrors(['email' => 'Please verify your email first.']);
+        }
+        return view('reset-password');
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        if (!$request->session()->get('password_reset_verified')) {
+            return redirect('/forget-password')->withErrors(['email' => 'Session expired or invalid.']);
+        }
+
+        $email = $request->session()->get('reset_email');
+        $user = User::where('email', $email)->first();
+        
+        if ($user) {
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            // Clear session
+            $request->session()->forget(['reset_code', 'reset_email', 'reset_code_expires_at', 'password_reset_verified']);
+
+            return redirect('/login')->with('success', 'Password reset successfully! You can now log in.');
+        }
+
+        return redirect('/forget-password')->withErrors(['email' => 'User not found.']);
     }
 }
