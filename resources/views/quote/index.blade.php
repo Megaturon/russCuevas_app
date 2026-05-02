@@ -23,7 +23,6 @@
     <x-nav-bar></x-nav-bar>
 </header>
 
-<<<<<<< HEAD
     <main class="quote-page">
         <div class="quote-container">
             <div class="quote-content">
@@ -49,22 +48,6 @@
                     <form id="quote-form" class="quote-form" action="{{ route('quote.store') }}" method="POST">
                         
                         @csrf 
-=======
-<main class="quote-page">
-    <div class="quote-container">
-        <div class="quote-content">
-            <h1>Get a Custom Quote</h1>
-            <p>Share your vision with us, and we'll create a personalized estimate for your unique project.</p>
-            
-            @if(session('success'))
-                <div class="alert alert-success" style="color: green; background-color: rgba(212, 237, 218, 0.8); padding: 15px; border-radius: 10px; margin-bottom: 30px; text-align: center;">
-                    <i class="fas fa-check-circle"></i> {{ session('success') }}
-                </div>
-            @endif
-
-            <form id="quote-form" class="auth-form" action="{{ route('quote.store') }}" method="POST">
-                @csrf 
->>>>>>> ui-polish-fixes
 
                 <div class="signup-grid">
                     <div class="form-group">

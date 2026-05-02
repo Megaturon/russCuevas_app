@@ -41,22 +41,11 @@
         <x-nav-bar></x-nav-bar>
     </header>
 
-<<<<<<< HEAD
-<body>
-  <main class="main-container">
-    <div class="appointment-container">
-      <h2>Book an Appointment</h2>
-      <form action="{{ route('appointments.store') }}" method="POST">
-        @csrf
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" value="<?php echo (isset($logged_fname))?$logged_fname:'';?>" required>
-=======
     <main class="quote-page">
         <div class="quote-container" style="max-width: 900px;">
             <div class="quote-content">
                 <h1>Book an Appointment</h1>
                 <p>Schedule a personal consultation at our artelier. We look forward to meeting you.</p>
->>>>>>> ui-polish-fixes
 
                 <div style="display: flex; gap: 40px; flex-wrap: wrap;">
                     <!-- Appointment Form -->
