@@ -188,7 +188,7 @@
                         {materialData.map((material) => (
                             <div 
                                 key={material.id}
-                                className={`flex items-center p-3 rounded-lg cursor-pointer transition-all w-full ${hoveredMaterial?.id === material.id ? 'bg-white shadow-sm' : ''} ${selectedMaterials.includes(material.id) ? 'bg-white ring-1 ring-black shadow-sm' : 'hover:bg-white/50'}`}
+                                className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 w-full relative ${hoveredMaterial?.id === material.id ? 'bg-white shadow-md transform translate-x-2 z-10 border-gray-200' : 'border-transparent'} ${selectedMaterials.includes(material.id) ? 'bg-white ring-2 ring-black shadow-sm' : 'hover:bg-gray-100'}`}
                                 onMouseEnter={() => setHoveredMaterial(material)}
                                 onMouseLeave={() => setHoveredMaterial(null)}
                                 onClick={() => toggleMaterial(material.id)}
@@ -198,7 +198,7 @@
                             </div>
                         ))}
                     </div>
-                    <div className="w-full md:w-1/2 bg-gray-50 p-4 border-l border-gray-100 flex flex-col justify-center min-h-[200px]">
+                    <div className="w-full md:w-1/2 bg-white p-6 border-l border-gray-200 flex flex-col justify-center min-h-[250px] shadow-xl z-10 relative">
                         {hoveredMaterial ? (
                             <div className="animate-fade-in">
                                 <img src={hoveredMaterial.image} alt={hoveredMaterial.name} className="w-full h-32 object-cover rounded-lg mb-3 shadow-sm" />
