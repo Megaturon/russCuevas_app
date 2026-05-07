@@ -206,7 +206,7 @@
                                 <p className="text-[10px] text-gray-500 leading-relaxed">{hoveredMaterial.description}</p>
                             </div>
                         ) : (
-                            <div className="text-center text-gray-300 text-xs italic">Hover for details</div>
+                            <div className="text-center text-gray-300 text-xs italic">Hover "Materials" for details</div>
                         )}
                     </div>
                 </div>
