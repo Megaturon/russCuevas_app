@@ -722,8 +722,6 @@ header.scrolled .navbtns a:hover {
     }
 }
 
-/* Add these styles to the existing style.css file */
-
 .quote-page {
     position: relative;
     width: 100%;
@@ -1105,6 +1103,8 @@ header.scrolled .navbtns a:hover {
     z-index: 1000;
 }
 
+
+
 /* Close Button - Updated */
 .close-btn {
     position: absolute;
@@ -1332,6 +1332,25 @@ header.scrolled .navbtns a:hover {
 .auth-form .auth-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.quote-form .auth-btn {
+    width: 100%;
+    background: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 18px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: var(--transition-smooth);
+}
+
+.quote-form .auth-btn:hover {
+    transform: translateY(-10px);
 }
 
 .auth-footer {
