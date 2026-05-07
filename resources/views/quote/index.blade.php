@@ -45,7 +45,7 @@
                             </div>
                         @endif
 
-                    <form id="quote-form" class="quote-form" action="{{ route('quote.store') }}" method="POST">
+                    <form id="quote-form" class="quote-form" action="{{ route('quote.store') }}" method="POST" enctype="multipart/form-data">
                         
                         @csrf 
 
@@ -62,12 +62,13 @@
 
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" value="{{ old('phone', auth()->user()->phone ?? '') }}">
+                        <input type="tel" id="phone" name="phone" placeholder="e.g. +1 (555) 000-0000" pattern="[0-9\s\-\+\(\)]*" title="Please enter a valid phone number" value="{{ old('phone', auth()->user()->phone ?? '') }}">
+                        <small style="color: var(--text-muted); font-size: 0.7rem; margin-top: 5px; display: block;">Optional. Formats accepted: numbers, spaces, dashes, plus, parentheses.</small>
                     </div>
 
                     <div class="form-group">
                         <label for="service-type">Service Type <span class="required-asterisk">*</span></label>
-                        <select id="service-type" name="service-type" required style="border-bottom: 1px solid var(--border-light); background: transparent; padding: 12px 0; width: 100%;">
+                        <select id="service-type" name="service-type" required style="border-bottom: 1px solid var(--border-light); background: transparent; padding: 12px 0; width: 100%;" onchange="toggleCustomService()">
                             <option value="">Select a Category</option>
                             <option value="Wedding Gown" {{ old('service-type') == 'Wedding Gown' ? 'selected' : '' }}>Wedding Gown</option>  
                             <option value="Bridesmaids" {{ old('service-type') == 'Bridesmaids' ? 'selected' : '' }}>Bridesmaids</option>
@@ -76,6 +77,11 @@
                             <option value="Prom Dress" {{ old('service-type') == 'Prom Dress' ? 'selected' : '' }}>Prom Dress</option>                          
                             <option value="other" {{ old('service-type') == 'other' ? 'selected' : '' }}>Other</option>
                         </select>
+                    </div>
+                    
+                    <div class="form-group" id="custom-service-container" style="display: {{ old('service-type') == 'other' ? 'block' : 'none' }}; margin-top: 15px;">
+                        <label for="custom_service_type">Please specify service <span class="required-asterisk">*</span></label>
+                        <input type="text" id="custom_service_type" name="custom_service_type" placeholder="e.g. Alterations, Custom Suit" value="{{ old('custom_service_type') }}">
                     </div>
 
                 </div>
@@ -89,13 +95,13 @@
                     <div class="flex justify-between items-end mb-4">
                         <div style="flex: 1; max-width: 300px;">
                             <label for="size">Standard Size <span class="required-asterisk">*</span></label>
-                            <select id="size" name="size" required style="border-bottom: 1px solid var(--border-light); background: transparent; padding: 12px 0; width: 100%;">
+                            <select id="size" name="size" required style="border-bottom: 1px solid var(--border-light); background: transparent; padding: 12px 0; width: 100%;" onchange="toggleCustomSize()">
                                 <option value="">Select your size</option>
-                                <option value="36">EU 36 / US 4 / UK 8</option>
-                                <option value="38">EU 38 / US 6 / UK 10</option>
-                                <option value="40">EU 40 / US 8 / UK 12</option>
-                                <option value="42">EU 42 / US 10 / UK 14</option>
-                                <option value="custom">Custom Measurements</option>
+                                <option value="36" {{ old('size') == '36' ? 'selected' : '' }}>EU 36 / US 4 / UK 8</option>
+                                <option value="38" {{ old('size') == '38' ? 'selected' : '' }}>EU 38 / US 6 / UK 10</option>
+                                <option value="40" {{ old('size') == '40' ? 'selected' : '' }}>EU 40 / US 8 / UK 12</option>
+                                <option value="42" {{ old('size') == '42' ? 'selected' : '' }}>EU 42 / US 10 / UK 14</option>
+                                <option value="custom" {{ old('size') == 'custom' ? 'selected' : '' }}>Custom Measurements</option>
                             </select>
                         </div>
                         <div class="size-guide-btn" id="openSizeGuide" style="margin-bottom: 12px;">
@@ -104,15 +110,25 @@
                     </div>
                 </div>
 
+                <div class="form-group" id="custom-size-container" style="display: {{ old('size') == 'custom' ? 'block' : 'none' }}; margin-top: 15px;">
+                    <label for="custom_size">Custom Measurements <span class="required-asterisk">*</span></label>
+                    <input type="text" id="custom_size" name="custom_size" placeholder="e.g. Bust: 35, Waist: 28, Hips: 38 (inches)" value="{{ old('custom_size') }}">
+                </div>
+
                 <div class="form-group">
                     <label for="details">Project Details <span class="required-asterisk">*</span></label>
-                    <textarea id="details" name="details" rows="4" placeholder="Describe your project, inspiration, and any specific requirements" style="width: 100%; background: transparent; border: 1px solid var(--border-light); border-radius: 10px; padding: 15px;"></textarea>
+                    <textarea id="details" name="details" rows="4" placeholder="Describe your project, inspiration, and any specific requirements" required style="width: 100%; background: transparent; border: 1px solid var(--border-light); border-radius: 10px; padding: 15px;">{{ old('details') }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="inspiration_image">Inspiration Image <span style="text-transform:none;font-weight:normal;color:#888;">(JPG/PNG only, Optional)</span></label>
+                    <input type="file" id="inspiration_image" name="inspiration_image" accept="image/png, image/jpeg, image/jpg" style="border: 1px dashed var(--border-light); border-radius: 8px; padding: 20px; background: rgba(255, 255, 255, 0.3);">
                 </div>
 
                 <div class="form-group checkbox-group" style="display: flex; align-items: center; gap: 10px;">
                     <input type="checkbox" id="terms" name="terms" required>
                     <label for="terms" style="margin-bottom: 0; text-transform: none; font-size: 0.8rem; letter-spacing: 0;">I agree to the terms of service and privacy policy</label>
-                </div> 
+                </div>
 
                 <button type="submit" class="auth-btn">Request Quote</button>
             </form>
@@ -206,7 +222,7 @@
                                 <p className="text-[10px] text-gray-500 leading-relaxed">{hoveredMaterial.description}</p>
                             </div>
                         ) : (
-                            <div className="text-center text-gray-300 text-xs italic">Hover for details</div>
+                            <div className="text-center text-gray-300 text-xs italic">Hover "Materials" for details</div>
                         )}
                     </div>
                 </div>
@@ -231,6 +247,36 @@
     document.addEventListener('keydown', function(e) {
         if (e.key === "Escape") { modal.classList.remove('active'); }
     });
+
+    // Toggle Custom Service Input
+    function toggleCustomService() {
+        const serviceSelect = document.getElementById('service-type');
+        const customServiceContainer = document.getElementById('custom-service-container');
+        const customServiceInput = document.getElementById('custom_service_type');
+        
+        if (serviceSelect.value === 'other') {
+            customServiceContainer.style.display = 'block';
+            customServiceInput.required = true;
+        } else {
+            customServiceContainer.style.display = 'none';
+            customServiceInput.required = false;
+        }
+    }
+
+    // Toggle Custom Size Input
+    function toggleCustomSize() {
+        const sizeSelect = document.getElementById('size');
+        const customSizeContainer = document.getElementById('custom-size-container');
+        const customSizeInput = document.getElementById('custom_size');
+        
+        if (sizeSelect.value === 'custom') {
+            customSizeContainer.style.display = 'block';
+            customSizeInput.required = true;
+        } else {
+            customSizeContainer.style.display = 'none';
+            customSizeInput.required = false;
+        }
+    }
 </script>
 
 </body>
