@@ -14,8 +14,12 @@ class Quote extends Model
         'email',
         'phone',
         'service_type',
+        'custom_service_type',
         'details',
         'selected_materials',
         'price_quote',
+        'size',
+        'custom_size',
+        'inspiration_image',
     ];
 }
