@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/css/styles_appointments.css',
                 'resources/css/styles_forgetpass.css',
                 'resources/css/styles_resetpass.css',
+                'resources/css/our-story.css',
                 'resources/js/navbar.js'
             ],
             refresh: true,

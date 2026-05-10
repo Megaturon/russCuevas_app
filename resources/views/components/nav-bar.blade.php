@@ -13,7 +13,7 @@
       <div class="dropdown-wrapper">
         <button class="about-btn">About Us</button>
         <ul class="luxury-dropdown" id="aboutDropdown">
-          <li onclick="location.href='/faq'">Our Story</li>
+          <li onclick="location.href='/our-story'">Our Story</li>
           <li onclick="location.href='/faq'">FAQ</li>
           <li onclick="location.href='/terms'">Terms & Conditions</li>
         </ul>

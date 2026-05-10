@@ -18,14 +18,14 @@
             <p class="italic text-gray-600 my-2 text-sm">Strictly by appointment only.</p>
             
             <div class="mt-5 flex gap-4">
-                <a href="https://www.facebook.com/russcuevascouture" class="hover:scale-110 transition-transform duration-300">
-                    <img src="{{ asset('images/fb.png') }}" alt="facebook" class="w-7 h-7" />
+                <a href="https://www.facebook.com/russcuevascouture" class="social-icon">
+                    <i class="fab fa-facebook-f"></i>
                 </a>
-                <a href="https://www.instagram.com/russcuevas/" class="hover:scale-110 transition-transform duration-300">
-                    <img src="{{ asset('images/ig.png') }}" alt="instagram" class="w-7 h-7" />
+                <a href="https://www.instagram.com/russcuevas/" class="social-icon">
+                    <i class="fab fa-instagram"></i>
                 </a>
-                <a href="https://www.tiktok.com/@russcuevas?lang=en" class="hover:scale-110 transition-transform duration-300">
-                    <img src="{{ asset('images/tiktok.png') }}" alt="tiktok" class="w-7 h-7" />
+                <a href="https://www.tiktok.com/@russcuevas?lang=en" class="social-icon">
+                    <i class="fab fa-tiktok"></i>
                 </a>
             </div>
         </div>
