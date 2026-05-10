@@ -38,6 +38,10 @@ Route::get('/faq', function () {
     return view('faq');
 });
 
+Route::get('/our-story', function () {
+    return view('our-story');
+});
+
 Route::get('/privacy', function () {
     return view('privacy');
 });
