@@ -59,3 +59,39 @@
       <span class="bar"></span>
     </div>
 </nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    const supabaseUrl = '{{ env('SUPABASE_URL') }}';
+    const supabaseKey = '{{ env('SUPABASE_KEY') }}';
+    if (!supabaseUrl || !supabaseKey) return;
+    
+    const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    const authMenu = document.getElementById('loginDropdown');
+
+    if (session && session.user) {
+        // Clear the long messy token from the URL if it exists
+        if (window.location.hash.includes('access_token')) {
+            window.history.replaceState(null, null, window.location.pathname + window.location.search);
+        }
+
+        const userName = session.user.user_metadata?.full_name || session.user.email;
+        
+        if (authMenu) {
+            // Replace the dropdown content with user's name and Log Out
+            authMenu.innerHTML = `
+                <li style="padding: 10px 20px; font-weight: 600; font-size: 0.7rem; border-bottom: 1px solid #eee; white-space: nowrap;">${userName}</li>
+                <li id="supabase-logout-btn" style="cursor: pointer; padding: 10px 20px; font-size: 0.8rem;">Log Out</li>
+            `;
+            
+            document.getElementById('supabase-logout-btn').addEventListener('click', async () => {
+                await supabaseClient.auth.signOut();
+                window.location.reload(); // Reload to show guest menu
+            });
+        }
+    }
+  });
+</script>
