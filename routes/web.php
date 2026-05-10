@@ -5,8 +5,9 @@ use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
-    return redirect('/main');
+    return view('main-page', ['gallery' => 'none']);
 });
+
 Route::redirect('/login-page', '/login');
 Route::redirect('/signup-page', '/signup');
 Route::redirect('/forgot-password', '/forget-password');
