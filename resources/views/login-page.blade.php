@@ -56,11 +56,33 @@
         </div>
 
         <button type="submit" class="auth-btn">Sign In</button>
+        
+        <div style="text-align: center; margin: 15px 0; position: relative;">
+            <hr style="border-top: 1px solid #ccc; margin: 0; position: absolute; width: 100%; top: 50%; z-index: 1;">
+            <span style="background: var(--bg-color, white); padding: 0 10px; position: relative; z-index: 2; color: #666; border-radius: 4px;">or</span>
+        </div>
+
+        <button type="button" class="auth-btn" style="background-color: #fff; color: #333; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="signInWithGoogle()">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 18px; height: 18px;">
+            Sign in with Google
+        </button>
       </form>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    const supabaseUrl = '{{ env('SUPABASE_URL') }}';
+    const supabaseKey = '{{ env('SUPABASE_KEY') }}';
+    const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function signInWithGoogle() {
+      const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'google',
+      });
+      if (error) console.error('Error signing in with Google:', error.message);
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const items = document.querySelectorAll('.carousel-item');
         let current = 0;
