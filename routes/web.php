@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\AuthController;
 
-Route::redirect('/', '/main');
+Route::get('/', function () {
+    return redirect('/main');
+});
 Route::redirect('/login-page', '/login');
 Route::redirect('/signup-page', '/signup');
 Route::redirect('/forgot-password', '/forget-password');
