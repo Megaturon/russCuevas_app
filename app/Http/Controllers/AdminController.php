@@ -156,33 +156,6 @@ class AdminController extends Controller
             $messageToClient = $request->message_to_client;
             $quote->update(['price_quote' => $price]);
 
-<<<<<<< HEAD
-            $data = [
-                'title' => 'Your Price Quote',
-                'name' => $quote->name,
-                'intro' => 'We have carefully reviewed your request and prepared a price quote for your custom design.',
-                'details' => [
-                    'Service' => $quote->service_type,
-                    'Quote Amount' => '₱ ' . number_format($price, 2)
-                ],
-                'outro' => 'Please reply to this email or visit our atelier to proceed with your order.'
-            ];
-
-            $this->sendEmail($quote->email, "Your Price Quote - Russ Cuevas Couture", $data);
-=======
-<<<<<<< Updated upstream
-            $subject = "Your Price Quote from Russ Cuevas Couture";
-            $body = "
-                Hi {$quote->name},<br><br>
-                Thank you for your quote request.<br>
-                We are pleased to provide you with a price quote of: <strong>₱ " . number_format($price, 2) . "</strong>.<br><br>
-                Please reply if you have any questions or would like to proceed.<br><br>
-                Best regards,<br>
-                Russ Cuevas Couture
-            ";
-
-            $this->sendEmail($quote->email, $subject, $body);
-=======
             $data = [
                 'title' => 'Your Price Quotation',
                 'name' => $quote->name,
@@ -195,10 +168,9 @@ class AdminController extends Controller
                 ],
                 'outro' => 'If you are ready to proceed with this design, you can schedule your first fitting or initial consultation through our website.'
             ];
->>>>>>> feat/admin-management
 
             $this->sendEmail($quote->email, "Quotation for your " . $quote->service_type . " - Russ Cuevas Atelier", $data);
->>>>>>> Stashed changes
+
 
             return response()->json(['message' => 'Professional quotation sent to client.']);
         }
