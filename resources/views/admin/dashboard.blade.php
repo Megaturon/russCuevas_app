@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     
     <style>
+<<<<<<< HEAD
         :root {
             --black: #000000;
             --white: #ffffff;
@@ -25,6 +26,181 @@
             
             --font-serif: 'Playfair Display', Georgia, serif;
             --font-sans: 'Inter', sans-serif;
+=======
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f1f3f5;
+            padding: 30px;
+        }
+<<<<<<< Updated upstream
+        h1 {
+            text-align: center;
+            color: #000;
+            padding: 15px 0;
+            font-family: 'Georgia', serif;
+            font-size: 28px;
+            border-radius: 5px;
+=======
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--grey-light);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--grey-text);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background-color: var(--black);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .sidebar-header {
+            padding: 25px 24px;
+            border-bottom: 1px solid var(--grey-dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sidebar-header h2 {
+            font-family: var(--font-sans);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 30px 0;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            padding: 15px 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border-left: 1px solid transparent;
+            color: #999;
+        }
+
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .nav-item:hover {
+            color: var(--white);
+            background-color: rgba(255,255,255,0.03);
+            padding-left: 35px;
+        }
+
+        .nav-item.active {
+            color: var(--white);
+            background-color: rgba(255,255,255,0.08);
+            border-left-color: var(--white);
+            padding-left: 35px;
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding: 20px 30px;
+            border-top: 1px solid var(--grey-dark);
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #999;
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        .logout-btn:hover {
+            color: var(--white);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: var(--white);
+        }
+
+        .topbar {
+            padding: 30px 40px;
+            border-bottom: 1px solid var(--grey-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--white);
+        }
+
+        .topbar h1 {
+            font-family: var(--font-sans);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--black);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background-color: var(--white);
+        }
+
+        /* Pane Switching */
+        .pane {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Filter Container */
+        .filter-container {
+>>>>>>> Stashed changes
+            margin-bottom: 30px;
+>>>>>>> feat/admin-management
         }
 
         * {
@@ -261,6 +437,13 @@
         }
 
         th {
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+            background: rgb(0, 0, 0);
+            color: white;
+=======
+>>>>>>> feat/admin-management
             font-family: var(--font-sans);
             color: var(--black);
             font-size: 0.7rem;
@@ -280,8 +463,17 @@
             line-height: 1.5;
         }
 
+<<<<<<< HEAD
         tr:hover td {
             background-color: var(--grey-light);
+=======
+        tr {
+            transition: background-color 0.2s ease;
+        }
+
+        tr:hover td {
+            background-color: #fafafa;
+>>>>>>> feat/admin-management
         }
 
         strong {
@@ -337,6 +529,10 @@
             gap: 10px;
             flex-wrap: wrap;
             align-items: center;
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> feat/admin-management
         }
 
         input[type="date"], input[type="time"], input.price-quote-input {
@@ -356,6 +552,13 @@
         }
 
         .btn {
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+            padding: 8px 12px;
+            margin: 2px;
+=======
+>>>>>>> feat/admin-management
             padding: 8px 16px;
             border: 1px solid var(--black);
             background: transparent;
@@ -365,6 +568,7 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
+<<<<<<< HEAD
             cursor: pointer;
             transition: all 0.3s ease;
             display: inline-flex;
@@ -489,6 +693,99 @@
         }
 
         .detail-value {
+=======
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-primary { background-color: var(--black); color: var(--white); }
+        .btn-primary:hover { background-color: transparent; color: var(--black); }
+        
+        .btn-secondary { border-color: var(--grey-border); color: var(--grey-text); }
+        .btn-secondary:hover { border-color: var(--black); color: var(--black); background: transparent; }
+
+        .btn-danger { border-color: var(--black); color: var(--black); }
+        .btn-danger:hover { background-color: var(--black); color: var(--white); }
+
+        .btn-success { background-color: var(--black); color: var(--white); }
+        .btn-success:hover { background-color: transparent; color: var(--black); }
+
+        .btn-warning { border-color: var(--black); color: var(--black); }
+        .btn-warning:hover { background-color: var(--black); color: var(--white); }
+
+        .custom-size-box {
+            padding: 10px;
+            border: 1px solid var(--grey-border);
+            font-size: 0.75rem;
+            line-height: 1.6;
+            margin-top: 5px;
+            background: var(--grey-light);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--grey-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 30px 40px;
+            border-bottom: 1px solid var(--grey-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            z-index: 10;
+        }
+
+        .modal-header h2 {
+            font-family: var(--font-sans);
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .close-modal-btn {
+            background: none;
+>>>>>>> Stashed changes
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+<<<<<<< Updated upstream
+>>>>>>> feat/admin-management
             font-size: 0.9rem;
             color: var(--black);
             line-height: 1.6;
@@ -512,9 +809,83 @@
             transition: all 0.3s ease;
         }
 
+<<<<<<< HEAD
         .stat-card:hover {
             border-color: var(--black);
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+=======
+        .btn-reschedule {
+            background-color: #5a5a5a;
+            color: white;
+            border: 1px solid #555;
+        }
+        .btn-reschedule:hover {
+            background-color: #7d7d7d;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+=======
+            color: var(--grey-text);
+            transition: color 0.3s;
+        }
+        .close-modal-btn:hover { color: var(--black); }
+
+        .modal-body {
+            padding: 40px;
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media(max-width: 768px) {
+            .modal-grid { grid-template-columns: 1fr; }
+        }
+
+        .detail-group {
+            margin-bottom: 25px;
+        }
+
+        .detail-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--grey-text);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .detail-value {
+            font-size: 0.9rem;
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        /* KPI Cards Styling */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 1px solid var(--grey-border);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .stat-card:hover {
+            border-color: var(--black);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+>>>>>>> Stashed changes
+>>>>>>> feat/admin-management
         }
 
         .stat-label {
@@ -581,6 +952,18 @@
     </div>
 </aside>
 
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+<div id="filter-container">
+    <label for="filter-start-date">Start Date:</label>
+    <input type="date" id="filter-start-date">
+    <label for="filter-end-date">End Date:</label>
+    <input type="date" id="filter-end-date">
+    <button id="filter-btn">Filter</button>
+    <button id="clear-filter-btn" onclick="location.reload()">Clear</button>
+=======
+>>>>>>> feat/admin-management
 <!-- Main Content -->
 <main class="main-content">
     <header class="topbar">
@@ -890,17 +1273,38 @@
 
             <div class="quote-action-box" style="margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--grey-border); display: flex; align-items: flex-end; gap: 20px;">
                 <div style="flex: 1;">
+<<<<<<< HEAD
                     <span class="detail-label" style="margin-bottom: 8px;">Submit Price Quote (₱)</span>
                     <input type="number" id="modal-price-input" class="price-quote-input" style="width: 100%; max-width: none; margin: 0; padding: 12px 15px; font-size: 1rem; border: 1px solid var(--black); background: transparent;" placeholder="Enter amount...">
                 </div>
                 <div>
                     <input type="hidden" id="modal-quote-id">
                     <button class="btn btn-primary" style="padding: 12px 40px; font-size: 0.85rem;" onclick="sendModalQuote()">Send Quotation</button>
+=======
+                    <div class="detail-group" style="border-top: 2px solid var(--black); padding-top: 20px;">
+                        <span class="detail-label">Message to Client (Personal Touch)</span>
+                        <textarea id="modal-message-input" placeholder="e.g. Based on the tulle fabric and intricate bodice work..." style="width: 100%; min-height: 100px; padding: 12px; border: 1px solid var(--grey-border); font-family: var(--font-sans); font-size: 0.85rem; margin-bottom: 20px;"></textarea>
+                    </div>
+
+                    <div class="detail-group">
+                        <span class="detail-label">Final Price Quote (PHP)</span>
+                        <input type="number" id="modal-price-input" class="price-quote-input" style="width: 100%; max-width: none; font-size: 1.1rem; font-weight: 600; padding: 12px;" placeholder="Enter amount (e.g. 40000)">
+                    </div>
+
+                    <div style="margin-top: 30px; text-align: center;">
+                        <input type="hidden" id="modal-quote-id">
+                        <button class="btn btn-primary" style="padding: 15px 50px; font-size: 0.9rem; width: 100%;" onclick="sendModalQuote()">Send Quotation</button>
+                    </div>
+>>>>>>> feat/admin-management
                 </div>
             </div>
 
         </div>
     </div>
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> feat/admin-management
 </div>
 
 <!-- Reschedule Modal -->
@@ -1037,6 +1441,13 @@
     function deleteAppointment(id) { if(confirm('Delete?')) sendAppointmentAction(id, 'delete'); }
 
     // Quote actions
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+    function sendQuote(id) {
+        const price = document.getElementById('price-quote-'+id).value;
+=======
+>>>>>>> feat/admin-management
     function deleteQuote(id) {
         if(!confirm('Are you sure you want to delete this quote request?')) return;
         const formData = new FormData();
@@ -1093,12 +1504,25 @@
     function sendModalQuote() {
         const id = document.getElementById('modal-quote-id').value;
         const price = document.getElementById('modal-price-input').value;
+<<<<<<< HEAD
         if(!price) return showToast('Please enter a price quote first', false);
 
+=======
+        const message = document.getElementById('modal-message-input').value;
+        const btn = event.target;
+
+        if(!price) return showToast('Please enter a price quote first', false);
+
+        btn.disabled = true;
+        btn.textContent = 'Sending Quotation...';
+
+>>>>>>> Stashed changes
+>>>>>>> feat/admin-management
         const formData = new FormData();
         formData.append('id', id);
         formData.append('quote_action', 'send_quote');
         formData.append('price_quote', price);
+        formData.append('message_to_client', message);
 
         fetch("{{ route('admin.quote.action') }}", {
             method: 'POST',
@@ -1106,11 +1530,39 @@
             headers: { 'X-CSRF-TOKEN': csrfToken }
         })
         .then(res => res.json())
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+        .then(data => showToast(data.message, true));
+    }
+
+    function deleteQuote(id) {
+        if(!confirm('Delete?')) return;
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('quote_action', 'delete');
+        fetch("{{ route('admin.quote.action') }}", {
+            method: 'POST',
+            body: formData,
+            headers: { 'X-CSRF-TOKEN': csrfToken }
+        }).then(() => location.reload());
+=======
+>>>>>>> feat/admin-management
         .then(data => {
             showToast(data.message, true);
             closeQuoteModal();
             setTimeout(() => location.reload(), 1500);
+<<<<<<< HEAD
         });
+=======
+        })
+        .catch(err => {
+            btn.disabled = false;
+            btn.textContent = 'Send Quotation';
+            showToast('Error sending quotation', false);
+        });
+>>>>>>> Stashed changes
+>>>>>>> feat/admin-management
     }
 
     // User actions

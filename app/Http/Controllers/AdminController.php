@@ -153,8 +153,10 @@ class AdminController extends Controller
 
         if ($action === 'send_quote') {
             $price = $request->price_quote;
+            $messageToClient = $request->message_to_client;
             $quote->update(['price_quote' => $price]);
 
+<<<<<<< HEAD
             $data = [
                 'title' => 'Your Price Quote',
                 'name' => $quote->name,
@@ -167,8 +169,38 @@ class AdminController extends Controller
             ];
 
             $this->sendEmail($quote->email, "Your Price Quote - Russ Cuevas Couture", $data);
+=======
+<<<<<<< Updated upstream
+            $subject = "Your Price Quote from Russ Cuevas Couture";
+            $body = "
+                Hi {$quote->name},<br><br>
+                Thank you for your quote request.<br>
+                We are pleased to provide you with a price quote of: <strong>₱ " . number_format($price, 2) . "</strong>.<br><br>
+                Please reply if you have any questions or would like to proceed.<br><br>
+                Best regards,<br>
+                Russ Cuevas Couture
+            ";
 
-            return response()->json(['message' => 'Price quote sent and saved.']);
+            $this->sendEmail($quote->email, $subject, $body);
+=======
+            $data = [
+                'title' => 'Your Price Quotation',
+                'name' => $quote->name,
+                'intro' => 'We have carefully reviewed your inspiration and details for your <strong>' . $quote->service_type . '</strong>. ' . ($messageToClient ? '<br><br><i>"' . e($messageToClient) . '"</i>' : ''),
+                'details' => [
+                    'Project' => $quote->service_type,
+                    'Sizing' => $quote->size === 'custom' ? 'Bespoke Measurements' : 'Standard ' . strtoupper($quote->size),
+                    'Quotation' => '₱ ' . number_format($price, 2),
+                    'Validity' => 'Valid for 30 Days'
+                ],
+                'outro' => 'If you are ready to proceed with this design, you can schedule your first fitting or initial consultation through our website.'
+            ];
+>>>>>>> feat/admin-management
+
+            $this->sendEmail($quote->email, "Quotation for your " . $quote->service_type . " - Russ Cuevas Atelier", $data);
+>>>>>>> Stashed changes
+
+            return response()->json(['message' => 'Professional quotation sent to client.']);
         }
 
         if ($action === 'delete') {
