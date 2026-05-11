@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ResetPasswordCode;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -161,5 +163,46 @@ class AuthController extends Controller
         }
 
         return redirect('/forget-password')->withErrors(['email' => 'User not found.']);
+    }
+
+    // --- Google OAuth Flow ---
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+            
+            $user = User::where('email', $googleUser->getEmail())->first();
+
+            if (!$user) {
+                $user = User::create([
+                    'name' => $googleUser->getName(),
+                    'email' => $googleUser->getEmail(),
+                    'google_id' => $googleUser->getId(),
+                    'password' => null, // Password is not required for Google login
+                    // Address and contact are required in standard registration, 
+                    // but nullable in DB based on standard Laravel, wait, our standard registration validates them
+                    // Let's leave them null, the user can update their profile later
+                ]);
+            } else {
+                // If user exists but doesn't have google_id, update it
+                if (!$user->google_id) {
+                    $user->google_id = $googleUser->getId();
+                    $user->save();
+                }
+            }
+
+            Auth::login($user);
+
+            return redirect()->intended('/main')->with('success', 'Logged in successfully via Google!');
+            
+        } catch (\Exception $e) {
+            \Log::error('Google Auth Error: ' . $e->getMessage());
+            return redirect('/login')->withErrors(['email' => 'Failed to authenticate using Google. Please try again.']);
+        }
     }
 }

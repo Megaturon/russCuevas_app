@@ -27,6 +27,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/signup', [AuthController::class, 'showRegistrationForm'])->name('signup');
 Route::post('/signup', [AuthController::class, 'register']);
 
+Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
+
 Route::get('/reset-password', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
@@ -50,16 +53,18 @@ Route::get('/terms', function () {
     return view('terms');
 });
 
-// Show the quote form (GET request)
-Route::get('/get-a-quote', [QuoteController::class, 'index'])->name('quote.index');
-
-// Submit the quote form (POST request)
-Route::post('/get-a-quote', [QuoteController::class, 'store'])->name('quote.store');
-
 use App\Http\Controllers\AppointmentController;
 
-Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
-Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+Route::middleware('auth')->group(function () {
+    // Show the quote form (GET request)
+    Route::get('/get-a-quote', [QuoteController::class, 'index'])->name('quote.index');
+
+    // Submit the quote form (POST request)
+    Route::post('/get-a-quote', [QuoteController::class, 'store'])->name('quote.store');
+
+    Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
+    Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+});
 
 use App\Http\Controllers\AdminController;
 
