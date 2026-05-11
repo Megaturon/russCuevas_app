@@ -557,6 +557,10 @@
             <i class="fas fa-calendar-alt"></i>
             Appointments
         </div>
+        <div class="nav-item" data-target="history">
+            <i class="fas fa-history"></i>
+            Appointment Records
+        </div>
         <div class="nav-item" data-target="quotes">
             <i class="fas fa-file-invoice-dollar"></i>
             Quote Requests
@@ -688,6 +692,49 @@
             </div>
 
             <div id="calendar-view"></div>
+        </div>
+
+        <!-- History Pane -->
+        <div class="pane" id="history">
+            <div class="filter-container" style="justify-content: flex-end;">
+                <input type="text" id="history-search" placeholder="Search past records..." onkeyup="filterTable('history-search', 'history')">
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th><th>Email</th><th>Schedule</th><th>Notes</th><th>Status</th><th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($pastAppointments as $row)
+                        <tr>
+                            <td><strong>{{ $row->name }}</strong></td>
+                            <td>{{ $row->email }}</td>
+                            <td>
+                                <div style="font-weight: 600; font-family: var(--font-playfair); font-size: 1rem;">
+                                    {{ \Carbon\Carbon::parse($row->date)->format('F d') }}
+                                </div>
+                                <div style="color: var(--grey-text); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">
+                                    {{ \Carbon\Carbon::parse($row->time)->format('g:i A') }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="customer-context">
+                                    <span style="font-size: 0.9rem; font-style: italic; color: var(--black);">"{{ $row->notes }}"</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-pill status-{{ $row->status }}">{{ $row->status }}</span>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" onclick="deleteAppointment({{ $row->id }})">Delete Record</button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Quotes Pane -->
@@ -927,7 +974,12 @@
     });
 
     // Appointment actions
-    function sendAppointmentAction(id, action, date=null, time=null) {
+    function sendAppointmentAction(id, action, date=null, time=null, buttonElement = null) {
+        if (buttonElement) {
+            buttonElement.disabled = true;
+            buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        }
+
         const formData = new FormData();
         formData.append('id', id);
         formData.append('appointment_action', action);
@@ -943,6 +995,13 @@
         .then(data => {
             showToast(data.message, true);
             setTimeout(() => location.reload(), 1000);
+        })
+        .catch(err => {
+            if (buttonElement) {
+                buttonElement.disabled = false;
+                buttonElement.textContent = 'Try Again';
+            }
+            showToast('Error processing request', false);
         });
     }
 
@@ -960,15 +1019,20 @@
     }
 
     function submitReschedule() {
+        const btn = event.target;
         const id = document.getElementById('reschedule-id').value;
         const date = document.getElementById('reschedule-date').value;
         const time = document.getElementById('reschedule-time').value;
         if(!date || !time) return showToast('Select date and time', false);
-        sendAppointmentAction(id, 'reschedule', date, time);
+        
+        btn.disabled = true;
+        btn.textContent = 'Processing...';
+        
+        sendAppointmentAction(id, 'reschedule', date, time, btn);
         closeRescheduleModal();
     }
 
-    function confirmAppointment(id) { sendAppointmentAction(id, 'confirm'); }
+    function confirmAppointment(id) { sendAppointmentAction(id, 'confirm', null, null, event.target); }
     function cancelAppointment(id) { if(confirm('Cancel?')) sendAppointmentAction(id, 'cancel'); }
     function deleteAppointment(id) { if(confirm('Delete?')) sendAppointmentAction(id, 'delete'); }
 

@@ -16,7 +16,18 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $appointments = Appointment::orderBy('date', 'asc')->orderBy('time', 'asc')->get();
+        $today = Carbon::today()->toDateString();
+        
+        $appointments = Appointment::where('date', '>=', $today)
+            ->orderBy('date', 'asc')
+            ->orderBy('time', 'asc')
+            ->get();
+            
+        $pastAppointments = Appointment::where('date', '<', $today)
+            ->orderBy('date', 'desc')
+            ->orderBy('time', 'asc')
+            ->get();
+
         $quotes = Quote::orderBy('created_at', 'desc')->get();
         $users = User::orderBy('created_at', 'asc')->get();
 
@@ -41,6 +52,7 @@ class AdminController extends Controller
 
         return view('admin.dashboard', compact(
             'appointments', 
+            'pastAppointments',
             'quotes', 
             'users', 
             'totalRevenuePending', 
