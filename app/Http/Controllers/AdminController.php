@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use App\Models\Quote;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -19,7 +20,34 @@ class AdminController extends Controller
         $quotes = Quote::orderBy('created_at', 'desc')->get();
         $users = User::orderBy('created_at', 'asc')->get();
 
-        return view('admin.dashboard', compact('appointments', 'quotes', 'users'));
+        // KPI Calculations
+        $totalRevenuePending = Quote::whereNotNull('price_quote')->sum('price_quote');
+        
+        $totalQuotes = Quote::count();
+        $totalAppointments = Appointment::count();
+        $conversionRate = $totalQuotes > 0 ? round(($totalAppointments / $totalQuotes) * 100, 1) : 0;
+
+        $mostRequestedService = Quote::select('service_type', \DB::raw('count(*) as total'))
+            ->groupBy('service_type')
+            ->orderBy('total', 'desc')
+            ->first();
+
+        // For the graph: Traffic volume last 7 days
+        $trafficData = Quote::select(\DB::raw('DATE(created_at) as date'), \DB::raw('count(*) as total'))
+            ->where('created_at', '>=', now()->subDays(7))
+            ->groupBy('date')
+            ->orderBy('date', 'asc')
+            ->pluck('total', 'date')->toArray();
+
+        return view('admin.dashboard', compact(
+            'appointments', 
+            'quotes', 
+            'users', 
+            'totalRevenuePending', 
+            'conversionRate', 
+            'mostRequestedService',
+            'trafficData'
+        ));
     }
 
     /**
@@ -34,10 +62,18 @@ class AdminController extends Controller
         if ($action === 'confirm') {
             $appointment->update(['status' => 'Confirmed']);
             
-            $subject = "Appointment Confirmed";
-            $body = "Hi {$appointment->name},<br><br>Your appointment on <b>{$appointment->date}</b> at <b>{$appointment->time}</b> has been <strong>confirmed</strong>.<br><br>Thank you!";
+            $data = [
+                'title' => 'Appointment Confirmed',
+                'name' => $appointment->name,
+                'intro' => 'Your appointment has been <strong>successfully confirmed</strong>. We look forward to seeing you.',
+                'details' => [
+                    'Schedule' => Carbon::parse($appointment->date)->format('F d') . ' | ' . Carbon::parse($appointment->time)->format('g:i A'),
+                    'Status' => 'Confirmed'
+                ],
+                'outro' => 'If you need to make any changes, please contact us at least 24 hours in advance.'
+            ];
             
-            $this->sendEmail($appointment->email, $subject, $body);
+            $this->sendEmail($appointment->email, "Appointment Confirmed - Russ Cuevas", $data);
 
             return response()->json(['message' => "Appointment confirmed and email sent.", 'status' => 'Confirmed']);
         } 
@@ -51,10 +87,18 @@ class AdminController extends Controller
                 'status' => 'Rescheduled'
             ]);
 
-            $subject = "Appointment Rescheduled";
-            $body = "Hi {$appointment->name},<br><br>Your appointment has been <strong>rescheduled</strong> to <b>$new_date</b> at <b>$new_time</b>.<br><br>Thank you!";
+            $data = [
+                'title' => 'Appointment Rescheduled',
+                'name' => $appointment->name,
+                'intro' => 'Your appointment has been <strong>rescheduled</strong> to a new time slot.',
+                'details' => [
+                    'New Schedule' => Carbon::parse($new_date)->format('F d') . ' | ' . Carbon::parse($new_time)->format('g:i A'),
+                    'Status' => 'Rescheduled'
+                ],
+                'outro' => 'We have updated our calendar. See you soon!'
+            ];
             
-            $this->sendEmail($appointment->email, $subject, $body);
+            $this->sendEmail($appointment->email, "Appointment Rescheduled - Russ Cuevas", $data);
 
             return response()->json(['message' => "Appointment rescheduled and email sent.", 'status' => 'Rescheduled']);
         }
@@ -62,10 +106,18 @@ class AdminController extends Controller
         if ($action === 'cancel') {
             $appointment->update(['status' => 'Cancelled']);
 
-            $subject = "Appointment Cancelled";
-            $body = "Hi {$appointment->name},<br><br>Your appointment on <b>{$appointment->date}</b> at <b>{$appointment->time}</b> has been <strong>cancelled</strong>.<br><br>If this is a mistake, feel free to rebook.";
+            $data = [
+                'title' => 'Appointment Cancelled',
+                'name' => $appointment->name,
+                'intro' => 'Your appointment on ' . $appointment->date . ' has been <strong>cancelled</strong>.',
+                'details' => [
+                    'Date' => Carbon::parse($appointment->date)->format('F d') . ' | ' . Carbon::parse($appointment->time)->format('g:i A'),
+                    'Status' => 'Cancelled'
+                ],
+                'outro' => 'If this was a mistake, you can always book a new appointment on our website.'
+            ];
             
-            $this->sendEmail($appointment->email, $subject, $body);
+            $this->sendEmail($appointment->email, "Appointment Cancelled - Russ Cuevas", $data);
 
             return response()->json(['message' => "Appointment cancelled and email sent.", 'status' => 'Cancelled']);
         }
@@ -91,17 +143,18 @@ class AdminController extends Controller
             $price = $request->price_quote;
             $quote->update(['price_quote' => $price]);
 
-            $subject = "Your Price Quote from Russ Cuevas Couture";
-            $body = "
-                Hi {$quote->name},<br><br>
-                Thank you for your quote request.<br>
-                We are pleased to provide you with a price quote of: <strong>₱ " . number_format($price, 2) . "</strong>.<br><br>
-                Please reply if you have any questions or would like to proceed.<br><br>
-                Best regards,<br>
-                Russ Cuevas Couture
-            ";
+            $data = [
+                'title' => 'Your Price Quote',
+                'name' => $quote->name,
+                'intro' => 'We have carefully reviewed your request and prepared a price quote for your custom design.',
+                'details' => [
+                    'Service' => $quote->service_type,
+                    'Quote Amount' => '₱ ' . number_format($price, 2)
+                ],
+                'outro' => 'Please reply to this email or visit our atelier to proceed with your order.'
+            ];
 
-            $this->sendEmail($quote->email, $subject, $body);
+            $this->sendEmail($quote->email, "Your Price Quote - Russ Cuevas Couture", $data);
 
             return response()->json(['message' => 'Price quote sent and saved.']);
         }
@@ -146,21 +199,28 @@ class AdminController extends Controller
         // Render rows for AJAX
         $html = "";
         foreach ($appointments as $row) {
-            $status_class = 'row-status-' . $row->status;
-            $html .= "<tr id='appointment-row-{$row->id}' class='{$status_class}'>
-                <td>" . e($row->name) . "</td>
+            $html .= "<tr id='appointment-row-{$row->id}'>
+                <td><strong>" . e($row->name) . "</strong></td>
                 <td>" . e($row->email) . "</td>
-                <td>" . e($row->date) . "</td>
-                <td>" . e($row->time) . "</td>
-                <td>" . e($row->notes) . "</td>
-                <td>" . e($row->status) . "</td>
                 <td>
-                    <input type='date' id='date-{$row->id}'>
-                    <input type='time' id='time-{$row->id}'>
-                    <button class='btn btn-reschedule' onclick='reschedule({$row->id})'>Reschedule</button>
-                    <button class='btn btn-confirm' onclick='confirmAppointment({$row->id})'>Confirm</button>
-                    <button class='btn btn-cancel' onclick='cancelAppointment({$row->id})'>Cancel</button>
-                    <button class='btn btn-delete' onclick='deleteAppointment({$row->id})'>Delete</button>
+                    <div>" . e($row->date) . "</div>
+                    <div style='color: var(--grey-text); font-size: 0.8rem;'>" . e($row->time) . "</div>
+                </td>
+                <td>" . e(\Str::limit($row->notes, 30)) . "</td>
+                <td>
+                    <span class='status-pill status-" . e($row->status) . "'>" . e($row->status) . "</span>
+                </td>
+                <td>
+                    <div style='margin-bottom: 6px;'>
+                        <input type='date' id='date-{$row->id}'>
+                        <input type='time' id='time-{$row->id}'>
+                    </div>
+                    <div class='table-actions'>
+                        <button class='btn btn-warning' onclick='reschedule({$row->id})'>Reschedule</button>
+                        <button class='btn btn-success' onclick='confirmAppointment({$row->id})'>Confirm</button>
+                        <button class='btn btn-secondary' onclick='cancelAppointment({$row->id})'>Cancel</button>
+                        <button class='btn btn-danger' onclick='deleteAppointment({$row->id})'>Delete</button>
+                    </div>
                 </td>
             </tr>";
         }
@@ -169,11 +229,11 @@ class AdminController extends Controller
     }
 
     /**
-     * Private helper to send email using Laravel Mail.
+     * Private helper to send email using the custom Blade template.
      */
-    private function sendEmail($to, $subject, $body)
+    private function sendEmail($to, $subject, $data)
     {
-        Mail::html($body, function ($message) use ($to, $subject) {
+        Mail::send('emails.notification', $data, function ($message) use ($to, $subject) {
             $message->to($to)
                     ->subject($subject);
         });
