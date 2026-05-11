@@ -89,8 +89,10 @@ class AdminController extends Controller
 
         if ($action === 'send_quote') {
             $price = $request->price_quote;
+            $messageToClient = $request->message_to_client;
             $quote->update(['price_quote' => $price]);
 
+<<<<<<< Updated upstream
             $subject = "Your Price Quote from Russ Cuevas Couture";
             $body = "
                 Hi {$quote->name},<br><br>
@@ -102,8 +104,24 @@ class AdminController extends Controller
             ";
 
             $this->sendEmail($quote->email, $subject, $body);
+=======
+            $data = [
+                'title' => 'Your Price Quotation',
+                'name' => $quote->name,
+                'intro' => 'We have carefully reviewed your inspiration and details for your <strong>' . $quote->service_type . '</strong>. ' . ($messageToClient ? '<br><br><i>"' . e($messageToClient) . '"</i>' : ''),
+                'details' => [
+                    'Project' => $quote->service_type,
+                    'Sizing' => $quote->size === 'custom' ? 'Bespoke Measurements' : 'Standard ' . strtoupper($quote->size),
+                    'Quotation' => '₱ ' . number_format($price, 2),
+                    'Validity' => 'Valid for 30 Days'
+                ],
+                'outro' => 'If you are ready to proceed with this design, you can schedule your first fitting or initial consultation through our website.'
+            ];
 
-            return response()->json(['message' => 'Price quote sent and saved.']);
+            $this->sendEmail($quote->email, "Quotation for your " . $quote->service_type . " - Russ Cuevas Atelier", $data);
+>>>>>>> Stashed changes
+
+            return response()->json(['message' => 'Professional quotation sent to client.']);
         }
 
         if ($action === 'delete') {
