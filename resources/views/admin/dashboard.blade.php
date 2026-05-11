@@ -226,7 +226,7 @@
         <thead>
             <tr>
                 <th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Service Type</th>
-                <th>Materials</th><th>Project Details</th><th>Price Quote</th><th>Submitted At</th><th>Actions</th>
+                <th>Size</th><th>Image</th><th>Materials</th><th>Project Details</th><th>Price Quote</th><th>Submitted At</th><th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -237,6 +237,22 @@
                 <td>{{ $row->email }}</td>
                 <td>{{ $row->phone }}</td>
                 <td>{{ $row->service_type }}</td>
+                <td>
+                    @if($row->size === 'custom')
+                        <small><strong>Custom:</strong><br>{{ $row->custom_size }}</small>
+                    @else
+                        {{ $row->size }}
+                    @endif
+                </td>
+                <td>
+                    @if($row->inspiration_image)
+                        <a href="{{ asset('storage/' . $row->inspiration_image) }}" target="_blank" title="Click to view full image">
+                            <img src="{{ asset('storage/' . $row->inspiration_image) }}" style="max-height: 40px; border-radius: 4px; border: 1px solid #ccc;">
+                        </a>
+                    @else
+                        <span style="color:#aaa;font-size:0.8rem;">None</span>
+                    @endif
+                </td>
                 <td>{{ $row->selected_materials }}</td>
                 <td>{{ $row->details }}</td>
                 <td>

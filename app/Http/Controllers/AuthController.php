@@ -64,6 +64,11 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            
+            if (Auth::user()->is_admin) {
+                return redirect()->intended('/admin');
+            }
+            
             return redirect()->intended('/main');
         }
 
@@ -197,6 +202,10 @@ class AuthController extends Controller
             }
 
             Auth::login($user);
+
+            if ($user->is_admin) {
+                return redirect()->intended('/admin')->with('success', 'Logged in successfully via Google!');
+            }
 
             return redirect()->intended('/main')->with('success', 'Logged in successfully via Google!');
             

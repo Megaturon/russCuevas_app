@@ -68,7 +68,7 @@ Route::middleware('auth')->group(function () {
 
 use App\Http\Controllers\AdminController;
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/appointment-action', [AdminController::class, 'appointmentAction'])->name('admin.appointment.action');
     Route::post('/quote-action', [AdminController::class, 'quoteAction'])->name('admin.quote.action');
