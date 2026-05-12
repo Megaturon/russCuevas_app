@@ -43,7 +43,65 @@ class AdminController extends Controller
             ->orderBy('total', 'desc')
             ->first();
 
-        // For the graph: Traffic volume last 7 days
+        // New Metrics for Business Overview Overhaul
+        $thisWeekStart = now()->startOfWeek();
+        $lastWeekStart = now()->subWeek()->startOfWeek();
+        $lastWeekEnd = now()->subWeek()->endOfWeek();
+
+        // Revenue
+        $thisWeekRevenue = Quote::where('created_at', '>=', $thisWeekStart)
+            ->whereNotNull('price_quote')
+            ->sum('price_quote');
+        $lastWeekRevenue = Quote::whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])
+            ->whereNotNull('price_quote')
+            ->sum('price_quote');
+        $revenueGrowthWeek = $lastWeekRevenue > 0 ? round((($thisWeekRevenue - $lastWeekRevenue) / $lastWeekRevenue) * 100, 1) : 100;
+
+        // Quotes
+        $thisWeekQuotes = Quote::where('created_at', '>=', $thisWeekStart)->count();
+        $lastWeekQuotes = Quote::whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])->count();
+        $quotesGrowthWeek = $lastWeekQuotes > 0 ? round((($thisWeekQuotes - $lastWeekQuotes) / $lastWeekQuotes) * 100, 1) : 100;
+
+        // Appointments
+        $thisWeekApps = Appointment::where('created_at', '>=', $thisWeekStart)->count();
+        $lastWeekApps = Appointment::whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])->count();
+        $appsGrowthWeek = $lastWeekApps > 0 ? round((($thisWeekApps - $lastWeekApps) / $lastWeekApps) * 100, 1) : 100;
+
+        // Conversion Rate Comparison
+        $thisWeekConv = $thisWeekQuotes > 0 ? ($thisWeekApps / $thisWeekQuotes) * 100 : 0;
+        $lastWeekConv = $lastWeekQuotes > 0 ? ($lastWeekApps / $lastWeekQuotes) * 100 : 0;
+        $convGrowthWeek = $lastWeekConv > 0 ? round($thisWeekConv - $lastWeekConv, 1) : $thisWeekConv;
+
+        // Service Distribution (Ranked)
+        $serviceDistribution = Quote::select('service_type', \DB::raw('count(*) as total'))
+            ->groupBy('service_type')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        // Sparkline data (Last 7 days daily counts)
+        $sparklineData = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = now()->subDays($i)->toDateString();
+            $sparklineData[] = Quote::whereDate('created_at', $date)->count();
+        }
+
+        // Appointment Status Breakdown
+        $statusBreakdown = Appointment::select('status', \DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->get();
+
+        // Recent Activity Feed
+        $recentActivities = Quote::latest()->take(5)->get()->map(function($item) {
+                $item->activity_type = 'Quote';
+                return $item;
+            })->concat(
+                Appointment::latest()->take(5)->get()->map(function($item) {
+                    $item->activity_type = 'Appointment';
+                    return $item;
+                })
+            )->sortByDesc('created_at')->take(5);
+
+        // Traffic Data (Last 7 days)
         $trafficData = Quote::select(\DB::raw('DATE(created_at) as date'), \DB::raw('count(*) as total'))
             ->where('created_at', '>=', now()->subDays(7))
             ->groupBy('date')
@@ -58,7 +116,15 @@ class AdminController extends Controller
             'totalRevenuePending', 
             'conversionRate', 
             'mostRequestedService',
-            'trafficData'
+            'trafficData',
+            'revenueGrowthWeek',
+            'quotesGrowthWeek',
+            'appsGrowthWeek',
+            'convGrowthWeek',
+            'serviceDistribution',
+            'sparklineData',
+            'statusBreakdown',
+            'recentActivities'
         ));
     }
 

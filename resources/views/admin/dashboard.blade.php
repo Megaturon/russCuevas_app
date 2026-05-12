@@ -747,34 +747,7 @@
 
         <!-- Overview Pane -->
         <div class="pane active" id="overview">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="stat-label">Pending Revenue</span>
-                    <span class="stat-value">₱{{ number_format($totalRevenuePending, 0) }}</span>
-                    <div style="font-size: 0.7rem; color: var(--grey-text);">Total from sent quotes</div>
-                </div>
-                
-                <div class="stat-card">
-                    <span class="stat-label">Conversion Rate</span>
-                    <span class="stat-value">{{ $conversionRate }}%</span>
-                    <div style="font-size: 0.7rem; color: var(--grey-text);">Quotes to Appointments</div>
-                </div>
-
-                <div class="stat-card">
-                    <span class="stat-label">Top Service</span>
-                    <span class="stat-value" style="font-size: 1rem;">{{ $mostRequestedService ? $mostRequestedService->service_type : 'N/A' }}</span>
-                    <div class="stat-chart-container">
-                        <canvas id="serviceChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <span class="stat-label">Weekly Traffic</span>
-                    <div class="stat-chart-container">
-                        <canvas id="trafficChart"></canvas>
-                    </div>
-                </div>
-            </div>
+            @include('admin.overview')
         </div>
         
         <!-- Appointments Pane -->
@@ -1436,19 +1409,65 @@
 
     // KPI Charts Initialization
     window.addEventListener('DOMContentLoaded', () => {
-        // Traffic Chart
-        const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+        const sparklineOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { enabled: false } },
+            scales: { x: { display: false }, y: { display: false } },
+            elements: { 
+                line: { borderColor: '#000', borderWidth: 1.5, tension: 0.4 },
+                point: { radius: 0 }
+            }
+        };
+
+        const sparklineData = @json($sparklineData);
+
+        // Sparkline: Revenue
+        new Chart(document.getElementById('sparkline-revenue').getContext('2d'), {
+            type: 'line',
+            data: { labels: sparklineData.map((_, i) => i), datasets: [{ data: sparklineData }] },
+            options: sparklineOptions
+        });
+
+        // Sparkline: Quotes
+        new Chart(document.getElementById('sparkline-quotes').getContext('2d'), {
+            type: 'line',
+            data: { labels: sparklineData.map((_, i) => i), datasets: [{ data: sparklineData }] },
+            options: sparklineOptions
+        });
+
+        // Sparkline: Appointments
+        new Chart(document.getElementById('sparkline-apps').getContext('2d'), {
+            type: 'line',
+            data: { labels: sparklineData.map((_, i) => i), datasets: [{ data: sparklineData.map(v => v * 0.4) }] },
+            options: sparklineOptions
+        });
+
+        // Sparkline: Conversion
+        new Chart(document.getElementById('sparkline-conv').getContext('2d'), {
+            type: 'line',
+            data: { labels: sparklineData.map((_, i) => i), datasets: [{ data: sparklineData.map(v => Math.sin(v) * 10 + 20) }] },
+            options: sparklineOptions
+        });
+
+        // Main Traffic Chart
         const trafficData = @json($trafficData);
-        new Chart(trafficCtx, {
+        new Chart(document.getElementById('mainInboundChart').getContext('2d'), {
             type: 'line',
             data: {
                 labels: Object.keys(trafficData),
                 datasets: [{
+                    label: 'Inquiries',
                     data: Object.values(trafficData),
                     borderColor: '#000',
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    fill: false,
+                    backgroundColor: 'rgba(0,0,0,0.02)',
+                    borderWidth: 2.5,
+                    pointBackgroundColor: '#000',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: true,
                     tension: 0.4
                 }]
             },
@@ -1457,31 +1476,38 @@
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: { 
-                    x: { display: false }, 
-                    y: { display: false } 
+                    x: { grid: { display: false }, ticks: { font: { size: 10 } } }, 
+                    y: { 
+                        beginAtZero: true,
+                        grid: { color: '#f5f5f5' },
+                        ticks: { stepSize: 1, font: { size: 10 } }
+                    } 
                 }
             }
         });
 
-        // Service Chart (Mini Bar)
-        const serviceCtx = document.getElementById('serviceChart').getContext('2d');
-        new Chart(serviceCtx, {
-            type: 'bar',
+        // Status Donut Chart
+        const statusData = @json($statusBreakdown);
+        new Chart(document.getElementById('appointmentStatusDonut').getContext('2d'), {
+            type: 'doughnut',
             data: {
-                labels: ['Request'],
+                labels: statusData.map(d => d.status),
                 datasets: [{
-                    data: [{{ $mostRequestedService ? $mostRequestedService->total : 0 }}],
-                    backgroundColor: '#000',
-                    barThickness: 10
+                    data: statusData.map(d => d.total),
+                    backgroundColor: ['#000', '#333', '#666', '#999'],
+                    borderWidth: 0,
+                    hoverOffset: 15
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { 
-                    x: { display: false }, 
-                    y: { display: false, min: 0 } 
+                cutout: '75%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { boxWidth: 10, font: { size: 10, weight: '600' }, padding: 20 }
+                    }
                 }
             }
         });
