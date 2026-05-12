@@ -1053,7 +1053,7 @@
 
                     <div class="detail-group">
                         <span class="detail-label">Final Price Quote (PHP)</span>
-                        <input type="number" id="modal-price-input" class="price-quote-input" style="width: 100%; max-width: none; font-size: 1.1rem; font-weight: 600; padding: 12px;" placeholder="Enter amount (e.g. 40000)">
+                        <input type="text" id="modal-price-input" class="price-quote-input" style="width: 100%; max-width: none; font-size: 1.1rem; font-weight: 600; padding: 12px;" placeholder="Enter amount (e.g. 40,000.00)">
                     </div>
 
                     <div style="margin-top: 30px; text-align: center;">
@@ -1240,11 +1240,46 @@
             imageContainer.innerHTML = '<span style="color: var(--grey-text); font-style: italic;">No inspiration image provided.</span>';
         }
 
-        document.getElementById('modal-price-input').value = quote.price_quote || '';
-        document.getElementById('modal-quote-id').value = quote.id;
+        const priceInput = document.getElementById('modal-price-input');
+        const priceVal = quote.price_quote || '';
+        priceInput.value = priceVal;
+        
+        // Trigger formatting for existing value
+        if (priceVal) {
+            const event = new Event('input', { bubbles: true });
+            priceInput.dispatchEvent(event);
+        }
 
+        document.getElementById('modal-quote-id').value = quote.id;
         quoteModalOverlay.classList.add('active');
     }
+
+    // Auto-format Price Input
+    document.getElementById('modal-price-input').addEventListener('input', function(e) {
+        let cursorPosition = e.target.selectionStart;
+        let originalLength = e.target.value.length;
+        
+        let value = e.target.value.replace(/[^0-9.]/g, '');
+        let parts = value.split('.');
+        
+        // Handle thousands separator
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        
+        // Limit to 2 decimal places and prevent multiple decimals
+        if (parts.length > 2) {
+            parts = [parts[0], parts[1]];
+        }
+        if (parts[1]) {
+            parts[1] = parts[1].substring(0, 2);
+        }
+        
+        e.target.value = parts.join('.');
+        
+        // Maintain cursor position
+        let newLength = e.target.value.length;
+        cursorPosition = cursorPosition + (newLength - originalLength);
+        e.target.setSelectionRange(cursorPosition, cursorPosition);
+    });
 
     function closeQuoteModal(e) {
         if (e && e.target !== quoteModalOverlay && !e.target.classList.contains('close-modal-btn')) {
@@ -1255,7 +1290,7 @@
 
     function sendModalQuote() {
         const id = document.getElementById('modal-quote-id').value;
-        const price = document.getElementById('modal-price-input').value;
+        const price = document.getElementById('modal-price-input').value.replace(/,/g, '');
         const message = document.getElementById('modal-message-input').value;
         const btn = event.target;
 
