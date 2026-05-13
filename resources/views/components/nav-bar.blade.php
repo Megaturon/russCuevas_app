@@ -5,9 +5,9 @@
       <div class="dropdown-wrapper">
         <button class="gallery-btn">Gallery</button>
         <ul class="luxury-dropdown" id="galleryDropdown">
-          <li onclick="loadGallery('Wedding Gown')">Wedding Gown</li>
-          <li onclick="loadGallery('Evening Gown')">Evening Wear</li>
-          <li onclick="loadGallery('Prom')">Prom Collections</li>
+          <li onclick="location.href='/#wedding-dresses'">Wedding Gown</li>
+          <li onclick="location.href='/#evening-gowns'">Evening Wear</li>
+          <li onclick="location.href='/#prom-dresses'">Prom Collections</li>
         </ul>
       </div>
       <div class="dropdown-wrapper">
