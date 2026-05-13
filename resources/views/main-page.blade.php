@@ -31,6 +31,29 @@
     .gallery-carousel-section {
         padding-top: 2rem;
         padding-bottom: 2rem;
+        max-height: 800px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .gallery-carousel-section .overflow-hidden {
+        width: 100%;
+    }
+    .gallerySwiper .swiper-wrapper {
+        align-items: center;
+    }
+    .gallery-heading {
+        font-family: 'Playfair Display', serif;
+        font-size: 3rem;
+        font-weight: 400;
+        font-style: italic;
+        color: #1a1a1a;
+        line-height: 1;
+        letter-spacing: -1px;
+        text-align: center;
+        margin-bottom: 1.5rem;
     }
   </style>
 </head>
@@ -76,27 +99,27 @@
 
   <!-- 1. Gallery Title and Description -->
   <section id="gallery-section" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center reveal-on-scroll">
-    <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6">Gallery</h2>
+    <h2 class="gallery-heading" style="font-size: 4rem;">Gallery</h2>
     <p class="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">Explore our exquisite collection of meticulously crafted gowns, designed to make your special moments unforgettable. From timeless wedding dresses to elegant evening wear and stunning prom creations, each piece tells a unique story.</p>
   </section>
 
   <!-- 2. Wedding Dresses -->
   <section id="wedding-dresses" class="gallery-carousel-section bg-white reveal-on-scroll">
     <div class="overflow-hidden">
-      <h3 class="text-3xl font-serif font-semibold text-gray-800 mb-6 text-center">Wedding Dresses</h3>
+      <h3 class="gallery-heading">Wedding Dresses</h3>
       <div class="swiper gallerySwiper w-full px-4 sm:px-10">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="/images/wedding_closeup.jpg" alt="Wedding Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-2.jpg" alt="Wedding Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-2.png" alt="Wedding Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-3.jpg" alt="Wedding Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-3.png" alt="Wedding Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-4.jpg" alt="Wedding Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-4.png" alt="Wedding Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-5.jpg" alt="Wedding Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress.jpeg" alt="Wedding Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress.jpg" alt="Wedding Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress.png" alt="Wedding Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/wedding_closeup.jpg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/wedding_dress-2.jpg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/wedding_dress-2.png" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/wedding_dress-3.jpg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/wedding_dress-3.png" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/wedding_dress-4.jpg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/wedding_dress-4.png" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/wedding_dress-5.jpg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/wedding_dress.jpeg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/wedding_dress.jpg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/wedding_dress.png" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
         </div>
       </div>
     </div>
@@ -105,19 +128,19 @@
   <!-- 3. Evening Gowns -->
   <section id="evening-gowns" class="gallery-carousel-section reveal-on-scroll" style="background-color: #faf9f6;">
     <div class="overflow-hidden">
-      <h3 class="text-3xl font-serif font-semibold text-gray-800 mb-6 text-center">Evening Gowns</h3>
+      <h3 class="gallery-heading">Evening Gowns</h3>
       <div class="swiper gallerySwiper w-full px-4 sm:px-10">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="/images/4.jpg" alt="Evening Gown" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening-2.jpg" alt="Evening Gown" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening-3.jpg" alt="Evening Gown" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening-4.jpg" alt="Evening Gown" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening.jpg" alt="Evening Gown" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/4.jpg" alt="Evening Gown" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening-2.jpg" alt="Evening Gown" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening-3.jpg" alt="Evening Gown" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening-4.jpg" alt="Evening Gown" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening.jpg" alt="Evening Gown" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/4.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/evening-2.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/evening-3.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/evening-4.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/evening.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/4.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/evening-2.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/evening-3.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/evening-4.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/evening.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
         </div>
       </div>
     </div>
@@ -126,17 +149,17 @@
   <!-- 4. Prom Dresses -->
   <section id="prom-dresses" class="gallery-carousel-section bg-white reveal-on-scroll">
     <div class="overflow-hidden">
-      <h3 class="text-3xl font-serif font-semibold text-gray-800 mb-6 text-center">Prom Collections</h3>
+      <h3 class="gallery-heading">Prom Collections</h3>
       <div class="swiper gallerySwiper w-full px-4 sm:px-10">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="/images/prom-2.jpg" alt="Prom Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom-3.jpg" alt="Prom Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom-4.jpg" alt="Prom Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom.jpg" alt="Prom Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom-2.jpg" alt="Prom Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom-3.jpg" alt="Prom Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom-4.jpg" alt="Prom Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom.jpg" alt="Prom Dress" class="w-full h-48 md:h-64 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/prom-2.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/prom-3.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/prom-4.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/prom.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/prom-2.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/prom-3.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/prom-4.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
+          <div class="swiper-slide"><img src="/images/prom.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
         </div>
       </div>
     </div>
