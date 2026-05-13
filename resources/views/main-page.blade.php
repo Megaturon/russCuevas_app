@@ -61,7 +61,7 @@
         <h1>Russ Cuevas Artelier</h1>
         <p>Quality work tailored to your needs</p>
         <div class="cta-container">
-          <button class="book-btn" id="book-appointment">
+          <button class="book-btn" id="book-appointment" onclick="window.location.href='/appointments'">
             Book an Appointment
           </button>
         </div>
