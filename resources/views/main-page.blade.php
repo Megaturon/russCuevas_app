@@ -1,327 +1,309 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Russ Cuevas</title>
-
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <meta name="description" content="Russ Cuevas Atelier — Bespoke couture crafted for life's most important moments.">
+  <title>Russ Cuevas Atelier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
   @vite(['resources/css/styles2.css'])
 </head>
+<body class="mp-body">
 
-<body>
-<header>
+{{-- NAV --}}
+<header id="mp-header">
   <x-nav-bar></x-nav-bar>
 </header>
 
-<main class="home">
-  
-  <!-- Gallery Section -->
-  <div class="gallery-section" id="gallerySection" style="display: none;">
-    <div class="gallery-title" id="galleryTitle">Gallery</div>
-    <div class="gallery-container" id="galleryContainer">
-      <!-- Gallery Images Load Here -->
+{{-- ===== HERO ===== --}}
+<section class="mp-hero" id="mp-hero"
+  data-slides='["/images/slide1.jpg","/images/slide2.webp","/images/slide3.jpg"]'>
+
+  <div class="mp-hero-text">
+    <span class="mp-hero-eyebrow">Est. Manila &middot; Bespoke Couture</span>
+    <h1 class="mp-hero-brand">Russ Cuevas</h1>
+    <p class="mp-hero-sub">Quality craftsmanship tailored to your most important moments.</p>
+    <div class="mp-hero-actions">
+      <a href="{{ route('appointments.index') }}" class="mp-btn-white" id="book-appointment">Book an Appointment</a>
+      <a href="#mp-collections" class="mp-btn-outline">View Collections</a>
     </div>
   </div>
 
-  <!-- Image Overlay -->
-  <div id="imageOverlay" class="overlay">
-    <button class="close-btn" onclick="closeOverlay()">×</button>
-    <button class="nav-btn prev-btn" onclick="prevImage()">❮</button>
-    <button class="nav-btn next-btn" onclick="nextImage()">❯</button>
-    <div id="overlayImages">
-      <!-- Carousel will be inserted here by JavaScript -->
+  <ul class="mp-hero-dots" id="mp-dots">
+    <li class="active"></li>
+    <li></li>
+    <li></li>
+  </ul>
+</section>
+
+
+
+{{-- ===== COLLECTIONS GALLERY ===== --}}
+<section class="mp-collections" id="mp-collections">
+  <div class="mp-collections-header">
+    <h2 class="mp-section-label">Collections</h2>
+    <div class="mp-collection-tabs" id="mp-tabs">
+      <button class="mp-tab active" data-cat="Wedding Gown">Wedding Gown</button>
+      <button class="mp-tab" data-cat="Principal Sponsor">Principal Sponsor</button>
+      <button class="mp-tab" data-cat="Evening Gown">Evening Gown</button>
+      <button class="mp-tab" data-cat="Formal Wear">Formal Wear</button>
+      <button class="mp-tab" data-cat="Prom">Prom</button>
     </div>
   </div>
+  <div class="mp-grid" id="mp-grid">
+    {{-- filled by JS --}}
+  </div>
+</section>
 
-  <!-- Main Slider -->
-  <div class="slider">
-    <div class="list">
-      <div class="item">
-        <img src="/images/slide1.jpg" alt="Slide 1">
-      </div>
-      <div class="item">
-        <img src="/images/slide2.webp" alt="Slide 2">
-      </div>
-      <div class="item">
-        <img src="/images/slide3.jpg" alt="Slide 3">
+{{-- ===== SERVICES LIST ===== --}}
+<section class="mp-catlist">
+  <h2 class="mp-section-label">Services</h2>
+  <ul class="mp-catlist-items">
+    <li><a href="{{ route('appointments.index') }}"><span>Bespoke Gown Design</span><i class="fa-solid fa-arrow-right"></i></a></li>
+    <li><a href="{{ route('appointments.index') }}"><span>Wedding Couture</span><i class="fa-solid fa-arrow-right"></i></a></li>
+    <li><a href="{{ route('appointments.index') }}"><span>Evening &amp; Formal Wear</span><i class="fa-solid fa-arrow-right"></i></a></li>
+    <li><a href="{{ route('appointments.index') }}"><span>Prom &amp; Debut Gowns</span><i class="fa-solid fa-arrow-right"></i></a></li>
+    <li><a href="{{ route('quote.index') }}"><span>Get a Quote</span><i class="fa-solid fa-arrow-right"></i></a></li>
+  </ul>
+</section>
+
+{{-- ===== CTA BANNER ===== --}}
+<section class="mp-cta" style="background-image:url('/images/slide3.jpg')">
+  <div class="mp-cta-overlay"></div>
+  <div class="mp-cta-content">
+    <span class="mp-hero-eyebrow" style="color:rgba(255,255,255,0.65)">Begin Your Journey</span>
+    <h2>Your Dream Gown Awaits</h2>
+    <p>Schedule a personal consultation and bring your vision to life.</p>
+    <a href="{{ route('appointments.index') }}" class="mp-btn-white">Book a Consultation</a>
+  </div>
+</section>
+
+{{-- ===== FOOTER ===== --}}
+<footer class="mp-footer" id="contact">
+  <div class="mp-footer-top">
+    <div class="mp-footer-brand">
+      <img src="/images/RC_logo.jpg" alt="Russ Cuevas Logo" class="mp-footer-logo">
+      <p>Bespoke couture crafted for life's most meaningful moments.<br>Based in Manila, Philippines.</p>
+      <div class="mp-footer-socials">
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
       </div>
     </div>
-    <ul class="dots">
-      <li class="active"></li>
-      <li></li>
-      <li></li>
-    </ul>
-
-    <div class="home-overlay">
-      <div class="home-content">
-        <h1>Russ Cuevas Artelier</h1>
-        <p>Quality work tailored to your needs</p>
-        <div class="cta-container">
-          <button class="book-btn" id="book-appointment">
-            Book an Appointment
-          </button>
-        </div>
-      </div>
+    <div class="mp-footer-col">
+      <h4>Collections</h4>
+      <ul>
+        <li><a href="#mp-collections">Wedding Gown</a></li>
+        <li><a href="#mp-collections">Evening Gown</a></li>
+        <li><a href="#mp-collections">Prom</a></li>
+        <li><a href="#mp-collections">Formal Wear</a></li>
+        <li><a href="#mp-collections">Principal Sponsor</a></li>
+      </ul>
+    </div>
+    <div class="mp-footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="{{ route('appointments.index') }}">Book Appointment</a></li>
+        <li><a href="{{ route('quote.index') }}">Get a Quote</a></li>
+        <li><a href="/our-story">Our Story</a></li>
+        <li><a href="/faq">FAQ</a></li>
+        <li><a href="/terms">Terms &amp; Conditions</a></li>
+      </ul>
+    </div>
+    <div class="mp-footer-col">
+      <h4>Contact</h4>
+      <ul class="mp-footer-contact">
+        <li><i class="fa-solid fa-location-dot"></i> Manila, Philippines</li>
+        <li><i class="fa-solid fa-phone"></i> +63 XXX XXX XXXX</li>
+        <li><i class="fa-solid fa-envelope"></i> hello@russcuevas.com</li>
+        <li><i class="fa-solid fa-clock"></i> Mon&ndash;Sat, 9AM&ndash;6PM</li>
+      </ul>
     </div>
   </div>
-</main>
+  <div class="mp-footer-bottom">
+    <p>&copy; {{ date('Y') }} Russ Cuevas Atelier. All rights reserved.</p>
+    <div>
+      <a href="/terms">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+    </div>
+  </div>
+</footer>
 
-<!-- Scripts -->
+{{-- ===== LIGHTBOX ===== --}}
+<div id="mp-lightbox" class="mp-lightbox" role="dialog" aria-modal="true">
+  <button class="mp-lb-close" onclick="mpCloseLb()" aria-label="Close">&times;</button>
+  <button class="mp-lb-prev" onclick="mpPrevLb()" aria-label="Previous">&#10094;</button>
+  <button class="mp-lb-next" onclick="mpNextLb()" aria-label="Next">&#10095;</button>
+  <div class="mp-lb-img-wrap"><img id="mp-lb-img" src="" alt="Gallery"></div>
+</div>
+
 <script>
-  // Gallery and Overlay Logic
-  let currentImages = [];
-  let currentIndex = 0;
-
-  const galleryImages = {
+/* ============================================================
+   GALLERY DATA
+============================================================ */
+var mpGallery = {
   "Wedding Gown": [
-    { thumbnail: "/images/wedding dress.jpg", images: ["/images/a1.jpg", "/images/a2.jpg", "/images/wedding dress.jpg"] },
-    { thumbnail: "/images/wed2.jpg", images: ["/images/aweb2.jpg", "/images/aweb3.jpg", "/images/aweb2.jpg"] },
-    { thumbnail: "/images/3.jpg", images: ["/images/3.jpg", "/images/4.jpg", "/images/5.jpg"] },
-    { thumbnail: "/images/3.jpg", images: ["/images/3.jpg", "/images/4.jpg", "/images/5.jpg"] },
-    { thumbnail: "/images/3.jpg", images: ["/images/3.jpg", "/images/4.jpg", "/images/5.jpg"] }
+    { thumb: "/images/wedding dress.jpg", imgs: ["/images/a1.jpg","/images/a2.jpg","/images/wedding dress.jpg"] },
+    { thumb: "/images/wed2.jpg",          imgs: ["/images/aweb2.jpg","/images/aweb3.jpg","/images/aweb2.jpg"] },
+    { thumb: "/images/3.jpg",             imgs: ["/images/3.jpg","/images/4.jpg","/images/5.jpg"] },
+    { thumb: "/images/3.jpg",             imgs: ["/images/3.jpg","/images/4.jpg","/images/5.jpg"] }
   ],
   "Principal Sponsor": [
-    { thumbnail: "/images/3.jpg", images: ["/images/3.jpg", "/images/4.jpg", "/images/5.jpg"] },
-    { thumbnail: "/images/wed2.jpg", images: ["/images/aweb2.jpg", "/images/aweb3.jpg", "/images/aweb2.jpg"] },
-    { thumbnail: "/images/wed2.jpg", images: ["/images/aweb2.jpg", "/images/aweb3.jpg", "/images/aweb2.jpg"] },
-    { thumbnail: "/images/wed2.jpg", images: ["/images/aweb2.jpg", "/images/aweb3.jpg", "/images/aweb2.jpg"] }
+    { thumb: "/images/3.jpg",    imgs: ["/images/3.jpg","/images/4.jpg","/images/5.jpg"] },
+    { thumb: "/images/wed2.jpg", imgs: ["/images/aweb2.jpg","/images/aweb3.jpg","/images/aweb2.jpg"] },
+    { thumb: "/images/wed2.jpg", imgs: ["/images/aweb2.jpg","/images/aweb3.jpg","/images/aweb2.jpg"] }
   ],
   "Evening Gown": [
-    { thumbnail: "/images/3.jpg", images: ["/images/3.jpg", "/images/4.jpg", "/images/5.jpg"] },
-    { thumbnail: "/images/wed2.jpg", images: ["/images/aweb2.jpg", "/images/aweb3.jpg", "/images/aweb2.jpg"] },
-    { thumbnail: "/images/wed2.jpg", images: ["/images/aweb2.jpg", "/images/aweb3.jpg", "/images/aweb2.jpg"] }
+    { thumb: "/images/3.jpg",    imgs: ["/images/3.jpg","/images/4.jpg","/images/5.jpg"] },
+    { thumb: "/images/wed2.jpg", imgs: ["/images/aweb2.jpg","/images/aweb3.jpg","/images/aweb2.jpg"] },
+    { thumb: "/images/wed2.jpg", imgs: ["/images/aweb2.jpg","/images/aweb3.jpg","/images/aweb2.jpg"] }
   ],
   "Formal Wear": [
-    { thumbnail: "/images/3.jpg", images: ["/images/3.jpg", "/images/4.jpg", "/images/5.jpg"] },
-    { thumbnail: "/images/wed2.jpg", images: ["/images/aweb2.jpg", "/images/aweb3.jpg", "/images/aweb2.jpg"] },
-    { thumbnail: "/images/wed2.jpg", images: ["/images/aweb2.jpg", "/images/aweb3.jpg", "/images/aweb2.jpg"] },
-    { thumbnail: "/images/wed2.jpg", images: ["/images/aweb2.jpg", "/images/aweb3.jpg", "/images/aweb2.jpg"] }
+    { thumb: "/images/3.jpg",    imgs: ["/images/3.jpg","/images/4.jpg","/images/5.jpg"] },
+    { thumb: "/images/wed2.jpg", imgs: ["/images/aweb2.jpg","/images/aweb3.jpg","/images/aweb2.jpg"] },
+    { thumb: "/images/wed2.jpg", imgs: ["/images/aweb2.jpg","/images/aweb3.jpg","/images/aweb2.jpg"] }
   ],
   "Prom": [
-    { thumbnail: "/images/3.jpg", images: ["/images/3.jpg", "/images/4.jpg", "/images/5.jpg"] },
-    { thumbnail: "/images/wed2.jpg", images: ["/images/aweb2.jpg", "/images/aweb3.jpg", "/images/aweb2.jpg"] },
-    { thumbnail: "/images/wed2.jpg", images: ["/images/aweb2.jpg", "/images/aweb3.jpg", "/images/aweb2.jpg"] },
-    { thumbnail: "/images/wed2.jpg", images: ["/images/aweb2.jpg", "/images/aweb3.jpg", "/images/aweb2.jpg"] }
+    { thumb: "/images/3.jpg",    imgs: ["/images/3.jpg","/images/4.jpg","/images/5.jpg"] },
+    { thumb: "/images/wed2.jpg", imgs: ["/images/aweb2.jpg","/images/aweb3.jpg","/images/aweb2.jpg"] },
+    { thumb: "/images/wed2.jpg", imgs: ["/images/aweb2.jpg","/images/aweb3.jpg","/images/aweb2.jpg"] }
   ]
 };
 
-  function loadGallery(category) {
-    const galleryTitle = document.getElementById("galleryTitle");
-    const galleryContainer = document.getElementById("galleryContainer");
-    const gallerySection = document.getElementById("gallerySection");
-    const homeSection = document.querySelector(".slider"); // Get the home slider section
+/* ============================================================
+   HERO SLIDER — background-image swap
+============================================================ */
+(function(){
+  var hero   = document.getElementById('mp-hero');
+  var dots   = document.querySelectorAll('#mp-dots li');
+  var slides = JSON.parse(hero.dataset.slides);
+  var idx    = 0;
 
-    // Close the dropdown menu
-    document.getElementById('galleryDropdown').style.display = 'none';
-    
-    // Close mobile menu if open
-    document.querySelector('.navbtns').classList.remove('active');
-    document.getElementById('mobile-menu').classList.remove('active');
-    
-    // Hide home section and show gallery
-    if (homeSection) {
-      homeSection.style.display = "none";
-    }
-
-    galleryTitle.textContent = `Collections - ${category}`;
-    galleryContainer.innerHTML = "";
-
-    if (galleryImages[category]) {
-      galleryImages[category].forEach(item => {
-        const div = document.createElement("div");
-        div.className = "gallery-item";
-
-        const img = document.createElement("img");
-        img.src = item.thumbnail;
-        img.alt = category;
-
-        img.addEventListener("click", function () {
-          const overlay = document.getElementById("imageOverlay");
-          const overlayImages = document.getElementById("overlayImages");
-
-          overlayImages.innerHTML = "";
-          currentImages = item.images;
-          currentIndex = 0;
-
-          // Create carousel container
-          const carouselContainer = document.createElement("div");
-          carouselContainer.className = "carousel-container";
-          
-          // Create carousel slider
-          const carouselSlider = document.createElement("div");
-          carouselSlider.className = "carousel-slider";
-          
-          // Create slides for each image
-          currentImages.forEach((img, index) => {
-            const slide = document.createElement("div");
-            slide.className = "carousel-slide";
-            
-            // Position slides relative to center
-            const offset = index - currentIndex;
-            const width = 300; // Base width for slides
-            
-            slide.style.width = (index === currentIndex) ? '510px' : '510px';
-            slide.style.left = `calc(50% - 175px + ${offset * (width * 0.8)}px)`;
-            
-            if (index === currentIndex) {
-              slide.classList.add("active");
-            }
-            
-            const imgElement = document.createElement("img");
-            imgElement.src = img;
-            imgElement.alt = category;
-            
-            slide.appendChild(imgElement);
-            carouselSlider.appendChild(slide);
-          });
-          
-          carouselContainer.appendChild(carouselSlider);
-          overlayImages.appendChild(carouselContainer);
-          
-          overlay.style.display = "flex";
-        });
-
-        div.appendChild(img);
-        galleryContainer.appendChild(div);
-      });
-
-      gallerySection.style.display = "block";
-    }
+  function setSlide(i) {
+    dots[idx].classList.remove('active');
+    idx = (i + slides.length) % slides.length;
+    hero.style.backgroundImage = 'url("' + slides[idx] + '")';
+    dots[idx].classList.add('active');
   }
 
-  // Add a function to go back to home from gallery
-  function returnToHome() {
-    document.getElementById("gallerySection").style.display = "none";
-    document.querySelector(".slider").style.display = "block";
-  }
+  setSlide(0);
 
-  function closeOverlay() {
-    document.getElementById("imageOverlay").style.display = "none";
-  }
-
-  function updateCarousel() {
-    if (currentImages.length === 0) return;
-    
-    const slides = document.querySelectorAll('.carousel-slide');
-    
-    slides.forEach((slide, index) => {
-      // Reset classes
-      slide.classList.remove("active");
-      
-      // Position slides
-      const offset = index - currentIndex;
-      const width = 510; // Base width for slides
-      
-      // Set size based on position
-      slide.style.width = (index === currentIndex) ? '530px' : '510px';
-      
-      // Position horizontally
-      slide.style.left = `calc(50% - 175px + ${offset * (width * 0.8)}px)`;
-      
-      // Add active class to current slide
-      if (index === currentIndex) {
-        slide.classList.add("active");
-      }
-      
-      // Set z-index based on distance from active
-      slide.style.zIndex = 10 - Math.abs(offset);
-      
-      // Set opacity based on distance
-      if (Math.abs(offset) > 2) {
-        slide.style.opacity = 0;
-      } else if (Math.abs(offset) > 1) {
-        slide.style.opacity = 0.3;
-      } else if (Math.abs(offset) === 1) {
-        slide.style.opacity = 0.7;
-      } else {
-        slide.style.opacity = 1;
-      }
+  dots.forEach(function(dot, i){
+    dot.addEventListener('click', function(){
+      clearInterval(timer);
+      setSlide(i);
+      timer = setInterval(auto, 5500);
     });
-  }
-
-  function prevImage() {
-    if (currentImages.length <= 1) return;
-    
-    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-    updateCarousel();
-  }
-
-  function nextImage() {
-    if (currentImages.length <= 1) return;
-    
-    currentIndex = (currentIndex + 1) % currentImages.length;
-    updateCarousel();
-  }
-
-  // Add keyboard event listeners for navigation
-  document.addEventListener('keydown', function(e) {
-    if (document.getElementById("imageOverlay").style.display === "flex") {
-      if (e.key === "ArrowLeft") {
-        prevImage();
-      } else if (e.key === "ArrowRight") {
-        nextImage();
-      } else if (e.key === "Escape") {
-        closeOverlay();
-      }
-    }
   });
 
-  // Main slider initialization
-  let slider = document.querySelector('.slider .list');
-  let items = document.querySelectorAll('.slider .list .item');
-  let dots = document.querySelectorAll('.slider .dots li');
-  let active = 0;
-  let lengthItems = items.length - 1;
+  function auto(){ setSlide(idx + 1); }
+  var timer = setInterval(auto, 5500);
+})();
 
-  // Initialize slider
-  function reloadSlider() {
-  items.forEach(item => item.classList.remove('active'));
-  dots.forEach(dot => dot.classList.remove('active'));
+/* ============================================================
+   GALLERY TABS + GRID
+============================================================ */
+var mpLbImages = [];
+var mpLbIdx    = 0;
 
-  items[active].classList.add('active');
-  dots[active].classList.add('active');
-
-  slider.style.left = `-${active * 100}vw`;
+function mpRenderGrid(cat) {
+  var grid  = document.getElementById('mp-grid');
+  var items = mpGallery[cat] || [];
+  grid.innerHTML = '';
+  items.forEach(function(item, i){
+    var card = document.createElement('div');
+    card.className = 'mp-card';
+    card.innerHTML =
+      '<div class="mp-card-img" style="background-image:url(\'' + item.thumb + '\')">' +
+        '<div class="mp-card-hover"><span>View</span></div>' +
+      '</div>' +
+      '<p class="mp-card-label">' + cat + '</p>';
+    card.querySelector('.mp-card-img').addEventListener('click', function(){
+      mpOpenLb(item.imgs, 0);
+    });
+    grid.appendChild(card);
+  });
 }
 
-  // Auto slide
-  let autoSlide = setInterval(() => {
-    active = active >= lengthItems ? 0 : active + 1;
-    reloadSlider();
-  }, 5000);
-
-  // Click on dots
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      active = index;
-      reloadSlider();
-      clearInterval(autoSlide);
-      autoSlide = setInterval(() => {
-        active = active >= lengthItems ? 0 : active + 1;
-        reloadSlider();
-      }, 5000);
-    });
+document.querySelectorAll('.mp-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.mp-tab').forEach(function(t){ t.classList.remove('active'); });
+    tab.classList.add('active');
+    mpRenderGrid(tab.dataset.cat);
   });
+});
 
-  // Initialize slider on page load
-  reloadSlider();
+/* ============================================================
+   LIGHTBOX
+============================================================ */
+function mpOpenLb(imgs, i){
+  mpLbImages = imgs;
+  mpLbIdx    = i;
+  document.getElementById('mp-lb-img').src = imgs[i];
+  document.getElementById('mp-lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function mpCloseLb(){
+  document.getElementById('mp-lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function mpPrevLb(){
+  mpLbIdx = (mpLbIdx - 1 + mpLbImages.length) % mpLbImages.length;
+  document.getElementById('mp-lb-img').src = mpLbImages[mpLbIdx];
+}
+function mpNextLb(){
+  mpLbIdx = (mpLbIdx + 1) % mpLbImages.length;
+  document.getElementById('mp-lb-img').src = mpLbImages[mpLbIdx];
+}
+document.getElementById('mp-lightbox').addEventListener('click', function(e){
+  if (e.target === this) mpCloseLb();
+});
+document.addEventListener('keydown', function(e){
+  if (!document.getElementById('mp-lightbox').classList.contains('active')) return;
+  if (e.key === 'ArrowLeft')  mpPrevLb();
+  if (e.key === 'ArrowRight') mpNextLb();
+  if (e.key === 'Escape')     mpCloseLb();
+});
 
-  @if( $gallery == "wedding" )
-    loadGallery('Wedding Gown');
-  @elseif( $gallery == "sponsor" )
-    loadGallery('Principal Sponsor');
-  @elseif( $gallery == "evening" )
-    loadGallery('Evening Gown');
-  @elseif( $gallery == "formal" )
-    loadGallery('Formal Wear');
-  @elseif( $gallery == "prom" )
-    loadGallery('Prom');
-  @endif
+/* ============================================================
+   SMOOTH SCROLL for View Collections anchor
+============================================================ */
+document.querySelectorAll('a[href="#mp-collections"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    var target = document.getElementById('mp-collections');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+/* ============================================================
+   HEADER SCROLL SHADOW
+============================================================ */
+window.addEventListener('scroll', function(){
+  document.getElementById('mp-header').classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
+
+/* ============================================================
+   BOOT GALLERY
+============================================================ */
+@if($gallery == "wedding")
+  document.querySelector('[data-cat="Wedding Gown"]').click();
+@elseif($gallery == "sponsor")
+  document.querySelector('[data-cat="Principal Sponsor"]').click();
+@elseif($gallery == "evening")
+  document.querySelector('[data-cat="Evening Gown"]').click();
+@elseif($gallery == "formal")
+  document.querySelector('[data-cat="Formal Wear"]').click();
+@elseif($gallery == "prom")
+  document.querySelector('[data-cat="Prom"]').click();
+@else
+  mpRenderGrid('Wedding Gown');
+@endif
 </script>
-
 </body>
 </html>
