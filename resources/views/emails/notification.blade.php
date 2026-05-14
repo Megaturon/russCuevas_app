@@ -83,7 +83,33 @@
                         </td>
                     </tr>
                     
-                    <!-- Action Button -->
+                    <!-- Action Buttons -->
+                    @if(isset($actions) && count($actions) > 0)
+                    <tr>
+                        <td align="center" style="padding-bottom: 60px; padding-left: 45px; padding-right: 45px;" class="content-padding">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="center">
+                                        <table border="0" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                @foreach($actions as $action)
+                                                <td align="center" bgcolor="{{ $action['color'] ?? '#ffffff' }}" style="border-radius: 2px; {{ !$loop->last ? 'margin-right: 15px;' : '' }}">
+                                                    <a href="{{ $action['url'] }}" target="_blank" style="display: inline-block; padding: 15px 30px; color: {{ isset($action['color']) && $action['color'] != '#ffffff' ? '#ffffff' : '#000000' }}; text-decoration: none; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">
+                                                        {{ $action['label'] }}
+                                                    </a>
+                                                </td>
+                                                @if(!$loop->last)
+                                                <td width="15">&nbsp;</td>
+                                                @endif
+                                                @endforeach
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    @else
                     <tr>
                         <td align="center" style="padding-bottom: 60px;">
                             <table border="0" cellpadding="0" cellspacing="0">
@@ -95,6 +121,7 @@
                             </table>
                         </td>
                     </tr>
+                    @endif
                     
                     <!-- Footer Divider -->
                     <tr>

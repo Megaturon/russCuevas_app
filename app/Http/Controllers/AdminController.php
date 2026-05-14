@@ -207,7 +207,19 @@ class AdminController extends Controller
                     'New Schedule' => Carbon::parse($new_date)->format('F d') . ' | ' . Carbon::parse($new_time)->format('g:i A'),
                     'Status' => 'Rescheduled'
                 ],
-                'outro' => 'We have updated our calendar. See you soon!'
+                'outro' => 'We have updated our calendar. Please let us know if this new schedule works for you by clicking one of the buttons below.',
+                'actions' => [
+                    [
+                        'label' => 'Confirm Schedule',
+                        'url' => route('appointment.confirm_reschedule', $appointment->id),
+                        'color' => '#000000'
+                    ],
+                    [
+                        'label' => 'Decline & Cancel',
+                        'url' => route('appointment.cancel_reschedule', $appointment->id),
+                        'color' => '#666666'
+                    ]
+                ]
             ];
             
             $this->sendEmail($appointment->email, "Appointment Rescheduled - Russ Cuevas", $data);

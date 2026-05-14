@@ -66,6 +66,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
 });
 
+// Client response routes for rescheduling (publicly accessible)
+Route::get('/appointment/{id}/confirm-reschedule', [AppointmentController::class, 'confirmReschedule'])->name('appointment.confirm_reschedule');
+Route::get('/appointment/{id}/cancel-reschedule', [AppointmentController::class, 'cancelReschedule'])->name('appointment.cancel_reschedule');
+
 use App\Http\Controllers\AdminController;
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
