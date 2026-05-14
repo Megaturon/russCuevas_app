@@ -127,6 +127,192 @@
         }
     }
 
+    /* Hero Styles */
+    .mp-hero-text {
+        position: relative;
+        z-index: 2;
+        color: #fff;
+        max-width: 620px;
+        text-align: left;
+    }
+    .mp-hero-eyebrow {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        opacity: 0.85;
+        margin-bottom: 12px;
+    }
+    .mp-hero-brand {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(3rem, 8vw, 5.5rem);
+        font-weight: 400;
+        font-style: italic;
+        line-height: 1;
+        margin-bottom: 20px;
+        color: #fff;
+        letter-spacing: -2px;
+    }
+    .mp-hero-sub {
+        font-size: 0.95rem;
+        font-weight: 300;
+        opacity: 0.9;
+        margin-bottom: 40px;
+        line-height: 1.7;
+        max-width: 420px;
+    }
+    .mp-hero-actions {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+    .mp-btn-white {
+        display: inline-block;
+        background: #fff;
+        color: #000;
+        padding: 16px 40px;
+        border-radius: 0;
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .mp-btn-white:hover {
+        background: #000;
+        color: #fff;
+        transform: translateY(-3px);
+    }
+    .mp-btn-outline {
+        display: inline-block;
+        background: transparent;
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.6);
+        padding: 16px 40px;
+        border-radius: 0;
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .mp-btn-outline:hover {
+        background: rgba(255,255,255,0.15);
+        border-color: #fff;
+        transform: translateY(-3px);
+    }
+
+    /* CTA Styles */
+    .mp-cta {
+        position: relative;
+        height: 550px;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        overflow: hidden;
+    }
+    .mp-cta-overlay {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
+    }
+    .mp-cta-content {
+        position: relative;
+        z-index: 2;
+        color: #fff;
+        max-width: 600px;
+        padding: 0 20px;
+    }
+    .mp-cta-content h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.5rem, 5vw, 3.8rem);
+        font-weight: 400;
+        margin-bottom: 20px;
+        color: #fff;
+        line-height: 1.1;
+    }
+    .mp-cta-content p {
+        font-size: 1rem;
+        opacity: 0.85;
+        margin-bottom: 40px;
+        line-height: 1.8;
+    }
+
+    @media (max-width: 768px) {
+        .mp-hero-text {
+            text-align: center;
+            padding: 0 20px;
+        }
+        .mp-hero-actions {
+            justify-content: center;
+        }
+        .mp-hero-brand {
+            font-size: 3.5rem;
+        }
+    }
+
+    /* Lightbox Styles */
+    .mp-lightbox {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.93);
+        z-index: 3000;
+        align-items: center;
+        justify-content: center;
+    }
+    .mp-lightbox.active {
+        display: flex;
+    }
+    .mp-lb-img-wrap img {
+        max-width: 88vw;
+        max-height: 88vh;
+        object-fit: contain;
+        display: block;
+        border-radius: 2px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .mp-lb-close {
+        position: absolute;
+        top: 20px; right: 24px;
+        color: #fff;
+        font-size: 2.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        opacity: 0.6;
+        line-height: 1;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        z-index: 3001;
+    }
+    .mp-lb-close:hover { opacity: 1; transform: rotate(90deg); }
+    .mp-lb-prev, .mp-lb-next {
+        position: absolute;
+        top: 50%; transform: translateY(-50%);
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #fff;
+        font-size: 1.2rem;
+        width: 52px; height: 52px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.25s ease;
+        z-index: 3001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .mp-lb-prev:hover, .mp-lb-next:hover { background: rgba(255,255,255,0.25); }
+    .mp-lb-prev { left: 24px; }
+    .mp-lb-next { right: 24px; }
+
   </style>
 </head>
 
@@ -156,17 +342,18 @@
       <li></li>
     </ul>
 
-    <div class="home-overlay">
-      <div class="home-content">
-        <h1>Russ Cuevas Artelier</h1>
-        <p>Quality work tailored to your needs</p>
-        <div class="cta-container">
-          <button class="book-btn" id="book-appointment" onclick="window.location.href='/appointments'">
-            Book an Appointment
-          </button>
+    <div class="home-overlay" style="justify-content: flex-start; padding-left: 8%;">
+      <div class="mp-hero-text">
+        <span class="mp-hero-eyebrow">Est. Manila &middot; Bespoke Couture</span>
+        <h1 class="mp-hero-brand">Russ Cuevas</h1>
+        <p class="mp-hero-sub">Quality craftsmanship tailored to your most important moments.</p>
+        <div class="mp-hero-actions">
+          <a href="{{ route('appointments.index') }}" class="mp-btn-white" id="book-appointment">Book an Appointment</a>
+          <a href="#gallery-section" class="mp-btn-outline">View Collections</a>
         </div>
       </div>
     </div>
+
   </div>
 
   <!-- 1. Gallery Title and Description -->
@@ -208,16 +395,18 @@
   </div>
 
 
+
   <!-- 5. CTA Button -->
-  <section id="cta-section" class="py-16 bg-white text-center reveal-on-scroll">
-    <div class="max-w-4xl mx-auto px-4">
-      <h2 class="text-4xl font-serif font-bold text-gray-900 mb-6">Ready to Find Your Dream Dress?</h2>
-      <p class="text-lg text-gray-600 mb-10">Book an appointment with Russ Cuevas Atelier and let us create a masterpiece tailored perfectly to you.</p>
-      <button class="book-btn" onclick="window.location.href='/appointments'">
-        Book an Appointment
-      </button>
+  <section id="cta-section" class="mp-cta reveal-on-scroll" style="background-image: url('/images/slide3.jpg');">
+    <div class="mp-cta-overlay"></div>
+    <div class="mp-cta-content">
+      <span class="mp-hero-eyebrow" style="color:rgba(255,255,255,0.7)">Begin Your Journey</span>
+      <h2>Your Dream Gown Awaits</h2>
+      <p>Schedule a personal consultation and bring your vision to life.</p>
+      <a href="{{ route('appointments.index') }}" class="mp-btn-white">Book a Consultation</a>
     </div>
   </section>
+
 </main>
 
 <x-footer></x-footer>
@@ -324,6 +513,28 @@
     container.innerHTML = html;
   }
 
+
+  document.addEventListener("DOMContentLoaded", () => {
+      const reveals = document.querySelectorAll(".reveal-on-scroll");
+      const revealOnScroll = () => {
+          for (let i = 0; i < reveals.length; i++) {
+              const windowHeight = window.innerHeight;
+              const elementTop = reveals[i].getBoundingClientRect().top;
+              const elementVisible = 50;
+              if (elementTop < windowHeight - elementVisible) {
+                  reveals[i].classList.add("scrolled-in");
+              }
+          }
+      };
+      window.addEventListener("scroll", revealOnScroll);
+      revealOnScroll();
+
+      // Render Masonry Galleries
+      mpRenderMasonry('gallery-wedding', 'Wedding');
+      mpRenderMasonry('gallery-evening', 'Evening');
+      mpRenderMasonry('gallery-prom', 'Prom');
+  });
+
   function mpOpenLbCategory(cat, i){
     var item = mpGallery[cat][i];
     if(item && item.imgs) mpOpenLb(item.imgs, 0);
@@ -349,27 +560,6 @@
     document.getElementById('mp-lb-img').src = mpLbImages[mpLbIdx];
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-      const reveals = document.querySelectorAll(".reveal-on-scroll");
-      const revealOnScroll = () => {
-          for (let i = 0; i < reveals.length; i++) {
-              const windowHeight = window.innerHeight;
-              const elementTop = reveals[i].getBoundingClientRect().top;
-              const elementVisible = 50;
-              if (elementTop < windowHeight - elementVisible) {
-                  reveals[i].classList.add("scrolled-in");
-              }
-          }
-      };
-      window.addEventListener("scroll", revealOnScroll);
-      revealOnScroll();
-
-      // Render Masonry Galleries
-      mpRenderMasonry('gallery-wedding', 'Wedding');
-      mpRenderMasonry('gallery-evening', 'Evening');
-      mpRenderMasonry('gallery-prom', 'Prom');
-  });
-
   document.getElementById('mp-lightbox').addEventListener('click', function(e){
     if (e.target === this) mpCloseLb();
   });
@@ -379,6 +569,7 @@
     if (e.key === 'ArrowRight') mpNextLb();
     if (e.key === 'Escape')     mpCloseLb();
   });
+
 
 </script>
 
