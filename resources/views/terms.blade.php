@@ -5,61 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms & Conditions - Russ Cuevas Artelier</title>
     
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    @vite(['resources/css/styles2.css'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('style2.css') }}">
 </head>
-<body>
-    <header>
-        <x-nav-bar></x-nav-bar>
-    </header>
-
-<main class="flex-grow pt-24 pb-12 px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center">
-        <div class="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-8 md:p-14 text-gray-700 mt-8">
-            <h1 class="text-4xl font-bold text-center text-gray-900 mb-10 font-serif">Terms & Conditions</h1>
+<body style="background-color: #ffffff; color: #333; overflow-x: hidden;">
     
-            <p class="text-lg leading-relaxed mb-8 text-center text-gray-600">These Terms govern your use of our site and services. By accessing or using our site, you agree to comply with these Terms.</p>
-        
-            <h2 class="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">The Site is an Online Store</h2>
-            <p class="leading-relaxed mb-4">The Site is an online store. The Company provides The Site to allow buyers to purchase products listed on the site.</p>
-            <p class="leading-relaxed mb-6">You agree to release the Company from any responsibility for any dispute that arises with another user of The Site. You agree that The Company cannot be deemed liable for your use of The Site. You agree to use The Company’s products and services at your own risk.</p>
-        
-            <h2 class="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">User Eligibility and Responsibility</h2>
-            <ul class="list-disc pl-6 space-y-3 leading-relaxed mb-6">
-                <li>The Company’s products and services are available only to persons 18 years of age or older. Please do not use the site if you do not satisfy this condition.</li>
-                <li>The Company reserves the right to refuse service at its own discretion at any time.</li>
-                <li>You agree to the following hyperlinked policies: <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a>.</li>
-                <li>You are responsible for all activity created under your account. You agree to keep your password private and inform The Company if there has been a breach of your account.</li>
-                <li>You agree to keep your account information, and any content you create, accurate, current, and complete.</li>
-                <li>You agree to comply with all applicable domestic and international laws regarding your use of The Site and not to use The Site for illegal activities.</li>
-                <li>You agree not to engage in any activity that negatively impacts The Company’s branding, revenue, or the quality of its products and services.</li>
-            </ul>
-        
-            <h2 class="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">Buying</h2>
-            <p class="leading-relaxed mb-6">You agree to pay for all orders or cancel the order within the time allocated by the seller.</p>
-        
-            <h2 class="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">Intellectual Property</h2>
-            <p class="leading-relaxed mb-6">The Company reserves the right to remove user-created content that impacts its own intellectual property at its own discretion.</p>
-        
-            <h2 class="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">No Guarantee</h2>
-            <ul class="list-disc pl-6 space-y-3 leading-relaxed mb-6">
-                <li>The Company reserves the right to perform maintenance on The Site as required.</li>
-                <li>The Company does not guarantee continuous, uninterrupted access to The Site.</li>
-                <li>The Company does not guarantee that private information will remain private, as third parties may unlawfully intercept access or private communications and transmissions.</li>
-                <li>You agree not to hold The Company liable for the impact of downtime caused by maintenance or any unscheduled system activity.</li>
-            </ul>
-        
-            <h2 class="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">Indemnity</h2>
-            <p class="leading-relaxed mb-6">You agree to indemnify and hold The Company harmless from any claim or demand arising out of your breach of this agreement or the documents it incorporates by reference, or your violation of any law or the rights of a third party.</p>
-        
-            <h2 class="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">No Agency</h2>
-            <p class="leading-relaxed mb-6">The terms and provisions of this Agreement shall not be interpreted as creating an agency, partnership, joint venture, employee-employer, or franchisor-franchisee relationship between yourself and The Company. A Member may not bind or obligate The Company without The Company’s prior written consent.</p>
-        
-            <h2 class="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">Law of Choice</h2>
-            <p class="leading-relaxed mb-6">The Company will comply with the relevant laws and regulations of the Republic of the Philippines.</p>
+    <x-nav-bar></x-nav-bar>
+
+    <!-- Header Section -->
+    <section style="background-color: #faf9f6; padding: 120px 20px 80px; text-align: center; border-bottom: 1px solid #eee;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <span style="font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; color: #888; display: block; margin-bottom: 20px;">Legal Information</span>
+            <h1 style="font-family: var(--font-serif); font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 400; margin-bottom: 30px; letter-spacing: -1px; color: #1a1a1a;">Terms & Conditions</h1>
+            <p style="font-family: var(--font-sans); font-size: 1.1rem; color: #666; line-height: 1.8; font-style: italic;">"The foundation of our relationship with you."</p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <main style="max-width: 1000px; margin: 0 auto; padding: 40px 20px 80px;">
+        <div style="background-color: #ffffff; border: 1px solid #f0f0f0; border-radius: 2px; padding: 60px 50px; box-shadow: 0 30px 60px rgba(0,0,0,0.02); position: relative; margin-top: -40px; z-index: 10;">
+            
+            <div style="font-family: var(--font-sans); font-size: 1.15rem; line-height: 1.7; color: #444;">
+                
+                <div style="margin-bottom: 50px; text-align: center; border-left: 4px solid #c5a48e; padding: 15px 30px; background-color: #fffdfb;">
+                    <p style="font-size: 1.25rem; color: #1a1a1a; font-family: var(--font-serif); font-style: italic; line-height: 1.6;">
+                        "Welcome to the world of Russ Cuevas. It is our distinct honor to accompany you on your journey toward a bespoke creation. The following terms are designed to ensure that your experience with our Artelier is as seamless and beautiful as the garments we create."
+                    </p>
+                </div>
+
+                <p style="margin-bottom: 40px; font-size: 1.2rem; color: #1a1a1a; font-weight: 500;">
+                    These Terms and Conditions govern the professional relationship between Russ Cuevas Atelier ("the Atelier") and our esteemed clients. By engaging our bespoke services or utilizing our digital platform, you acknowledge and agree to the following standards of excellence.
+                </p>
+
+                <!-- 1. General Engagement -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">1. General Engagement</h2>
+                    <p style="margin-bottom: 15px;">1.1 Each Russ Cuevas creation is a bespoke work of art, handcrafted to the specific measurements, aesthetic preferences, and design requirements of the client.</p>
+                    <p>1.2 A formal engagement begins only upon the receipt of the initial deposit and the execution of our comprehensive service agreement.</p>
+                </div>
+
+                <!-- 2. Bookings & Appointments -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">2. Bookings & Consultations</h2>
+                    <p style="margin-bottom: 15px;">2.1 To preserve the intimate and focused nature of our craft, all consultations and fittings are conducted strictly by appointment at our Atelier in Kalookan, Metro Manila.</p>
+                    <p style="margin-bottom: 15px;">2.2 <strong>Punctuality:</strong> We value your time and ask for the same in return. Clients are requested to arrive at their scheduled time. Late arrivals may result in a shortened session to maintain the schedule of subsequent patrons.</p>
+                    <p>2.3 <strong>Cancellations:</strong> We kindly request a minimum of 48 hours' notice for any rescheduling. Consistent late cancellations or no-shows may require a non-refundable booking fee for future sessions.</p>
+                </div>
+
+                <!-- 3. Financial Terms & Refunds -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">3. Payments, Deposits & Refunds</h2>
+                    <p style="margin-bottom: 15px;">3.1 <strong>Initial Commitment:</strong> A non-refundable deposit of 50% of the total estimated value is required to initiate the design process, secure fabric allocations, and begin pattern construction.</p>
+                    <p style="margin-bottom: 15px;">3.2 <strong>Progressive Payments:</strong> Milestones and payment schedules are detailed within your specific contract. All balances must be settled in full prior to the final release of the garment.</p>
+                    <p>3.3 <strong>Refund Policy:</strong> Due to the highly personalized and bespoke nature of our work, all payments are non-refundable. Should a client choose to discontinue the process, any payments made will be retained by the Atelier to cover the costs of labor, specialized fabrics, and overhead incurred.</p>
+                </div>
+
+                <!-- 4. The Fitting Journey -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">4. Alterations & Fittings</h2>
+                    <p style="margin-bottom: 15px;">4.1 Achieving the perfect silhouette typically requires a journey of 3 to 5 intimate fittings. We ask our clients to provide the intended footwear and undergarments for every fitting to ensure precision in length and structure.</p>
+                    <p style="margin-bottom: 15px;">4.2 <strong>Design Evolution:</strong> While we welcome collaboration, significant design changes requested after the initial pattern-making or fabric cutting phase will incur additional artisanal and material fees.</p>
+                    <p>4.3 <strong>Measurements:</strong> The Atelier is dedicated to the measurements taken during the initial consultation. We cannot be held responsible for fit discrepancies resulting from significant weight fluctuations after the final measurements have been confirmed.</p>
+                </div>
+
+                <!-- 5. Intellectual Property -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">5. Intellectual Property</h2>
+                    <p style="margin-bottom: 15px;">5.1 All original designs, sketches, patterns, and technical drawings created by Russ Cuevas remain the exclusive intellectual property of the Atelier.</p>
+                    <p>5.2 The unauthorized reproduction or commercial utilization of our unique designs is strictly prohibited and protected by international copyright laws.</p>
+                </div>
+
+                <!-- 6. Usage Rights & Media -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">6. Usage Rights & Portfolio</h2>
+                    <p style="margin-bottom: 15px;">6.1 We take immense pride in our creations. The Atelier reserves the right to photograph garments in progress and in their finished state for our digital portfolio and social media channels.</p>
+                    <p>6.2 We hold your privacy in high regard; images featuring the client themselves will only be shared with express verbal or written consent.</p>
+                </div>
+
+                <!-- 7. Privacy & Data -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">7. Privacy & Confidentiality</h2>
+                    <p style="margin-bottom: 15px;">7.1 Your personal narrative, including intimate measurements, contact details, and event specifics, is kept in the strictest confidence. </p>
+                    <p>7.2 Data is utilized solely for the purpose of artisanal fulfillment and providing a personalized client experience. We do not engage in the sale or sharing of client information with external third parties.</p>
+                </div>
+
+                <!-- 8. Liability & Force Majeure -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">8. Limitation of Liability</h2>
+                    <p style="margin-bottom: 15px;">8.1 The Atelier strives for perfection but shall not be held liable for delays caused by circumstances beyond our control, including but not limited to global logistics disruptions, fabric manufacturer shortages, or acts of God (Force Majeure).</p>
+                    <p>8.2 Our total financial liability is limited strictly to the total amount paid by the client for the specific garment under dispute.</p>
+                </div>
+
+                <!-- 9. Governing Law & Disputes -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">9. Governing Law & Dispute Resolution</h2>
+                    <p style="margin-bottom: 15px;">9.1 These terms and your relationship with the Atelier are governed by the laws of the Republic of the Philippines.</p>
+                    <p>9.2 In the rare event of a disagreement, both parties agree to first seek an amicable resolution through private mediation before pursuing any legal action within the jurisdiction of Kalookan, Metro Manila.</p>
+                </div>
+
+                <p style="font-style: italic; color: #888; border-top: 1px solid #eee; pt-20px; margin-top: 50px; padding-top: 20px;">
+                    Last updated: May 2026
+                </p>
+            </div>
         </div>
     </main>
 
     <x-footer></x-footer>
+
 </body>
 </html>

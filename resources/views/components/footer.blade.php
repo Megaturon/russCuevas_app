@@ -38,7 +38,7 @@
             <h3>Contact</h3>
             <div class="footer-contact-item">
                 <i class="fas fa-map-marker-alt"></i>
-                <span>Kalawaan, Pasig City<br>Metro Manila, 1600</span>
+                <span>Kalookan, Metro Manila<br>NCR, Philippines</span>
             </div>
             <div class="footer-contact-item">
                 <i class="fas fa-clock"></i>
