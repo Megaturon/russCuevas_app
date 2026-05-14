@@ -797,6 +797,15 @@
             <i class="fas fa-chart-line"></i>
             Business Overview
         </div>
+        <div class="nav-item" data-target="notifications">
+            <i class="fas fa-bell"></i>
+            Notifications
+            @if($tomorrowAppointments->count() + $pendingAppointmentsCount > 0)
+                <span style="background: var(--black); color: var(--white); font-size: 0.6rem; padding: 2px 6px; border-radius: 10px; margin-left: auto; border: 1px solid rgba(255,255,255,0.3);">
+                    {{ $tomorrowAppointments->count() + $pendingAppointmentsCount }}
+                </span>
+            @endif
+        </div>
         <div class="nav-item" data-target="appointments">
             <i class="fas fa-calendar-alt"></i>
             Appointments
@@ -838,6 +847,192 @@
         <div class="pane active" id="overview">
             @include('admin.overview')
         </div>
+
+        <!-- Notifications Pane -->
+        <div class="pane" id="notifications">
+            <div style="max-width: 1000px; margin: 0 auto;">
+                
+                <!-- Notification Hub Header -->
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;">
+                    <div>
+                        <h2 style="font-family: var(--font-serif); font-size: 2.2rem; letter-spacing: 1px; margin-bottom: 8px;">Notification Hub</h2>
+                        <p style="color: var(--grey-text); font-size: 0.9rem; letter-spacing: 0.5px;">Manage your immediate priorities and pending approvals.</p>
+                    </div>
+                    <div style="display: flex; gap: 20px;">
+                        <div style="text-align: right; border-right: 1px solid var(--grey-border); padding-right: 20px;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--black);">{{ $tomorrowAppointments->count() }}</div>
+                            <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-text);">For Tomorrow</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--black);">{{ $pendingAppointmentsCount }}</div>
+                            <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-text);">Pending Actions</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Priority Schedule Section -->
+                <div style="margin-bottom: 60px;">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
+                        <i class="fas fa-calendar-check" style="font-size: 1.1rem; color: var(--black);"></i>
+                        <h3 style="font-family: var(--font-sans); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--black);">Tomorrow's Schedule</h3>
+                    </div>
+
+                    @if($tomorrowAppointments->count() > 0)
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            @foreach($tomorrowAppointments as $app)
+                                <div class="notification-card priority-card">
+                                    <div class="time-col">
+                                        <div class="time-main">{{ \Carbon\Carbon::parse($app->time)->format('g:i') }}</div>
+                                        <div class="time-ampm">{{ \Carbon\Carbon::parse($app->time)->format('A') }}</div>
+                                    </div>
+                                    <div class="info-col">
+                                        <div class="info-header">
+                                            <div class="client-name">{{ $app->name }}</div>
+                                            <span class="status-pill status-confirmed">Confirmed</span>
+                                        </div>
+                                        <div class="client-email"><i class="fas fa-envelope"></i> {{ $app->email }}</div>
+                                        @if($app->notes)
+                                        <div class="card-notes">
+                                            <span class="notes-label">Preparation Notes:</span>
+                                            <p>"{{ $app->notes }}"</p>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="empty-state-card">
+                            <i class="far fa-calendar-alt"></i>
+                            <p>No confirmed appointments for tomorrow.</p>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Action Required Section -->
+                <div style="margin-bottom: 60px;">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 1.1rem; color: var(--black);"></i>
+                        <h3 style="font-family: var(--font-sans); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--black);">Action Required</h3>
+                    </div>
+
+                    @if($pendingAppointments->count() > 0)
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            @foreach($pendingAppointments as $app)
+                                <div class="notification-card pending-card">
+                                    <div class="date-col">
+                                        <div class="date-month">{{ \Carbon\Carbon::parse($app->date)->format('M') }}</div>
+                                        <div class="date-day">{{ \Carbon\Carbon::parse($app->date)->format('d') }}</div>
+                                    </div>
+                                    <div class="info-col">
+                                        <div class="info-header">
+                                            <div class="client-name">{{ $app->name }}</div>
+                                            <span class="status-pill status-pending">Pending Approval</span>
+                                        </div>
+                                        <div class="client-email"><i class="fas fa-clock"></i> {{ \Carbon\Carbon::parse($app->time)->format('g:i A') }} • {{ $app->email }}</div>
+                                        <div class="card-notes" style="background: rgba(0,0,0,0.02);">
+                                            <p>"{{ $app->notes ?: 'Requesting a session.' }}"</p>
+                                        </div>
+                                    </div>
+                                    <div class="action-col">
+                                        <button class="btn btn-success btn-sm-compact" onclick="confirmAppointment({{ $app->id }})">Confirm</button>
+                                        <button class="btn btn-warning btn-sm-compact" onclick="openRescheduleModal({{ $app->id }}, '{{ $app->date }}', '{{ $app->time }}')">Reschedule</button>
+                                        <button class="btn btn-danger btn-sm-compact" onclick="deleteAppointment({{ $app->id }})">Delete</button>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="empty-state-card">
+                            <i class="far fa-check-circle"></i>
+                            <p>All appointment requests have been processed.</p>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Recent Inquiries -->
+                <div>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
+                        <i class="fas fa-paper-plane" style="font-size: 1.1rem; color: var(--black);"></i>
+                        <h3 style="font-family: var(--font-sans); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--black);">Recent Inquiries</h3>
+                    </div>
+
+                    @if($newTodayQuotes->count() > 0)
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            @foreach($newTodayQuotes as $quote)
+                                <div class="activity-card">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-file-invoice-dollar"></i>
+                                    </div>
+                                    <div class="activity-info">
+                                        <div class="activity-title">New Quote Request from <strong>{{ $quote->name }}</strong></div>
+                                        <div class="activity-meta">Service: {{ $quote->service_type }} • {{ $quote->created_at->diffForHumans() }}</div>
+                                    </div>
+                                    <button class="btn btn-primary btn-outline-sm" onclick='document.querySelector("[data-target=\"quotes\"]").click(); openQuoteModal(@json($quote))'>Review Quote</button>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p style="color: var(--grey-text); font-style: italic; font-size: 0.9rem; padding-left: 30px;">No new quote inquiries today.</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .notification-card {
+                background: var(--white);
+                border: 1px solid var(--grey-border);
+                display: flex;
+                align-items: stretch;
+                transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            }
+            .notification-card:hover {
+                border-color: var(--black);
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            }
+            .time-col, .date-col {
+                min-width: 100px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border-right: 1px solid var(--grey-border);
+                padding: 20px;
+                text-align: center;
+            }
+            .time-main { font-size: 1.3rem; font-weight: 700; color: var(--black); line-height: 1; }
+            .time-ampm { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-text); margin-top: 4px; }
+            .date-month { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--grey-text); margin-bottom: 2px; }
+            .date-day { font-size: 1.5rem; font-weight: 700; color: var(--black); line-height: 1; }
+            
+            .info-col { flex: 1; padding: 20px 30px; display: flex; flex-direction: column; justify-content: center; }
+            .info-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+            .client-name { font-size: 1.15rem; font-weight: 700; color: var(--black); }
+            .client-email { font-size: 0.85rem; color: var(--grey-text); margin-bottom: 15px; }
+            .client-email i { margin-right: 8px; width: 14px; text-align: center; }
+            
+            .card-notes { padding: 12px 15px; border-left: 3px solid var(--black); background: var(--grey-light); border-radius: 0 4px 4px 0; }
+            .notes-label { display: block; font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-text); margin-bottom: 4px; }
+            .card-notes p { font-size: 0.9rem; font-style: italic; color: var(--black); line-height: 1.4; margin: 0; }
+            
+            .action-col { padding: 20px; display: flex; flex-direction: column; gap: 8px; justify-content: center; border-left: 1px solid var(--grey-border); background: #fafafa; }
+            .btn-sm-compact { padding: 8px 12px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; width: 120px; }
+            
+            .activity-card { display: flex; align-items: center; gap: 20px; padding: 15px 25px; border: 1px solid var(--grey-border); background: var(--white); transition: all 0.3s ease; }
+            .activity-card:hover { border-color: var(--black); }
+            .icon-circle { width: 42px; height: 42px; background: var(--black); color: var(--white); display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem; }
+            .activity-info { flex: 1; }
+            .activity-title { font-size: 0.95rem; color: var(--black); margin-bottom: 2px; }
+            .activity-meta { font-size: 0.75rem; color: var(--grey-text); }
+            .btn-outline-sm { background: transparent; color: var(--black); border: 1px solid var(--black); font-size: 0.7rem; padding: 6px 12px; }
+            .btn-outline-sm:hover { background: var(--black); color: var(--white); }
+            
+            .empty-state-card { text-align: center; padding: 50px; border: 2px dashed var(--grey-border); color: var(--grey-text); border-radius: 4px; }
+            .empty-state-card i { font-size: 2rem; margin-bottom: 15px; opacity: 0.3; }
+            .empty-state-card p { font-style: italic; font-size: 0.95rem; margin: 0; }
+        </style>
         
         <!-- Appointments Pane -->
         <div class="pane" id="appointments">

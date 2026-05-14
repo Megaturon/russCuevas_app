@@ -123,11 +123,28 @@ class AdminController extends Controller
             ->pluck('total', 'date')->toArray();
 
         $allAppointments = Appointment::all();
+        $tomorrow = Carbon::tomorrow()->toDateString();
+        $today_date = Carbon::today()->toDateString();
+
+        $tomorrowAppointments = Appointment::where('date', $tomorrow)
+            ->where('status', 'Confirmed')
+            ->orderBy('time', 'asc')
+            ->get();
+
+        $newTodayQuotes = Quote::whereDate('created_at', $today_date)->get();
+        $newTodayAppointments = Appointment::whereDate('created_at', $today_date)->get();
+        $pendingAppointments = Appointment::where('status', 'Pending')->orderBy('created_at', 'desc')->get();
+        $pendingAppointmentsCount = $pendingAppointments->count();
         
         return view('admin.dashboard', compact(
             'appointments', 
             'pastAppointments',
             'allAppointments',
+            'tomorrowAppointments',
+            'newTodayQuotes',
+            'newTodayAppointments',
+            'pendingAppointments',
+            'pendingAppointmentsCount',
             'quotes', 
             'users', 
             'totalRevenuePending', 
