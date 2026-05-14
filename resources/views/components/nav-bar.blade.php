@@ -2,6 +2,14 @@
 
 <nav class="navbar">
     <div class="nav-left">
+      <div class="logo-container">
+        <a href="/" class="logo" style="display:block; cursor:pointer;">
+          <img src="/images/RC_logo.jpg" alt="Russ Cuevas Logo">
+        </a>
+      </div>
+    </div>
+
+    <div class="nav-right">
       <div class="dropdown-wrapper">
         <button class="gallery-btn">Gallery</button>
         <ul class="luxury-dropdown" id="galleryDropdown">
@@ -19,23 +27,15 @@
         </ul>
       </div>
       <a href="/faq">Learn</a>
-    </div>
-
-    <div class="logo-container">
-      <a href="/" class="logo">
-        <img src="/images/RC_logo.jpg" alt="Russ Cuevas Logo">
-      </a>
-    </div>
-
-    <div class="nav-right">
       <a href="{{ route('quote.index') }}" class="quote-link">Get a Quote</a>
       <a href="{{ route('appointments.index') }}" class="book-btn-nav">Book Now</a>
+
       <div class="icons">
-        <div class="dropdown">
-          <a class="login-btn">
-            <img src="/img/user.png" alt="User Profile" width="20" height="20" class="user-icon-img">
+        <div class="dropdown" style="position: relative;">
+          <a class="login-btn" style="display:flex; align-items:center; justify-content:center; cursor:pointer;">
+            <img src="/img/user.png" alt="User Profile" width="22" height="22" class="user-icon-img" style="display:block; object-fit:contain;">
           </a>
-          <div class="dropdown-content">
+          <div class="dropdown-content" style="position: absolute; top: 100%; right: 0; left: auto;">
             <ul class="dropdown-menu" id="loginDropdown" style="display: none;">
               @guest
               <a href="/login"><li>Log In</li></a>
@@ -85,7 +85,6 @@
     const authMenu = document.getElementById('loginDropdown');
 
     if (session && session.user) {
-        // Clear the long messy token from the URL if it exists
         if (window.location.hash.includes('access_token')) {
             window.history.replaceState(null, null, window.location.pathname + window.location.search);
         }
@@ -93,7 +92,6 @@
         const userName = session.user.user_metadata?.full_name || session.user.email;
         
         if (authMenu) {
-            // Replace the dropdown content with user's name and Log Out
             authMenu.innerHTML = `
                 <li style="padding: 10px 20px; font-weight: 600; font-size: 0.7rem; border-bottom: 1px solid #eee; white-space: nowrap;">${userName}</li>
                 <li id="supabase-logout-btn" style="cursor: pointer; padding: 10px 20px; font-size: 0.8rem;">Log Out</li>
@@ -101,7 +99,7 @@
             
             document.getElementById('supabase-logout-btn').addEventListener('click', async () => {
                 await supabaseClient.auth.signOut();
-                window.location.reload(); // Reload to show guest menu
+                window.location.reload();
             });
         }
     }
