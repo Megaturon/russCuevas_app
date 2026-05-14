@@ -367,26 +367,41 @@
   </section>
 
   <!-- 2. Wedding Dresses -->
-  <section id="wedding-dresses" class="py-16 bg-white reveal-on-scroll">
+  <section id="wedding-dresses" class="py-20 bg-white reveal-on-scroll text-center">
     <div class="max-w-7xl mx-auto px-4">
-      <h3 class="gallery-heading">Wedding Dresses</h3>
-      <div id="gallery-wedding" class="mt-12"></div>
+      <span class="mp-hero-eyebrow" style="color: #888; margin-bottom: 15px;">Bridal</span>
+      <div style="display: inline-flex; align-items: center; gap: 30px; margin-bottom: 20px;">
+        <div style="width: 60px; height: 5px; background-color: #c5a48e; opacity: 0.8;"></div>
+        <h3 class="gallery-heading" style="margin-bottom: 0;">Wedding Dresses</h3>
+      </div>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-12">Timeless elegance for your walk down the aisle.</p>
+      <div id="gallery-wedding" class="mt-8"></div>
     </div>
   </section>
 
   <!-- 3. Evening Gowns -->
-  <section id="evening-gowns" class="py-16 reveal-on-scroll" style="background-color: #faf9f6;">
+  <section id="evening-gowns" class="py-20 reveal-on-scroll text-center" style="background-color: #faf9f6;">
     <div class="max-w-7xl mx-auto px-4">
-      <h3 class="gallery-heading">Evening Gowns</h3>
-      <div id="gallery-evening" class="mt-12"></div>
+      <span class="mp-hero-eyebrow" style="color: #888; margin-bottom: 15px;">Couture</span>
+      <div style="display: inline-flex; align-items: center; gap: 30px; margin-bottom: 20px;">
+        <div style="width: 60px; height: 5px; background-color: #c5a48e; opacity: 0.8;"></div>
+        <h3 class="gallery-heading" style="margin-bottom: 0;">Evening Gowns</h3>
+      </div>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-12">Sophisticated glamour for life's most grand occasions.</p>
+      <div id="gallery-evening" class="mt-8"></div>
     </div>
   </section>
 
   <!-- 4. Prom Dresses -->
-  <section id="prom-dresses" class="py-16 bg-white reveal-on-scroll">
+  <section id="prom-dresses" class="py-20 bg-white reveal-on-scroll text-center">
     <div class="max-w-7xl mx-auto px-4">
-      <h3 class="gallery-heading">Prom Collections</h3>
-      <div id="gallery-prom" class="mt-12"></div>
+      <span class="mp-hero-eyebrow" style="color: #888; margin-bottom: 15px;">Debut</span>
+      <div style="display: inline-flex; align-items: center; gap: 30px; margin-bottom: 20px;">
+        <div style="width: 60px; height: 5px; background-color: #c5a48e; opacity: 0.8;"></div>
+        <h3 class="gallery-heading" style="margin-bottom: 0;">Prom Collections</h3>
+      </div>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-12">Make a statement with youthful and modern couture.</p>
+      <div id="gallery-prom" class="mt-8"></div>
     </div>
   </section>
 
