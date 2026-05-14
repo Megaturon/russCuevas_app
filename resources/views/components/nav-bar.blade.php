@@ -1,21 +1,19 @@
 @vite(['resources/js/navbar.js', 'resources/css/styles2.css'])
 
 <nav class="navbar">
-    <div class="nav-left">
-      <div class="logo-container">
-        <a href="/" class="logo" style="display:block; cursor:pointer;">
-          <img src="/images/RC_logo.jpg" alt="Russ Cuevas Logo">
-        </a>
-      </div>
+    <div class="logo-container">
+      <a href="/" class="logo">
+        <img src="/images/RC_logo.jpg" alt="Russ Cuevas Logo">
+      </a>
     </div>
 
     <div class="nav-right">
       <div class="dropdown-wrapper">
         <button class="gallery-btn">Gallery</button>
         <ul class="luxury-dropdown" id="galleryDropdown">
-          <li onclick="mpSmoothScroll('wedding-dresses')">Wedding Gown</li>
-          <li onclick="mpSmoothScroll('evening-gowns')">Evening Wear</li>
-          <li onclick="mpSmoothScroll('prom-dresses')">Prom Collections</li>
+          <li onclick="loadGallery('Wedding Gown')">Wedding Gown</li>
+          <li onclick="loadGallery('Evening Gown')">Evening Wear</li>
+          <li onclick="loadGallery('Prom')">Prom Collections</li>
         </ul>
       </div>
       <div class="dropdown-wrapper">
