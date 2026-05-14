@@ -55,6 +55,78 @@
         text-align: center;
         margin-bottom: 1.5rem;
     }
+
+    /* Masonry Layout */
+    .mp-masonry-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    .mp-masonry-large {
+        grid-row: span 2;
+        min-height: 600px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .mp-masonry-small-col {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .mp-masonry-small {
+        flex: 1;
+        min-height: 290px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .mp-card-hover {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+    .mp-masonry-large:hover .mp-card-hover,
+    .mp-masonry-small:hover .mp-card-hover {
+        opacity: 1;
+    }
+    .mp-card-hover span {
+        color: #fff;
+        font-family: 'Inter', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border: 1px solid #fff;
+        padding: 10px 20px;
+        font-size: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+        .mp-masonry-group {
+            grid-template-columns: 1fr;
+        }
+        .mp-masonry-large {
+            min-height: 400px;
+            grid-row: span 1;
+        }
+        .mp-masonry-small {
+            min-height: 300px;
+        }
+    }
+
   </style>
 </head>
 
@@ -104,66 +176,37 @@
   </section>
 
   <!-- 2. Wedding Dresses -->
-  <section id="wedding-dresses" class="gallery-carousel-section bg-white reveal-on-scroll">
-    <div class="overflow-hidden">
+  <section id="wedding-dresses" class="py-16 bg-white reveal-on-scroll">
+    <div class="max-w-7xl mx-auto px-4">
       <h3 class="gallery-heading">Wedding Dresses</h3>
-      <div class="swiper gallerySwiper w-full px-4 sm:px-10">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="/images/wedding_closeup.jpg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-2.jpg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-2.png" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-3.jpg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-3.png" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-4.jpg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-4.png" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress-5.jpg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress.jpeg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress.jpg" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/wedding_dress.png" alt="Wedding Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-        </div>
-      </div>
+      <div id="gallery-wedding" class="mt-12"></div>
     </div>
   </section>
 
   <!-- 3. Evening Gowns -->
-  <section id="evening-gowns" class="gallery-carousel-section reveal-on-scroll" style="background-color: #faf9f6;">
-    <div class="overflow-hidden">
+  <section id="evening-gowns" class="py-16 reveal-on-scroll" style="background-color: #faf9f6;">
+    <div class="max-w-7xl mx-auto px-4">
       <h3 class="gallery-heading">Evening Gowns</h3>
-      <div class="swiper gallerySwiper w-full px-4 sm:px-10">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="/images/4.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening-2.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening-3.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening-4.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/4.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening-2.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening-3.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening-4.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/evening.jpg" alt="Evening Gown" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-        </div>
-      </div>
+      <div id="gallery-evening" class="mt-12"></div>
     </div>
   </section>
 
   <!-- 4. Prom Dresses -->
-  <section id="prom-dresses" class="gallery-carousel-section bg-white reveal-on-scroll">
-    <div class="overflow-hidden">
+  <section id="prom-dresses" class="py-16 bg-white reveal-on-scroll">
+    <div class="max-w-7xl mx-auto px-4">
       <h3 class="gallery-heading">Prom Collections</h3>
-      <div class="swiper gallerySwiper w-full px-4 sm:px-10">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="/images/prom-2.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom-3.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom-4.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom-2.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom-3.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom-4.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-          <div class="swiper-slide"><img src="/images/prom.jpg" alt="Prom Dress" class="w-full h-72 md:h-96 object-cover rounded-md shadow-lg"></div>
-        </div>
-      </div>
+      <div id="gallery-prom" class="mt-12"></div>
     </div>
   </section>
+
+  {{-- ===== LIGHTBOX ===== --}}
+  <div id="mp-lightbox" class="mp-lightbox" role="dialog" aria-modal="true">
+    <button class="mp-lb-close" onclick="mpCloseLb()" aria-label="Close">&times;</button>
+    <button class="mp-lb-prev" onclick="mpPrevLb()" aria-label="Previous">&#10094;</button>
+    <button class="mp-lb-next" onclick="mpNextLb()" aria-label="Next">&#10095;</button>
+    <div class="mp-lb-img-wrap"><img id="mp-lb-img" src="" alt="Gallery"></div>
+  </div>
+
 
   <!-- 5. CTA Button -->
   <section id="cta-section" class="py-16 bg-white text-center reveal-on-scroll">
@@ -215,7 +258,97 @@
 
   reloadSlider();
 
-  // Scroll Reveal Logic
+  // Gallery Data
+  var mpGallery = {
+    "Wedding": [
+      { thumb: "/images/wedding_closeup.jpg", imgs: ["/images/wedding_closeup.jpg"] },
+      { thumb: "/images/wedding_dress-2.jpg", imgs: ["/images/wedding_dress-2.jpg"] },
+      { thumb: "/images/wedding_dress-3.jpg", imgs: ["/images/wedding_dress-3.jpg"] },
+      { thumb: "/images/wedding_dress-4.jpg", imgs: ["/images/wedding_dress-4.jpg"] },
+      { thumb: "/images/wedding_dress-5.jpg", imgs: ["/images/wedding_dress-5.jpg"] },
+      { thumb: "/images/wedding_dress.jpg",   imgs: ["/images/wedding_dress.jpg"] }
+    ],
+    "Evening": [
+      { thumb: "/images/4.jpg",          imgs: ["/images/4.jpg"] },
+      { thumb: "/images/evening-2.jpg",  imgs: ["/images/evening-2.jpg"] },
+      { thumb: "/images/evening-3.jpg",  imgs: ["/images/evening-3.jpg"] },
+      { thumb: "/images/evening-4.jpg",  imgs: ["/images/evening-4.jpg"] },
+      { thumb: "/images/evening.jpg",    imgs: ["/images/evening.jpg"] },
+      { thumb: "/images/4.jpg",          imgs: ["/images/4.jpg"] }
+    ],
+    "Prom": [
+      { thumb: "/images/prom-2.jpg", imgs: ["/images/prom-2.jpg"] },
+      { thumb: "/images/prom-3.jpg", imgs: ["/images/prom-3.jpg"] },
+      { thumb: "/images/prom-4.jpg", imgs: ["/images/prom-4.jpg"] },
+      { thumb: "/images/prom.jpg",   imgs: ["/images/prom.jpg"] },
+      { thumb: "/images/prom-2.jpg", imgs: ["/images/prom-2.jpg"] },
+      { thumb: "/images/prom-3.jpg", imgs: ["/images/prom-3.jpg"] }
+    ]
+  };
+
+  var mpLbImages = [];
+  var mpLbIdx    = 0;
+
+  function mpRenderMasonry(containerId, cat) {
+    var container = document.getElementById(containerId);
+    var items = mpGallery[cat] || [];
+    if (!container) return;
+    
+    var html = '';
+    for (var i = 0; i < items.length; i += 3) {
+      var chunk = items.slice(i, i + 3);
+      var isFlipped = (i / 3) % 2 === 1;
+      
+      html += '<div class="mp-masonry-group">';
+      
+      var largeHtml = '';
+      if (chunk[0]) {
+        largeHtml = '<div class="mp-masonry-large" onclick="mpOpenLbCategory(\'' + cat + '\', ' + i + ')" style="background-image:url(\'' + chunk[0].thumb + '\')"><div class="mp-card-hover"><span>View</span></div></div>';
+      }
+      
+      var smallHtml = '';
+      if (chunk[1] || chunk[2]) {
+        smallHtml += '<div class="mp-masonry-small-col">';
+        if (chunk[1]) {
+          smallHtml += '<div class="mp-masonry-small" onclick="mpOpenLbCategory(\'' + cat + '\', ' + (i+1) + ')" style="background-image:url(\'' + chunk[1].thumb + '\')"><div class="mp-card-hover"><span>View</span></div></div>';
+        }
+        if (chunk[2]) {
+          smallHtml += '<div class="mp-masonry-small" onclick="mpOpenLbCategory(\'' + cat + '\', ' + (i+2) + ')" style="background-image:url(\'' + chunk[2].thumb + '\')"><div class="mp-card-hover"><span>View</span></div></div>';
+        }
+        smallHtml += '</div>';
+      }
+
+      html += isFlipped ? (smallHtml + largeHtml) : (largeHtml + smallHtml);
+      html += '</div>';
+    }
+    container.innerHTML = html;
+  }
+
+  function mpOpenLbCategory(cat, i){
+    var item = mpGallery[cat][i];
+    if(item && item.imgs) mpOpenLb(item.imgs, 0);
+  }
+
+  function mpOpenLb(imgs, i){
+    mpLbImages = imgs;
+    mpLbIdx    = i;
+    document.getElementById('mp-lb-img').src = imgs[i];
+    document.getElementById('mp-lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function mpCloseLb(){
+    document.getElementById('mp-lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function mpPrevLb(){
+    mpLbIdx = (mpLbIdx - 1 + mpLbImages.length) % mpLbImages.length;
+    document.getElementById('mp-lb-img').src = mpLbImages[mpLbIdx];
+  }
+  function mpNextLb(){
+    mpLbIdx = (mpLbIdx + 1) % mpLbImages.length;
+    document.getElementById('mp-lb-img').src = mpLbImages[mpLbIdx];
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
       const reveals = document.querySelectorAll(".reveal-on-scroll");
       const revealOnScroll = () => {
@@ -231,21 +364,22 @@
       window.addEventListener("scroll", revealOnScroll);
       revealOnScroll();
 
-      // Initialize Swiper Carousels
-      const swipers = document.querySelectorAll('.gallerySwiper');
-      swipers.forEach(function(swiperElement) {
-        new Swiper(swiperElement, {
-          slidesPerView: 'auto',
-          spaceBetween: 16,
-          loop: true,
-          speed: 800,
-          autoplay: {
-            delay: 2500,
-            disableOnInteraction: false,
-          },
-        });
-      });
+      // Render Masonry Galleries
+      mpRenderMasonry('gallery-wedding', 'Wedding');
+      mpRenderMasonry('gallery-evening', 'Evening');
+      mpRenderMasonry('gallery-prom', 'Prom');
   });
+
+  document.getElementById('mp-lightbox').addEventListener('click', function(e){
+    if (e.target === this) mpCloseLb();
+  });
+  document.addEventListener('keydown', function(e){
+    if (!document.getElementById('mp-lightbox').classList.contains('active')) return;
+    if (e.key === 'ArrowLeft')  mpPrevLb();
+    if (e.key === 'ArrowRight') mpNextLb();
+    if (e.key === 'Escape')     mpCloseLb();
+  });
+
 </script>
 
 </body>
