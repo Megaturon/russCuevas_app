@@ -34,14 +34,14 @@
           <a class="login-btn" style="display:flex; align-items:center; justify-content:center; cursor:pointer;">
             <img src="/img/user.png" alt="User Profile" width="22" height="22" class="user-icon-img" style="display:block; object-fit:contain;">
           </a>
-          <div class="dropdown-content" style="position: absolute; top: 100%; right: 0; left: auto;">
-            <ul class="dropdown-menu" id="loginDropdown" style="display: none;">
+          <div class="dropdown-content">
+            <ul class="user-dropdown-luxury" id="loginDropdown" style="display: none;">
               @guest
               <a href="/login"><li>Log In</li></a>
               <a href="/signup"><li>Sign Up</li></a>
               @else
-              <li style="padding: 10px 20px; font-weight: 600; font-size: 0.7rem; border-bottom: 1px solid #eee;">{{ auth()->user()->name }}</li>
-              <li onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="cursor: pointer; padding: 10px 20px;">Log Out</li>
+              <li class="user-name-header">{{ auth()->user()->name }}</li>
+              <li onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</li>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
               </form>
@@ -95,8 +95,8 @@
         
         if (authMenu) {
             authMenu.innerHTML = `
-                <li style="padding: 10px 20px; font-weight: 600; font-size: 0.7rem; border-bottom: 1px solid #eee; white-space: nowrap;">${userName}</li>
-                <li id="supabase-logout-btn" style="cursor: pointer; padding: 10px 20px; font-size: 0.8rem;">Log Out</li>
+                <li class="user-name-header">${userName}</li>
+                <li id="supabase-logout-btn">Log Out</li>
             `;
             
             document.getElementById('supabase-logout-btn').addEventListener('click', async () => {
