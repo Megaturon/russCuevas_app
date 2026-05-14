@@ -16,16 +16,30 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $today = Carbon::today()->toDateString();
+        $now = Carbon::now();
+        $today = $now->toDateString();
+        $currentTime = $now->toTimeString();
         
-        $appointments = Appointment::where('date', '>=', $today)
+        $appointments = Appointment::where(function($query) use ($today, $currentTime) {
+                $query->where('date', '>', $today)
+                      ->orWhere(function($q) use ($today, $currentTime) {
+                          $q->where('date', $today)
+                            ->where('time', '>=', $currentTime);
+                      });
+            })
             ->orderBy('date', 'asc')
             ->orderBy('time', 'asc')
             ->get();
             
-        $pastAppointments = Appointment::where('date', '<', $today)
+        $pastAppointments = Appointment::where(function($query) use ($today, $currentTime) {
+                $query->where('date', '<', $today)
+                      ->orWhere(function($q) use ($today, $currentTime) {
+                          $q->where('date', $today)
+                            ->where('time', '<', $currentTime);
+                      });
+            })
             ->orderBy('date', 'desc')
-            ->orderBy('time', 'asc')
+            ->orderBy('time', 'desc')
             ->get();
 
         $quotes = Quote::orderBy('created_at', 'desc')->get();
@@ -108,9 +122,12 @@ class AdminController extends Controller
             ->orderBy('date', 'asc')
             ->pluck('total', 'date')->toArray();
 
+        $allAppointments = Appointment::all();
+        
         return view('admin.dashboard', compact(
             'appointments', 
             'pastAppointments',
+            'allAppointments',
             'quotes', 
             'users', 
             'totalRevenuePending', 

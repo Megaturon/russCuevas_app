@@ -238,15 +238,106 @@
             text-transform: uppercase;
             font-size: 0.8rem;
             letter-spacing: 1px;
+            margin-bottom: 2rem !important;
         }
         
+        .fc-toolbar-title {
+            font-family: var(--font-serif) !important;
+            font-size: 1.4rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 2px !important;
+            color: var(--black) !important;
+        }
+
         .fc-button-primary {
             background-color: var(--black) !important;
-            border-color: var(--black) !important;
+            border: 1px solid var(--black) !important;
             border-radius: 0 !important;
-            text-transform: uppercase;
+            text-transform: uppercase !important;
             font-size: 0.7rem !important;
-            letter-spacing: 1px;
+            font-weight: 600 !important;
+            letter-spacing: 1.5px !important;
+            padding: 10px 18px !important;
+            transition: all 0.3s ease !important;
+            box-shadow: none !important;
+        }
+
+        .fc-button-primary:hover {
+            background-color: var(--grey-dark) !important;
+            border-color: var(--grey-dark) !important;
+        }
+
+        .fc-button-primary:disabled {
+            background-color: #ccc !important;
+            border-color: #ccc !important;
+            opacity: 0.5 !important;
+        }
+
+        .fc-button-active {
+            background-color: var(--grey-dark) !important;
+            border-color: var(--grey-dark) !important;
+        }
+
+        .fc-theme-standard td, .fc-theme-standard th {
+            border: 1px solid var(--grey-border) !important;
+        }
+
+        .fc-col-header-cell {
+            background-color: var(--white) !important;
+            padding: 12px 0 !important;
+        }
+
+        .fc-col-header-cell-cushion {
+            font-size: 0.75rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            color: var(--black) !important;
+            text-decoration: none !important;
+        }
+
+        .fc-day-today {
+            background-color: var(--grey-light) !important;
+        }
+
+        .fc-daygrid-day-number {
+            font-size: 0.9rem !important;
+            color: var(--black) !important;
+            padding: 10px !important;
+            font-weight: 500 !important;
+            text-decoration: none !important;
+        }
+
+        .fc-event {
+            border-radius: 0 !important;
+            border: none !important;
+            padding: 4px 8px !important;
+            font-size: 0.65rem !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            cursor: pointer !important;
+            transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+        }
+
+        .fc-event:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+        }
+
+        .fc-daygrid-event-dot {
+            border-color: var(--black) !important;
+        }
+
+        .fc-daygrid-more-link {
+            font-size: 0.7rem !important;
+            font-weight: 600 !important;
+            color: var(--black) !important;
+            text-decoration: none !important;
+        }
+
+        .fc-scrollgrid {
+            border-radius: 0 !important;
         }
 
         .view-toggle-btn {
@@ -477,12 +568,18 @@
         .close-modal-btn {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 2rem;
+            line-height: 1;
             cursor: pointer;
             color: var(--grey-text);
-            transition: color 0.3s;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
         }
-        .close-modal-btn:hover { color: var(--black); }
+        .close-modal-btn:hover { color: var(--black); transform: scale(1.1); }
 
         .modal-body {
             padding: 40px;
@@ -594,15 +691,7 @@
             letter-spacing: 1px;
         }
 
-        .close-modal-btn {
-            background: none;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            color: var(--black);
-            line-height: 1.6;
-        }
+
 
         /* KPI Cards Styling */
         .stats-grid {
@@ -1064,6 +1153,24 @@
     </div>
 </div>
 
+<!-- Day Appointments Modal -->
+<div class="modal-overlay" id="dayAppointmentsModalOverlay" onclick="closeDayModal(event)">
+    <div class="modal-content" style="max-width: 500px;" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2 id="day-modal-title">Appointments for May 14</h2>
+            <button class="close-modal-btn" onclick="closeDayModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="day-appointments-list" style="display: flex; flex-direction: column; gap: 15px;">
+                <!-- Appointments injected here -->
+            </div>
+            <div id="no-appointments-msg" style="display: none; text-align: center; padding: 20px; color: var(--grey-text); font-style: italic;">
+                No appointments scheduled for this day.
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -1360,14 +1467,29 @@
 
     function initCalendar() {
         const calendarEl = document.getElementById('calendar-view');
-        const appointments = @json($appointments);
+        const appointments = @json($allAppointments);
         
-        const events = appointments.map(app => ({
-            title: app.name + ' (' + app.status + ')',
-            start: app.date + 'T' + app.time,
-            color: app.status === 'Confirmed' ? '#000' : (app.status === 'Cancelled' ? '#ccc' : '#666'),
-            extendedProps: app
-        }));
+        const events = appointments.map(app => {
+            let bgColor = '#000000'; // Confirmed
+            let textColor = '#ffffff';
+            
+            if (app.status === 'Pending') {
+                bgColor = '#666666';
+            } else if (app.status === 'Rescheduled') {
+                bgColor = '#333333';
+            } else if (app.status === 'Cancelled') {
+                bgColor = '#e5e5e5';
+                textColor = '#666666';
+            }
+
+            return {
+                title: app.name.split(' ')[0] + ' (' + app.status.charAt(0) + ')',
+                start: app.date + 'T' + app.time,
+                backgroundColor: bgColor,
+                textColor: textColor,
+                extendedProps: app
+            };
+        });
 
         calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
@@ -1377,9 +1499,13 @@
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
             events: events,
+            dayMaxEvents: true,
+            dateClick: function(info) {
+                showDayAppointments(info.dateStr);
+            },
             eventClick: function(info) {
                 const app = info.event.extendedProps;
-                alert('Appointment for: ' + app.name + '\nStatus: ' + app.status + '\nNotes: ' + app.notes);
+                showDayAppointments(app.date);
             }
         });
         calendar.render();
@@ -1512,6 +1638,49 @@
             }
         });
     });
+
+    function showDayAppointments(dateStr) {
+        const appointments = @json($allAppointments);
+        const filtered = appointments.filter(app => app.date === dateStr);
+        const listEl = document.getElementById('day-appointments-list');
+        const msgEl = document.getElementById('no-appointments-msg');
+        const modal = document.getElementById('dayAppointmentsModalOverlay');
+        const titleEl = document.getElementById('day-modal-title');
+
+        const date = new Date(dateStr);
+        titleEl.textContent = 'Schedule: ' + date.toLocaleDateString([], { month: 'long', day: 'numeric', year: 'numeric' });
+
+        listEl.innerHTML = '';
+        if (filtered.length > 0) {
+            msgEl.style.display = 'none';
+            filtered.forEach(app => {
+                const timeStr = new Date(app.date + 'T' + app.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const item = document.createElement('div');
+                item.style.cssText = `padding: 15px; border: 1px solid var(--grey-border); border-left: 4px solid var(--black);`;
+                item.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <strong style="font-size: 1.15rem;">${app.name}</strong>
+                        <span class="status-pill status-${app.status}" style="font-size: 0.65rem;">${app.status}</span>
+                    </div>
+                    <div style="font-size: 0.9rem; color: var(--grey-text); margin-top: 5px;">
+                        <i class="fas fa-clock" style="margin-right: 5px;"></i> ${timeStr}
+                    </div>
+                    <div style="font-size: 0.95rem; margin-top: 8px; font-style: italic;">"${app.notes || 'No notes'}"</div>
+                `;
+                listEl.appendChild(item);
+            });
+        } else {
+            msgEl.style.display = 'block';
+        }
+
+        modal.classList.add('active');
+    }
+
+    function closeDayModal(e) {
+        if (!e || e.target.id === 'dayAppointmentsModalOverlay' || e.target.classList.contains('close-modal-btn')) {
+            document.getElementById('dayAppointmentsModalOverlay').classList.remove('active');
+        }
+    }
 </script>
 
 </body>

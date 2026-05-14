@@ -41,6 +41,9 @@
               <a href="/signup"><li>Sign Up</li></a>
               @else
               <li class="user-name-header">{{ auth()->user()->name }}</li>
+              @if(auth()->user()->is_admin)
+              <a href="/admin"><li>Admin Dashboard</li></a>
+              @endif
               <li onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</li>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
@@ -94,8 +97,10 @@
         const userName = session.user.user_metadata?.full_name || session.user.email;
         
         if (authMenu) {
+            const isAdmin = session.user.user_metadata?.role === 'admin' || session.user.email === 'admin@russcuevas.com';
             authMenu.innerHTML = `
                 <li class="user-name-header">${userName}</li>
+                ${isAdmin ? `<a href="/admin"><li>Admin Dashboard</li></a>` : ''}
                 <li id="supabase-logout-btn">Log Out</li>
             `;
             
