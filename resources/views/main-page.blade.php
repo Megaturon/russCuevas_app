@@ -408,6 +408,19 @@
     </div>
   </section>
 
+  <!-- 5. Filipiniana -->
+  <section id="filipiniana-section" class="py-20 reveal-on-scroll text-center" style="background-color: #faf9f6;">
+    <div class="max-w-7xl mx-auto px-4">
+      <span class="mp-hero-eyebrow" style="color: #888; margin-bottom: 15px;">Heritage</span>
+      <div style="display: inline-flex; align-items: center; gap: 30px; margin-bottom: 20px;">
+        <div style="width: 60px; height: 5px; background-color: #c5a48e; opacity: 0.8;"></div>
+        <h3 class="gallery-heading" style="margin-bottom: 0;">Filipiniana Collection</h3>
+      </div>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-12">Celebrating the timeless beauty of Filipino heritage through couture craftsmanship.</p>
+      <div id="gallery-filipiniana" class="mt-8"></div>
+    </div>
+  </section>
+
   {{-- ===== LIGHTBOX ===== --}}
   <div id="mp-lightbox" class="mp-lightbox" role="dialog" aria-modal="true">
     <button class="mp-lb-close" onclick="mpCloseLb()" aria-label="Close">&times;</button>
@@ -494,6 +507,11 @@
       { thumb: "/images/prom.jpg",   imgs: ["/images/prom.jpg"] },
       { thumb: "/images/prom-2.jpg", imgs: ["/images/prom-2.jpg"] },
       { thumb: "/images/prom-3.jpg", imgs: ["/images/prom-3.jpg"] }
+    ],
+    "Filipiniana": [
+      { thumb: "/img/model2.jpg", imgs: ["/img/model2.jpg"] },
+      { thumb: "/img/model3.jpg", imgs: ["/img/model3.jpg"] },
+      { thumb: "/img/model4.jpg", imgs: ["/img/model4.jpg"] }
     ]
   };
 
@@ -555,6 +573,24 @@
       mpRenderMasonry('gallery-wedding', 'Wedding');
       mpRenderMasonry('gallery-evening', 'Evening');
       mpRenderMasonry('gallery-prom', 'Prom');
+      mpRenderMasonry('gallery-filipiniana', 'Filipiniana');
+
+      // Scroll to section if hash or gallery parameter exists
+      const urlParams = new URLSearchParams(window.location.search);
+      const galleryParam = urlParams.get('gallery');
+      const hash = window.location.hash.substring(1);
+      
+      const targetId = galleryParam === 'wedding' ? 'wedding-dresses' :
+                       galleryParam === 'evening' ? 'evening-gowns' :
+                       galleryParam === 'prom' ? 'prom-dresses' : 
+                       galleryParam === 'filipiniana' ? 'filipiniana-section' : hash;
+
+      if (targetId) {
+          setTimeout(() => {
+              const el = document.getElementById(targetId);
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 500);
+      }
   });
 
   function mpOpenLbCategory(cat, i){

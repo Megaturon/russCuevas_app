@@ -11,9 +11,10 @@
       <div class="dropdown-wrapper">
         <button class="gallery-btn">Gallery</button>
         <ul class="luxury-dropdown" id="galleryDropdown">
-          <li onclick="loadGallery('Wedding Gown')">Wedding Gown</li>
-          <li onclick="loadGallery('Evening Gown')">Evening Wear</li>
-          <li onclick="loadGallery('Prom')">Prom Collections</li>
+          <li onclick="mpSmoothScroll('wedding-dresses')">Wedding Gown</li>
+          <li onclick="mpSmoothScroll('evening-gowns')">Evening Wear</li>
+          <li onclick="mpSmoothScroll('prom-dresses')">Prom Collections</li>
+          <li onclick="mpSmoothScroll('filipiniana-section')">Filipiniana</li>
         </ul>
       </div>
       <div class="dropdown-wrapper">
@@ -61,6 +62,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   function mpSmoothScroll(id) {
+    // Close any open luxury dropdowns
+    document.querySelectorAll('.luxury-dropdown').forEach(d => d.style.display = 'none');
+    
     const isHome = window.location.pathname === '/' || window.location.pathname === '/index.php' || window.location.pathname.endsWith('main-page');
     if (isHome) {
       const el = document.getElementById(id);
