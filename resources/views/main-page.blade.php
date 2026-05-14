@@ -10,6 +10,9 @@
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   @vite(['resources/css/styles2.css'])
   <style>
+    html {
+        scroll-behavior: smooth;
+    }
     .reveal-on-scroll {
         opacity: 0;
         transform: translateY(50px);
