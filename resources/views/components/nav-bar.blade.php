@@ -5,9 +5,9 @@
       <div class="dropdown-wrapper">
         <button class="gallery-btn">Gallery</button>
         <ul class="luxury-dropdown" id="galleryDropdown">
-          <li onclick="loadGallery('Wedding Gown')">Wedding Gown</li>
-          <li onclick="loadGallery('Evening Gown')">Evening Wear</li>
-          <li onclick="loadGallery('Prom')">Prom Collections</li>
+          <li onclick="mpSmoothScroll('wedding-dresses')">Wedding Gown</li>
+          <li onclick="mpSmoothScroll('evening-gowns')">Evening Wear</li>
+          <li onclick="mpSmoothScroll('prom-dresses')">Prom Collections</li>
         </ul>
       </div>
       <div class="dropdown-wrapper">
@@ -62,6 +62,18 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  function mpSmoothScroll(id) {
+    const isHome = window.location.pathname === '/' || window.location.pathname === '/index.php' || window.location.pathname.endsWith('main-page');
+    if (isHome) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+    }
+    window.location.href = '/#' + id;
+  }
+
   document.addEventListener('DOMContentLoaded', async function() {
     const supabaseUrl = '{{ env('SUPABASE_URL') }}';
     const supabaseKey = '{{ env('SUPABASE_KEY') }}';
