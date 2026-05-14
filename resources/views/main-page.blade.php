@@ -357,8 +357,12 @@
   </div>
 
   <!-- 1. Gallery Title and Description -->
-  <section id="gallery-section" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center reveal-on-scroll">
-    <h2 class="gallery-heading" style="font-size: 4rem;">Gallery</h2>
+  <section id="gallery-section" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center reveal-on-scroll">
+    <span class="mp-hero-eyebrow" style="color: #888; margin-bottom: 15px;">Gallery</span>
+    <div style="display: inline-flex; align-items: center; gap: 30px; margin-bottom: 25px;">
+      <div style="width: 80px; height: 5px; background-color: #c5a48e; opacity: 0.8;"></div>
+      <h2 class="gallery-heading" style="font-size: 4rem; margin-bottom: 0;">Trendy Looks for Every Occasion</h2>
+    </div>
     <p class="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">Explore our exquisite collection of meticulously crafted gowns, designed to make your special moments unforgettable. From timeless wedding dresses to elegant evening wear and stunning prom creations, each piece tells a unique story.</p>
   </section>
 
