@@ -52,85 +52,60 @@
       <button class="mp-tab" data-cat="Formal Wear">Formal Wear</button>
       <button class="mp-tab" data-cat="Prom">Prom</button>
     </div>
-  </div>
-  <div class="mp-grid" id="mp-grid">
-    {{-- filled by JS --}}
-  </div>
-</section>
+    <p class="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">Explore our exquisite collection of meticulously crafted gowns, designed to make your special moments unforgettable. From timeless wedding dresses to elegant evening wear and stunning prom creations, each piece tells a unique story.</p>
+  </section>
 
-{{-- ===== SERVICES LIST ===== --}}
-<section class="mp-catlist">
-  <h2 class="mp-section-label">Services</h2>
-  <ul class="mp-catlist-items">
-    <li><a href="{{ route('appointments.index') }}"><span>Bespoke Gown Design</span><i class="fa-solid fa-arrow-right"></i></a></li>
-    <li><a href="{{ route('appointments.index') }}"><span>Wedding Couture</span><i class="fa-solid fa-arrow-right"></i></a></li>
-    <li><a href="{{ route('appointments.index') }}"><span>Evening &amp; Formal Wear</span><i class="fa-solid fa-arrow-right"></i></a></li>
-    <li><a href="{{ route('appointments.index') }}"><span>Prom &amp; Debut Gowns</span><i class="fa-solid fa-arrow-right"></i></a></li>
-    <li><a href="{{ route('quote.index') }}"><span>Get a Quote</span><i class="fa-solid fa-arrow-right"></i></a></li>
-  </ul>
-</section>
-
-{{-- ===== CTA BANNER ===== --}}
-<section class="mp-cta" style="background-image:url('/images/slide3.jpg')">
-  <div class="mp-cta-overlay"></div>
-  <div class="mp-cta-content">
-    <span class="mp-hero-eyebrow" style="color:rgba(255,255,255,0.65)">Begin Your Journey</span>
-    <h2>Your Dream Gown Awaits</h2>
-    <p>Schedule a personal consultation and bring your vision to life.</p>
-    <a href="{{ route('appointments.index') }}" class="mp-btn-white">Book a Consultation</a>
-  </div>
-</section>
-
-{{-- ===== FOOTER ===== --}}
-<footer class="mp-footer" id="contact">
-  <div class="mp-footer-top">
-    <div class="mp-footer-brand">
-      <img src="/images/RC_logo.jpg" alt="Russ Cuevas Logo" class="mp-footer-logo">
-      <p>Bespoke couture crafted for life's most meaningful moments.<br>Based in Manila, Philippines.</p>
-      <div class="mp-footer-socials">
-        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+  <!-- 2. Wedding Dresses -->
+  <section id="wedding-dresses" class="py-20 bg-white reveal-on-scroll text-center">
+    <div class="max-w-7xl mx-auto px-4">
+      <span class="mp-hero-eyebrow" style="color: #888; margin-bottom: 15px;">Bridal</span>
+      <div style="display: inline-flex; align-items: center; gap: 30px; margin-bottom: 20px;">
+        <div style="width: 60px; height: 5px; background-color: #c5a48e; opacity: 0.8;"></div>
+        <h3 class="gallery-heading" style="margin-bottom: 0;">Wedding Dresses</h3>
       </div>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-12">Timeless elegance for your walk down the aisle.</p>
+      <div id="gallery-wedding" class="mt-8"></div>
     </div>
-    <div class="mp-footer-col">
-      <h4>Collections</h4>
-      <ul>
-        <li><a href="#mp-collections">Wedding Gown</a></li>
-        <li><a href="#mp-collections">Evening Gown</a></li>
-        <li><a href="#mp-collections">Prom</a></li>
-        <li><a href="#mp-collections">Formal Wear</a></li>
-        <li><a href="#mp-collections">Principal Sponsor</a></li>
-      </ul>
+  </section>
+
+  <!-- 3. Evening Gowns -->
+  <section id="evening-gowns" class="py-20 reveal-on-scroll text-center" style="background-color: #faf9f6;">
+    <div class="max-w-7xl mx-auto px-4">
+      <span class="mp-hero-eyebrow" style="color: #888; margin-bottom: 15px;">Couture</span>
+      <div style="display: inline-flex; align-items: center; gap: 30px; margin-bottom: 20px;">
+        <div style="width: 60px; height: 5px; background-color: #c5a48e; opacity: 0.8;"></div>
+        <h3 class="gallery-heading" style="margin-bottom: 0;">Evening Gowns</h3>
+      </div>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-12">Sophisticated glamour for life's most grand occasions.</p>
+      <div id="gallery-evening" class="mt-8"></div>
     </div>
-    <div class="mp-footer-col">
-      <h4>Navigate</h4>
-      <ul>
-        <li><a href="{{ route('appointments.index') }}">Book Appointment</a></li>
-        <li><a href="{{ route('quote.index') }}">Get a Quote</a></li>
-        <li><a href="/our-story">Our Story</a></li>
-        <li><a href="/faq">FAQ</a></li>
-        <li><a href="/terms">Terms &amp; Conditions</a></li>
-      </ul>
+  </section>
+
+  <!-- 5. Filipiniana -->
+  <section id="filipiniana" class="py-20 reveal-on-scroll text-center" style="background-color: #faf9f6;">
+    <div class="max-w-7xl mx-auto px-4">
+      <span class="mp-hero-eyebrow" style="color: #888; margin-bottom: 15px;">Heritage</span>
+      <div style="display: inline-flex; align-items: center; gap: 30px; margin-bottom: 20px;">
+        <div style="width: 60px; height: 5px; background-color: #c5a48e; opacity: 0.8;"></div>
+        <h3 class="gallery-heading" style="margin-bottom: 0;">Filipiniana</h3>
+      </div>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-12">Celebrating the timeless beauty of Filipino heritage through couture craftsmanship.</p>
+      <div id="gallery-filipiniana" class="mt-8"></div>
     </div>
-    <div class="mp-footer-col">
-      <h4>Contact</h4>
-      <ul class="mp-footer-contact">
-        <li><i class="fa-solid fa-location-dot"></i> Manila, Philippines</li>
-        <li><i class="fa-solid fa-phone"></i> +63 XXX XXX XXXX</li>
-        <li><i class="fa-solid fa-envelope"></i> hello@russcuevas.com</li>
-        <li><i class="fa-solid fa-clock"></i> Mon&ndash;Sat, 9AM&ndash;6PM</li>
-      </ul>
+  </section>
+
+  <!-- 5. Filipiniana -->
+  <section id="filipiniana" class="py-20 reveal-on-scroll text-center" style="background-color: #faf9f6;">
+    <div class="max-w-7xl mx-auto px-4">
+      <span class="mp-hero-eyebrow" style="color: #888; margin-bottom: 15px;">Heritage</span>
+      <div style="display: inline-flex; align-items: center; gap: 30px; margin-bottom: 20px;">
+        <div style="width: 60px; height: 5px; background-color: #c5a48e; opacity: 0.8;"></div>
+        <h3 class="gallery-heading" style="margin-bottom: 0;">Filipiniana</h3>
+      </div>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-12">Celebrating the timeless beauty of Filipino heritage through couture craftsmanship.</p>
+      <div id="gallery-filipiniana" class="mt-8"></div>
     </div>
-  </div>
-  <div class="mp-footer-bottom">
-    <p>&copy; {{ date('Y') }} Russ Cuevas Atelier. All rights reserved.</p>
-    <div>
-      <a href="/terms">Privacy Policy</a>
-      <a href="/terms">Terms of Service</a>
-    </div>
-  </div>
-</footer>
+  </section>
 
 {{-- ===== LIGHTBOX ===== --}}
 <div id="mp-lightbox" class="mp-lightbox" role="dialog" aria-modal="true">
@@ -199,74 +174,136 @@ var mpGallery = {
     });
   });
 
-  function auto(){ setSlide(idx + 1); }
-  var timer = setInterval(auto, 5500);
-})();
+  reloadSlider();
 
-/* ============================================================
-   GALLERY TABS + GRID
-============================================================ */
-var mpLbImages = [];
-var mpLbIdx    = 0;
+  // Gallery Data
+  var mpGallery = {
+    "Wedding": [
+      { thumb: "/images/wedding_closeup.jpg", imgs: ["/images/wedding_closeup.jpg"] },
+      { thumb: "/images/wedding_dress-2.jpg", imgs: ["/images/wedding_dress-2.jpg"] },
+      { thumb: "/images/wedding_dress-3.jpg", imgs: ["/images/wedding_dress-3.jpg"] },
+      { thumb: "/images/wedding_dress-4.jpg", imgs: ["/images/wedding_dress-4.jpg"] },
+      { thumb: "/images/wedding_dress-5.jpg", imgs: ["/images/wedding_dress-5.jpg"] },
+      { thumb: "/images/wedding_dress.jpg",   imgs: ["/images/wedding_dress.jpg"] }
+    ],
+    "Evening": [
+      { thumb: "/images/4.jpg",          imgs: ["/images/4.jpg"] },
+      { thumb: "/images/evening-2.jpg",  imgs: ["/images/evening-2.jpg"] },
+      { thumb: "/images/evening-3.jpg",  imgs: ["/images/evening-3.jpg"] },
+      { thumb: "/images/evening-4.jpg",  imgs: ["/images/evening-4.jpg"] },
+      { thumb: "/images/evening.jpg",    imgs: ["/images/evening.jpg"] },
+      { thumb: "/images/4.jpg",          imgs: ["/images/4.jpg"] }
+    ],
+    "Prom": [
+      { thumb: "/images/prom-2.jpg", imgs: ["/images/prom-2.jpg"] },
+      { thumb: "/images/prom-3.jpg", imgs: ["/images/prom-3.jpg"] },
+      { thumb: "/images/prom-4.jpg", imgs: ["/images/prom-4.jpg"] },
+      { thumb: "/images/prom.jpg",   imgs: ["/images/prom.jpg"] },
+      { thumb: "/images/prom-2.jpg", imgs: ["/images/prom-2.jpg"] },
+      { thumb: "/images/prom-3.jpg", imgs: ["/images/prom-3.jpg"] }
+    ],
+    "Filipiniana": [
+      { thumb: "/img/model2.jpg", imgs: ["/img/model2.jpg"] },
+      { thumb: "/img/model3.jpg", imgs: ["/img/model3.jpg"] },
+      { thumb: "/img/model4.jpg", imgs: ["/img/model4.jpg"] }
+    ]
+  };
 
-function mpRenderGrid(cat) {
-  var grid  = document.getElementById('mp-grid');
-  var items = mpGallery[cat] || [];
-  grid.innerHTML = '';
-  items.forEach(function(item, i){
-    var card = document.createElement('div');
-    card.className = 'mp-card';
-    card.innerHTML =
-      '<div class="mp-card-img" style="background-image:url(\'' + item.thumb + '\')">' +
-        '<div class="mp-card-hover"><span>View</span></div>' +
-      '</div>' +
-      '<p class="mp-card-label">' + cat + '</p>';
-    card.querySelector('.mp-card-img').addEventListener('click', function(){
-      mpOpenLb(item.imgs, 0);
-    });
-    grid.appendChild(card);
+  var mpLbImages = [];
+  var mpLbIdx    = 0;
+
+  function mpRenderMasonry(containerId, cat) {
+    var container = document.getElementById(containerId);
+    var items = mpGallery[cat] || [];
+    if (!container) return;
+    
+    var html = '';
+    for (var i = 0; i < items.length; i += 3) {
+      var chunk = items.slice(i, i + 3);
+      var isFlipped = (i / 3) % 2 === 1;
+      
+      html += '<div class="mp-masonry-group">';
+      
+      var largeHtml = '';
+      if (chunk[0]) {
+        largeHtml = '<div class="mp-masonry-large" onclick="mpOpenLbCategory(\'' + cat + '\', ' + i + ')" style="background-image:url(\'' + chunk[0].thumb + '\')"><div class="mp-card-hover"><span>View</span></div></div>';
+      }
+      
+      var smallHtml = '';
+      if (chunk[1] || chunk[2]) {
+        smallHtml += '<div class="mp-masonry-small-col">';
+        if (chunk[1]) {
+          smallHtml += '<div class="mp-masonry-small" onclick="mpOpenLbCategory(\'' + cat + '\', ' + (i+1) + ')" style="background-image:url(\'' + chunk[1].thumb + '\')"><div class="mp-card-hover"><span>View</span></div></div>';
+        }
+        if (chunk[2]) {
+          smallHtml += '<div class="mp-masonry-small" onclick="mpOpenLbCategory(\'' + cat + '\', ' + (i+2) + ')" style="background-image:url(\'' + chunk[2].thumb + '\')"><div class="mp-card-hover"><span>View</span></div></div>';
+        }
+        smallHtml += '</div>';
+      }
+
+      html += isFlipped ? (smallHtml + largeHtml) : (largeHtml + smallHtml);
+      html += '</div>';
+    }
+    container.innerHTML = html;
+  }
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+      const reveals = document.querySelectorAll(".reveal-on-scroll");
+      const revealOnScroll = () => {
+          for (let i = 0; i < reveals.length; i++) {
+              const windowHeight = window.innerHeight;
+              const elementTop = reveals[i].getBoundingClientRect().top;
+              const elementVisible = 50;
+              if (elementTop < windowHeight - elementVisible) {
+                  reveals[i].classList.add("scrolled-in");
+              }
+          }
+      };
+      window.addEventListener("scroll", revealOnScroll);
+      revealOnScroll();
+
+      // Render Masonry Galleries
+      mpRenderMasonry('gallery-wedding', 'Wedding');
+      mpRenderMasonry('gallery-evening', 'Evening');
+      mpRenderMasonry('gallery-prom', 'Prom');
+      mpRenderMasonry('gallery-filipiniana', 'Filipiniana');
   });
-}
 
-document.querySelectorAll('.mp-tab').forEach(function(tab){
-  tab.addEventListener('click', function(){
-    document.querySelectorAll('.mp-tab').forEach(function(t){ t.classList.remove('active'); });
-    tab.classList.add('active');
-    mpRenderGrid(tab.dataset.cat);
+  function mpOpenLbCategory(cat, i){
+    var item = mpGallery[cat][i];
+    if(item && item.imgs) mpOpenLb(item.imgs, 0);
+  }
+
+  function mpOpenLb(imgs, i){
+    mpLbImages = imgs;
+    mpLbIdx    = i;
+    document.getElementById('mp-lb-img').src = imgs[i];
+    document.getElementById('mp-lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function mpCloseLb(){
+    document.getElementById('mp-lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function mpPrevLb(){
+    mpLbIdx = (mpLbIdx - 1 + mpLbImages.length) % mpLbImages.length;
+    document.getElementById('mp-lb-img').src = mpLbImages[mpLbIdx];
+  }
+  function mpNextLb(){
+    mpLbIdx = (mpLbIdx + 1) % mpLbImages.length;
+    document.getElementById('mp-lb-img').src = mpLbImages[mpLbIdx];
+  }
+
+  document.getElementById('mp-lightbox').addEventListener('click', function(e){
+    if (e.target === this) mpCloseLb();
   });
-});
-
-/* ============================================================
-   LIGHTBOX
-============================================================ */
-function mpOpenLb(imgs, i){
-  mpLbImages = imgs;
-  mpLbIdx    = i;
-  document.getElementById('mp-lb-img').src = imgs[i];
-  document.getElementById('mp-lightbox').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function mpCloseLb(){
-  document.getElementById('mp-lightbox').classList.remove('active');
-  document.body.style.overflow = '';
-}
-function mpPrevLb(){
-  mpLbIdx = (mpLbIdx - 1 + mpLbImages.length) % mpLbImages.length;
-  document.getElementById('mp-lb-img').src = mpLbImages[mpLbIdx];
-}
-function mpNextLb(){
-  mpLbIdx = (mpLbIdx + 1) % mpLbImages.length;
-  document.getElementById('mp-lb-img').src = mpLbImages[mpLbIdx];
-}
-document.getElementById('mp-lightbox').addEventListener('click', function(e){
-  if (e.target === this) mpCloseLb();
-});
-document.addEventListener('keydown', function(e){
-  if (!document.getElementById('mp-lightbox').classList.contains('active')) return;
-  if (e.key === 'ArrowLeft')  mpPrevLb();
-  if (e.key === 'ArrowRight') mpNextLb();
-  if (e.key === 'Escape')     mpCloseLb();
-});
+  document.addEventListener('keydown', function(e){
+    if (!document.getElementById('mp-lightbox').classList.contains('active')) return;
+    if (e.key === 'ArrowLeft')  mpPrevLb();
+    if (e.key === 'ArrowRight') mpNextLb();
+    if (e.key === 'Escape')     mpCloseLb();
+  });
 
 /* ============================================================
    SMOOTH SCROLL for View Collections anchor
