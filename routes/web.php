@@ -78,4 +78,5 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('/quote-action', [AdminController::class, 'quoteAction'])->name('admin.quote.action');
     Route::post('/user-action', [AdminController::class, 'userAction'])->name('admin.user.action');
     Route::post('/filter-appointments', [AdminController::class, 'filterAppointments'])->name('admin.filter.appointments');
+    Route::get('/latest-appointments', [AdminController::class, 'latestAppointments'])->name('admin.latest.appointments');
 });

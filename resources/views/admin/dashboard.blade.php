@@ -359,7 +359,6 @@
         /* Table Styles */
         .table-container {
             width: 100%;
-            overflow-x: auto;
         }
 
         table {
@@ -369,7 +368,10 @@
         }
 
         th {
-
+            position: sticky;
+            top: -40px;
+            background-color: #ffffff;
+            z-index: 10;
             font-family: var(--font-sans);
             color: var(--black);
             font-size: 0.7rem;
@@ -1032,25 +1034,208 @@
             .empty-state-card { text-align: center; padding: 50px; border: 2px dashed var(--grey-border); color: var(--grey-text); border-radius: 4px; }
             .empty-state-card i { font-size: 2rem; margin-bottom: 15px; opacity: 0.3; }
             .empty-state-card p { font-style: italic; font-size: 0.95rem; margin: 0; }
+            
+            /* Status Filter Buttons */
+            .status-filter-btn {
+                background: var(--white);
+                border: 1px solid var(--grey-border);
+                color: var(--grey-text);
+                padding: 8px 16px;
+                font-size: 0.75rem;
+                font-family: var(--font-sans);
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                border-radius: 4px;
+            }
+            .status-filter-btn:hover {
+                border-color: var(--black);
+                color: var(--black);
+            }
+            .status-filter-btn.active {
+                background: var(--black);
+                color: var(--white);
+                border-color: var(--black);
+            }
+
+            /* Unified Filter Bar */
+            .unified-filter-bar {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 15px;
+                background: var(--white);
+                padding: 15px 20px;
+                border-radius: 6px;
+                border: 1px solid var(--grey-border);
+                margin-bottom: 20px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            }
+
+            /* Status Pills Overhaul */
+            .status-pill {
+                display: inline-flex;
+                align-items: center;
+                padding: 6px 12px;
+                border-radius: 4px;
+                font-size: 0.75rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .status-Pending {
+                background-color: #fff8e6;
+                color: #b7791f;
+                position: relative;
+            }
+            .status-Pending::before {
+                content: '';
+                display: inline-block;
+                width: 6px;
+                height: 6px;
+                background-color: #d69e2e;
+                border-radius: 50%;
+                margin-right: 6px;
+                animation: pulse 1.5s infinite;
+            }
+            @keyframes pulse {
+                0% { box-shadow: 0 0 0 0 rgba(214, 158, 46, 0.7); }
+                70% { box-shadow: 0 0 0 6px rgba(214, 158, 46, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(214, 158, 46, 0); }
+            }
+            .status-Confirmed {
+                background-color: #e6f4ea;
+                color: #1e7e34;
+            }
+            .status-Rescheduled {
+                background-color: #e3f2fd;
+                color: #0d47a1;
+            }
+            .status-Cancelled {
+                background-color: #f5f5f5;
+                color: #9e9e9e;
+                text-decoration: line-through;
+            }
+
+            /* Dropdown Actions */
+            .action-dropdown {
+                position: relative;
+                display: inline-block;
+            }
+            .action-dropdown-content {
+                display: none;
+                position: absolute;
+                left: 100%;
+                top: -10px;
+                margin-left: 10px;
+                background-color: #fff;
+                min-width: 140px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+                z-index: 100;
+                border: 1px solid var(--grey-border);
+                border-radius: 4px;
+                overflow: hidden;
+            }
+            .action-dropdown-content a {
+                color: var(--black);
+                padding: 10px 16px;
+                text-decoration: none;
+                display: block;
+                font-size: 0.8rem;
+                text-align: left;
+                font-weight: 500;
+            }
+            .action-dropdown-content a:hover {
+                background-color: var(--grey-light);
+            }
+            .action-dropdown-content a.danger {
+                color: #dc3545;
+            }
+            .action-dropdown-content a.danger:hover {
+                background-color: #ffeeee;
+            }
+            .action-dropdown.show .action-dropdown-content {
+                display: block;
+            }
+
+            /* Table Hover Accent */
+            table tbody tr {
+                transition: background-color 0.2s ease;
+            }
+            table tbody tr td:first-child {
+                position: relative;
+            }
+            table tbody tr td:first-child::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 0;
+                background: #c5a880; /* Gold accent */
+                transition: width 0.2s ease;
+            }
+            table tbody tr:hover {
+                background-color: #fffdf5; /* Warm tint */
+            }
+            table tbody tr:hover td:first-child::before {
+                width: 4px;
+            }
+
+            /* Skeleton Loading */
+            .skeleton-row td {
+                padding: 15px;
+            }
+            .skeleton-box {
+                height: 20px;
+                background: #eee;
+                background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+                border-radius: 4px;
+                background-size: 200% 100%;
+                animation: 1.5s shimmer linear infinite;
+            }
+            @keyframes shimmer {
+                to { background-position-x: -200%; }
+            }
         </style>
         
         <!-- Appointments Pane -->
         <div class="pane" id="appointments">
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; flex-wrap: wrap; gap: 20px;">
-                <div class="filter-container" style="margin-bottom: 0;">
-                    <div style="display: flex; gap: 10px;">
-                        <button class="view-toggle-btn active" id="btn-list-view" onclick="switchAppointmentView('list')">List View</button>
-                        <button class="view-toggle-btn" id="btn-calendar-view" onclick="switchAppointmentView('calendar')">Calendar View</button>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px; margin-left: 20px;">
-                        <label for="filter-start-date">Filter Date:</label>
-                        <input type="date" id="filter-start-date">
-                        <input type="date" id="filter-end-date">
-                        <button class="btn btn-primary" id="filter-btn" style="padding: 8px 15px;">Filter</button>
+            <div class="unified-filter-bar">
+                <!-- Search -->
+                <div style="flex: 1; min-width: 250px;">
+                    <div class="filter-container" style="margin-bottom: 0;">
+                        <input type="text" id="appointment-search" placeholder="Search appointments..." onkeyup="filterTable('appointment-search', 'appointments', 'appointment-status-filters')" style="width: 100%; margin: 0;">
                     </div>
                 </div>
-                <div class="filter-container" style="margin-bottom: 0;">
-                    <input type="text" id="appointment-search" placeholder="Search appointments..." onkeyup="filterTable('appointment-search', 'appointments')">
+                
+                <!-- Status Filters -->
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;" class="appointment-status-filters">
+                    <button class="status-filter-btn active" onclick="setStatusFilter(this, 'appointments', 'appointment-search', 'appointment-status-filters')">All</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'appointments', 'appointment-search', 'appointment-status-filters')">Pending</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'appointments', 'appointment-search', 'appointment-status-filters')">Confirmed</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'appointments', 'appointment-search', 'appointment-status-filters')">Rescheduled</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'appointments', 'appointment-search', 'appointment-status-filters')">Cancelled</button>
+                </div>
+
+                <!-- Date Presets & Range -->
+                <div id="date-filter-controls" style="display: flex; align-items: center; gap: 10px; border-left: 1px solid var(--grey-border); padding-left: 15px;">
+                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.75rem;" onclick="setDatePreset('today', 'filter-start-date', 'filter-end-date')">Today</button>
+                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.75rem;" onclick="setDatePreset('week', 'filter-start-date', 'filter-end-date')">This Week</button>
+                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.75rem;" onclick="setDatePreset('month', 'filter-start-date', 'filter-end-date')">This Month</button>
+                    <div style="display: flex; gap: 5px; align-items: center; margin-left: 10px;">
+                        <input type="date" id="filter-start-date" onchange="triggerDateFilter()" style="margin: 0; padding: 6px; font-size: 0.8rem;">
+                        <span style="color: var(--grey-text); font-size: 0.8rem;">to</span>
+                        <input type="date" id="filter-end-date" onchange="triggerDateFilter()" style="margin: 0; padding: 6px; font-size: 0.8rem;">
+                    </div>
+                </div>
+
+                <!-- View Toggle -->
+                <div style="display: flex; gap: 0; border-left: 1px solid var(--grey-border); padding-left: 15px;">
+                    <button class="view-toggle-btn active" id="btn-list-view" onclick="switchAppointmentView('list')" style="border-radius: 4px 0 0 4px; margin: 0; padding: 6px 12px; font-size: 0.75rem;">List</button>
+                    <button class="view-toggle-btn" id="btn-calendar-view" onclick="switchAppointmentView('calendar')" style="border-radius: 0 4px 4px 0; margin: 0; border-left: none; padding: 6px 12px; font-size: 0.75rem;">Calendar</button>
                 </div>
             </div>
 
@@ -1058,14 +1243,16 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Name</th><th>Email</th><th>Schedule</th><th>Notes</th><th>Status</th><th>Actions</th>
+                            <th>Client Info</th><th>Schedule</th><th>Notes</th><th>Status</th><th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($appointments as $row)
                         <tr id="appointment-row-{{ $row->id }}">
-                            <td><strong>{{ $row->name }}</strong></td>
-                            <td>{{ $row->email }}</td>
+                            <td>
+                                <strong>{{ $row->name }}</strong><br>
+                                <span style="color:var(--grey-text); font-size: 0.85rem;">{{ $row->email }}</span>
+                            </td>
                             <td>
                                 <div style="font-weight: 600; font-family: var(--font-playfair); font-size: 1rem;">
                                     {{ \Carbon\Carbon::parse($row->date)->format('F d') }}
@@ -1090,12 +1277,23 @@
                             <td>
                                 <span class="status-pill status-{{ $row->status }}">{{ $row->status }}</span>
                             </td>
-                            <td>
-                                <div class="table-actions">
-                                    <button class="btn btn-warning" onclick="openRescheduleModal({{ $row->id }}, '{{ $row->date }}', '{{ $row->time }}')">Reschedule</button>
-                                    <button class="btn btn-success" onclick="confirmAppointment({{ $row->id }})">Confirm</button>
-                                    <button class="btn btn-secondary" onclick="cancelAppointment({{ $row->id }})">Cancel</button>
-                                    <button class="btn btn-danger" onclick="deleteAppointment({{ $row->id }})">Delete</button>
+                            <td style="overflow: visible;">
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    @if($row->status !== 'Confirmed')
+                                    <button class="btn btn-success" onclick="confirmAppointment({{ $row->id }})" style="padding: 6px 12px; font-size: 0.75rem;">Confirm</button>
+                                    @else
+                                    <button class="btn btn-warning" onclick="openRescheduleModal({{ $row->id }}, '{{ $row->date }}', '{{ $row->time }}')" style="padding: 6px 12px; font-size: 0.75rem;">Reschedule</button>
+                                    @endif
+                                    <div class="action-dropdown">
+                                        <button class="btn btn-secondary action-dropdown-btn" onclick="toggleDropdown(event, {{ $row->id }})" style="padding: 6px 10px;"><i class="fas fa-ellipsis-h"></i></button>
+                                        <div class="action-dropdown-content" id="dropdown-{{ $row->id }}">
+                                            @if($row->status !== 'Confirmed')
+                                            <a href="#" onclick="event.preventDefault(); openRescheduleModal({{ $row->id }}, '{{ $row->date }}', '{{ $row->time }}')">Reschedule</a>
+                                            @endif
+                                            <a href="#" onclick="event.preventDefault(); cancelAppointment({{ $row->id }})">Cancel</a>
+                                            <a href="#" class="danger" onclick="event.preventDefault(); deleteAppointment({{ $row->id }})">Delete</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -1109,21 +1307,32 @@
 
         <!-- History Pane -->
         <div class="pane" id="history">
-            <div class="filter-container" style="justify-content: flex-end;">
-                <input type="text" id="history-search" placeholder="Search past records..." onkeyup="filterTable('history-search', 'history')">
+            <div class="unified-filter-bar">
+                <div style="flex: 1; min-width: 250px;">
+                    <div class="filter-container" style="margin-bottom: 0;">
+                        <input type="text" id="history-search" placeholder="Search past records..." onkeyup="filterTable('history-search', 'history', 'history-status-filters')" style="width: 100%; margin: 0;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;" class="history-status-filters">
+                    <button class="status-filter-btn active" onclick="setStatusFilter(this, 'history', 'history-search', 'history-status-filters')">All</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'history', 'history-search', 'history-status-filters')">Confirmed</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'history', 'history-search', 'history-status-filters')">Cancelled</button>
+                </div>
             </div>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>Name</th><th>Email</th><th>Schedule</th><th>Notes</th><th>Status</th><th>Actions</th>
+                            <th>Client Info</th><th>Schedule</th><th>Notes</th><th>Status</th><th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($pastAppointments as $row)
                         <tr>
-                            <td><strong>{{ $row->name }}</strong></td>
-                            <td>{{ $row->email }}</td>
+                            <td>
+                                <strong>{{ $row->name }}</strong><br>
+                                <span style="color:var(--grey-text); font-size: 0.85rem;">{{ $row->email }}</span>
+                            </td>
                             <td>
                                 <div style="font-weight: 600; font-family: var(--font-playfair); font-size: 1rem;">
                                     {{ \Carbon\Carbon::parse($row->date)->format('F d') }}
@@ -1140,8 +1349,13 @@
                             <td>
                                 <span class="status-pill status-{{ $row->status }}">{{ $row->status }}</span>
                             </td>
-                            <td>
-                                <button class="btn btn-danger" onclick="deleteAppointment({{ $row->id }})">Delete Record</button>
+                            <td style="overflow: visible;">
+                                <div class="action-dropdown">
+                                    <button class="btn btn-secondary action-dropdown-btn" onclick="toggleDropdown(event, 'hist-{{ $row->id }}')" style="padding: 6px 10px;"><i class="fas fa-ellipsis-h"></i></button>
+                                    <div class="action-dropdown-content" id="dropdown-hist-{{ $row->id }}">
+                                        <a href="#" class="danger" onclick="event.preventDefault(); deleteAppointment({{ $row->id }})">Delete Record</a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
@@ -1366,8 +1580,51 @@
     </div>
 </div>
 
+<!-- Custom Confirm Modal -->
+<div class="modal-overlay" id="confirmModalOverlay" onclick="closeConfirmModal(event)">
+    <div class="modal-content" style="max-width: 450px;" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2 id="confirm-modal-title">Confirm Action</h2>
+            <button class="close-modal-btn" onclick="closeConfirmModal(null, true)">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 40px; text-align: center;">
+            <div style="margin-bottom: 20px;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--black);"></i>
+            </div>
+            <p id="confirm-modal-message" style="color: var(--grey-text); font-size: 1.05rem; margin-bottom: 35px; line-height: 1.6;">This action cannot be undone.</p>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="btn btn-secondary" style="flex: 1; padding: 14px; font-size: 0.9rem;" onclick="closeConfirmModal(event, true)">Cancel</button>
+                <button class="btn btn-primary" id="confirm-modal-action-btn" style="flex: 1; padding: 14px; font-size: 0.9rem;">Proceed</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    let confirmActionCallback = null;
+
+    function showConfirmModal(title, message, callback) {
+        document.getElementById('confirm-modal-title').textContent = title;
+        document.getElementById('confirm-modal-message').textContent = message;
+        confirmActionCallback = callback;
+        document.getElementById('confirmModalOverlay').classList.add('active');
+    }
+
+    function closeConfirmModal(e, forceClose = false) {
+        if (forceClose || (e && e.target.id === 'confirmModalOverlay')) {
+            document.getElementById('confirmModalOverlay').classList.remove('active');
+            confirmActionCallback = null;
+        }
+    }
+
+    document.getElementById('confirm-modal-action-btn').addEventListener('click', () => {
+        if (confirmActionCallback) {
+            confirmActionCallback();
+        }
+        closeConfirmModal(null, true);
+    });
 
     function showToast(message, success) {
         const toast = document.createElement('div');
@@ -1471,20 +1728,35 @@
         closeRescheduleModal();
     }
 
-    function confirmAppointment(id) { sendAppointmentAction(id, 'confirm', null, null, event.target); }
-    function cancelAppointment(id) { if(confirm('Cancel?')) sendAppointmentAction(id, 'cancel'); }
-    function deleteAppointment(id) { if(confirm('Delete?')) sendAppointmentAction(id, 'delete'); }
+    function confirmAppointment(id) { 
+        showConfirmModal('Confirm Appointment', 'Are you sure you want to confirm this schedule?', () => {
+            sendAppointmentAction(id, 'confirm', null, null, document.getElementById('confirm-modal-action-btn'));
+        }); 
+    }
+    
+    function cancelAppointment(id) { 
+        showConfirmModal('Cancel Appointment', 'Are you sure you want to cancel this appointment?', () => {
+            sendAppointmentAction(id, 'cancel', null, null, document.getElementById('confirm-modal-action-btn'));
+        }); 
+    }
+    
+    function deleteAppointment(id) { 
+        showConfirmModal('Delete Appointment', 'Are you sure you want to delete this appointment record?', () => {
+            sendAppointmentAction(id, 'delete', null, null, document.getElementById('confirm-modal-action-btn'));
+        }); 
+    }
 
     function deleteQuote(id) {
-        if(!confirm('Are you sure you want to delete this quote request?')) return;
-        const formData = new FormData();
-        formData.append('id', id);
-        formData.append('quote_action', 'delete');
-        fetch("{{ route('admin.quote.action') }}", {
-            method: 'POST',
-            body: formData,
-            headers: { 'X-CSRF-TOKEN': csrfToken }
-        }).then(() => location.reload());
+        showConfirmModal('Delete Quote', 'Are you sure you want to delete this quote request?', () => {
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('quote_action', 'delete');
+            fetch("{{ route('admin.quote.action') }}", {
+                method: 'POST',
+                body: formData,
+                headers: { 'X-CSRF-TOKEN': csrfToken }
+            }).then(() => location.reload());
+        });
     }
 
     // Modal Logic
@@ -1600,37 +1872,77 @@
 
     // User actions
     function deleteUser(id, name) {
-        if(!confirm('Are you sure you want to delete user: ' + name + '?')) return;
-        const formData = new FormData();
-        formData.append('user_id', id);
-        formData.append('user_action', 'delete');
-        fetch("{{ route('admin.user.action') }}", {
-            method: 'POST',
-            body: formData,
-            headers: { 'X-CSRF-TOKEN': csrfToken }
-        }).then(() => location.reload());
+        showConfirmModal('Delete User', 'Are you sure you want to delete user: ' + name + '?', () => {
+            const formData = new FormData();
+            formData.append('user_id', id);
+            formData.append('user_action', 'delete');
+            fetch("{{ route('admin.user.action') }}", {
+                method: 'POST',
+                body: formData,
+                headers: { 'X-CSRF-TOKEN': csrfToken }
+            }).then(() => location.reload());
+        });
     }
 
-    // Real-time Table Filtering
-    function filterTable(inputId, paneId) {
+    // Real-time Table Filtering with Status
+    function filterTable(inputId, paneId, groupClass = null) {
         const input = document.getElementById(inputId);
-        const filter = input.value.toLowerCase();
+        const filter = input ? input.value.toLowerCase() : '';
         const pane = document.getElementById(paneId);
-        const table = pane.querySelector(`table`);
+        if (!pane) return;
+
+        let activeStatus = 'All';
+        if (groupClass) {
+            const group = pane.querySelector('.' + groupClass);
+            if (group) {
+                const activeBtn = group.querySelector('.status-filter-btn.active');
+                if (activeBtn) activeStatus = activeBtn.textContent.trim();
+            }
+        }
+
+        const table = pane.querySelector('table');
+        if (!table) return;
         const tr = table.getElementsByTagName("tr");
 
         for (let i = 1; i < tr.length; i++) {
-            let visible = false;
-            const td = tr[i].getElementsByTagName("td");
-            for (let j = 0; j < td.length - 1; j++) { // Skip the Actions column
-                if (td[j]) {
-                    if (td[j].textContent.toLowerCase().indexOf(filter) > -1) {
-                        visible = true;
+            let rowStatusEl = tr[i].querySelector('.status-pill');
+            let showByStatus = true;
+            if (rowStatusEl && activeStatus !== 'All') {
+                showByStatus = (rowStatusEl.textContent.trim().toLowerCase() === activeStatus.toLowerCase());
+            }
+
+            let showBySearch = filter === '';
+            if (!showBySearch) {
+                const td = tr[i].getElementsByTagName("td");
+                for (let j = 0; j < td.length - 1; j++) { // Skip the Actions column
+                    if (td[j] && td[j].textContent.toLowerCase().indexOf(filter) > -1) {
+                        showBySearch = true;
                         break;
                     }
                 }
             }
-            tr[i].style.display = visible ? "" : "none";
+
+            tr[i].style.display = (showBySearch && showByStatus) ? "" : "none";
+        }
+    }
+
+    function setStatusFilter(btn, paneId, searchInputId, groupClass) {
+        const group = btn.closest('.' + groupClass);
+        if (group) {
+            group.querySelectorAll('.status-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+        filterTable(searchInputId, paneId, groupClass);
+
+        // Update Calendar if it's the appointments pane
+        if (calendar && paneId === 'appointments') {
+            let activeStatus = btn.textContent.trim();
+            let filteredEvents = allCalendarEvents;
+            if (activeStatus !== 'All') {
+                filteredEvents = allCalendarEvents.filter(e => e.extendedProps.status.toLowerCase() === activeStatus.toLowerCase());
+            }
+            calendar.removeAllEventSources();
+            calendar.addEventSource(filteredEvents);
         }
     }
 
@@ -1641,17 +1953,28 @@
         const calView = document.getElementById('calendar-view');
         const btnList = document.getElementById('btn-list-view');
         const btnCal = document.getElementById('btn-calendar-view');
+        const dateControls = document.getElementById('date-filter-controls');
 
         if (view === 'list') {
             listView.style.display = 'block';
             calView.style.display = 'none';
             btnList.classList.add('active');
             btnCal.classList.remove('active');
+            
+            if (dateControls) {
+                dateControls.style.opacity = '1';
+                dateControls.querySelectorAll('button, input').forEach(el => el.disabled = false);
+            }
         } else {
             listView.style.display = 'none';
             calView.style.display = 'block';
             btnList.classList.remove('active');
             btnCal.classList.add('active');
+            
+            if (dateControls) {
+                dateControls.style.opacity = '0.4';
+                dateControls.querySelectorAll('button, input').forEach(el => el.disabled = true);
+            }
             
             if (!calendar) {
                 initCalendar();
@@ -1660,11 +1983,13 @@
         }
     }
 
+    let allCalendarEvents = [];
+
     function initCalendar() {
         const calendarEl = document.getElementById('calendar-view');
         const appointments = @json($allAppointments);
         
-        const events = appointments.map(app => {
+        allCalendarEvents = appointments.map(app => {
             let bgColor = '#000000'; // Confirmed
             let textColor = '#ffffff';
             
@@ -1686,6 +2011,18 @@
             };
         });
 
+        let activeStatus = 'All';
+        const group = document.querySelector('.appointment-status-filters');
+        if (group) {
+            const activeBtn = group.querySelector('.status-filter-btn.active');
+            if (activeBtn) activeStatus = activeBtn.textContent.trim();
+        }
+        
+        let initialEvents = allCalendarEvents;
+        if (activeStatus !== 'All') {
+            initialEvents = allCalendarEvents.filter(e => e.extendedProps.status.toLowerCase() === activeStatus.toLowerCase());
+        }
+
         calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
             headerToolbar: {
@@ -1693,7 +2030,7 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
-            events: events,
+            events: initialEvents,
             dayMaxEvents: true,
             dateClick: function(info) {
                 showDayAppointments(info.dateStr);
@@ -1705,12 +2042,115 @@
         });
         calendar.render();
     }
+    // Real-time Polling for New Appointments & Quotes
+    let lastPollAppId = {{ $allAppointments->max('id') ?? 0 }};
+    let lastPollQuoteId = {{ $quotes->max('id') ?? 0 }};
+    
+    setInterval(() => {
+        fetch(`{{ route('admin.latest.appointments') }}?last_app_id=${lastPollAppId}&last_quote_id=${lastPollQuoteId}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            let delayIndex = 0;
+            
+            if (data.appointments && data.appointments.length > 0) {
+                data.appointments.forEach((app) => {
+                    setTimeout(() => {
+                        showToast(`New Appointment: ${app.name} requested ${app.service_type || 'a service'}`, true);
+                    }, delayIndex * 2000); 
+                    delayIndex++;
+                });
+                
+                const maxAppId = Math.max(...data.appointments.map(a => a.id));
+                lastPollAppId = maxAppId > lastPollAppId ? maxAppId : lastPollAppId;
+            }
 
-    // Filter Logic
-    document.getElementById('filter-btn').addEventListener('click', () => {
+            if (data.quotes && data.quotes.length > 0) {
+                data.quotes.forEach((quote) => {
+                    setTimeout(() => {
+                        showToast(`New Quote Request: ${quote.name} for ${quote.service_type || 'a service'}`, true);
+                    }, delayIndex * 2000); 
+                    delayIndex++;
+                });
+                
+                const maxQuoteId = Math.max(...data.quotes.map(q => q.id));
+                lastPollQuoteId = maxQuoteId > lastPollQuoteId ? maxQuoteId : lastPollQuoteId;
+            }
+        })
+        .catch(err => console.error('Polling error:', err));
+    }, 10000); // Poll every 10 seconds
+
+    // Show missed/pending notifications immediately on login/page load
+    setTimeout(() => {
+        const pendingApps = @json($pendingAppointments);
+        const pendingQuotes = @json($newTodayQuotes);
+        
+        let initialDelay = 0;
+        
+        if (pendingApps && pendingApps.length > 0) {
+            pendingApps.forEach((app) => {
+                setTimeout(() => {
+                    showToast(`Pending Appointment: ${app.name} requested ${app.service_type || 'a service'}`, true);
+                }, initialDelay * 1500);
+                initialDelay++;
+            });
+        }
+
+        if (pendingQuotes && pendingQuotes.length > 0) {
+            pendingQuotes.forEach((quote) => {
+                setTimeout(() => {
+                    showToast(`New Quote Request: ${quote.name} for ${quote.service_type || 'a service'}`, true);
+                }, initialDelay * 1500);
+                initialDelay++;
+            });
+        }
+    }, 1000); // Slight delay to ensure page is fully rendered
+
+    // Filter & Presets Logic
+    function setDatePreset(preset, startId, endId) {
+        const start = document.getElementById(startId);
+        const end = document.getElementById(endId);
+        const today = new Date();
+        let s = new Date(), e = new Date();
+
+        if (preset === 'today') {
+            // Already today
+        } else if (preset === 'week') {
+            s.setDate(today.getDate() - today.getDay()); // Sunday
+            e.setDate(s.getDate() + 6); // Saturday
+        } else if (preset === 'month') {
+            s = new Date(today.getFullYear(), today.getMonth(), 1);
+            e = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        }
+
+        // Adjust for timezone offset to prevent date shifting
+        start.value = new Date(s.getTime() - (s.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
+        end.value = new Date(e.getTime() - (e.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
+
+        // Trigger filter immediately after setting preset
+        triggerDateFilter();
+    }
+
+    function triggerDateFilter() {
         const start = document.getElementById('filter-start-date').value;
         const end = document.getElementById('filter-end-date').value;
-        if(!start || !end) return showToast('Please select both start and end dates', false);
+        if(!start || !end) return;
+
+        const tbody = document.querySelector('#appointments tbody');
+        
+        // Skeleton Loading state
+        tbody.innerHTML = Array(3).fill(`
+            <tr class="skeleton-row">
+                <td><div class="skeleton-box" style="width: 150px; margin-bottom: 5px;"></div><div class="skeleton-box" style="width: 100px;"></div></td>
+                <td><div class="skeleton-box" style="width: 80px; margin-bottom: 5px;"></div><div class="skeleton-box" style="width: 60px;"></div></td>
+                <td><div class="skeleton-box" style="width: 200px;"></div></td>
+                <td><div class="skeleton-box" style="width: 80px;"></div></td>
+                <td><div class="skeleton-box" style="width: 100px;"></div></td>
+            </tr>
+        `).join('');
 
         const formData = new FormData();
         formData.append('filter_start_date', start);
@@ -1723,9 +2163,32 @@
         })
         .then(res => res.text())
         .then(html => {
-            document.querySelector('#appointments tbody').innerHTML = html;
-            showToast('Filter applied', true);
+            tbody.innerHTML = html;
+            // Re-apply status filter if active
+            const activeStatusBtn = document.querySelector('.appointment-status-filters .active');
+            if(activeStatusBtn) {
+                setStatusFilter(activeStatusBtn, 'appointments', 'appointment-search', 'appointment-status-filters');
+            }
         });
+    }
+
+    // Dropdown Actions
+    function toggleDropdown(e, id) {
+        e.stopPropagation();
+        const currentDropdown = document.getElementById('dropdown-' + id);
+        
+        // Close others
+        document.querySelectorAll('.action-dropdown').forEach(el => {
+            if (el !== currentDropdown.parentElement) {
+                el.classList.remove('show');
+            }
+        });
+        
+        currentDropdown.parentElement.classList.toggle('show');
+    }
+
+    document.addEventListener('click', function() {
+        document.querySelectorAll('.action-dropdown').forEach(el => el.classList.remove('show'));
     });
 
     // KPI Charts Initialization
@@ -1836,7 +2299,19 @@
 
     function showDayAppointments(dateStr) {
         const appointments = @json($allAppointments);
-        const filtered = appointments.filter(app => app.date === dateStr);
+        let filtered = appointments.filter(app => app.date === dateStr);
+        
+        let activeStatus = 'All';
+        const group = document.querySelector('.appointment-status-filters');
+        if (group) {
+            const activeBtn = group.querySelector('.status-filter-btn.active');
+            if (activeBtn) activeStatus = activeBtn.textContent.trim();
+        }
+        
+        if (activeStatus !== 'All') {
+            filtered = filtered.filter(app => app.status.toLowerCase() === activeStatus.toLowerCase());
+        }
+
         const listEl = document.getElementById('day-appointments-list');
         const msgEl = document.getElementById('no-appointments-msg');
         const modal = document.getElementById('dayAppointmentsModalOverlay');

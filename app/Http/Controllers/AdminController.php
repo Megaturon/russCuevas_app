@@ -327,33 +327,80 @@ class AdminController extends Controller
         // Render rows for AJAX
         $html = "";
         foreach ($appointments as $row) {
+            $formattedDate = \Carbon\Carbon::parse($row->date)->format('F d');
+            $formattedTime = \Carbon\Carbon::parse($row->time)->format('g:i A');
+            $icon = 'fa-comment-alt';
+            $note = strtolower($row->notes);
+            if(str_contains($note, 'fitting')) $icon = 'fa-scissors';
+            if(str_contains($note, 'consultation') || str_contains($note, 'meeting')) $icon = 'fa-handshake';
+            if(str_contains($note, 'pickup') || str_contains($note, 'claim')) $icon = 'fa-shopping-bag';
+
             $html .= "<tr id='appointment-row-{$row->id}'>
-                <td><strong>" . e($row->name) . "</strong></td>
-                <td>" . e($row->email) . "</td>
                 <td>
-                    <div>" . e($row->date) . "</div>
-                    <div style='color: var(--grey-text); font-size: 0.8rem;'>" . e($row->time) . "</div>
+                    <strong>" . e($row->name) . "</strong><br>
+                    <span style='color:var(--grey-text); font-size: 0.85rem;'>" . e($row->email) . "</span>
                 </td>
-                <td>" . e(\Str::limit($row->notes, 30)) . "</td>
+                <td>
+                    <div style='font-weight: 600; font-family: var(--font-playfair); font-size: 1rem;'>{$formattedDate}</div>
+                    <div style='color: var(--grey-text); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;'>{$formattedTime}</div>
+                </td>
+                <td style='max-width: 250px;'>
+                    <div class='customer-context'>
+                        <i class='fas {$icon}' style='margin-right: 8px; color: var(--black); font-size: 0.8rem;'></i>
+                        <span style='font-size: 0.9rem; font-style: italic; color: var(--black);'>\"" . e($row->notes) . "\"</span>
+                    </div>
+                </td>
                 <td>
                     <span class='status-pill status-" . e($row->status) . "'>" . e($row->status) . "</span>
                 </td>
-                <td>
-                    <div style='margin-bottom: 6px;'>
-                        <input type='date' id='date-{$row->id}'>
-                        <input type='time' id='time-{$row->id}'>
-                    </div>
-                    <div class='table-actions'>
-                        <button class='btn btn-warning' onclick='reschedule({$row->id})'>Reschedule</button>
-                        <button class='btn btn-success' onclick='confirmAppointment({$row->id})'>Confirm</button>
-                        <button class='btn btn-secondary' onclick='cancelAppointment({$row->id})'>Cancel</button>
-                        <button class='btn btn-danger' onclick='deleteAppointment({$row->id})'>Delete</button>
+                <td style='overflow: visible;'>
+                    <div style='display: flex; gap: 8px; align-items: center;'>";
+                    
+            if ($row->status !== 'Confirmed') {
+                $html .= "<button class='btn btn-success' onclick='confirmAppointment({$row->id})' style='padding: 6px 12px; font-size: 0.75rem;'>Confirm</button>";
+            } else {
+                $html .= "<button class='btn btn-warning' onclick=\"openRescheduleModal({$row->id}, '{$row->date}', '{$row->time}')\" style='padding: 6px 12px; font-size: 0.75rem;'>Reschedule</button>";
+            }
+
+            $html .= "<div class='action-dropdown'>
+                            <button class='btn btn-secondary action-dropdown-btn' onclick='toggleDropdown(event, {$row->id})' style='padding: 6px 10px;'><i class='fas fa-ellipsis-h'></i></button>
+                            <div class='action-dropdown-content' id='dropdown-{$row->id}'>";
+                            
+            if ($row->status !== 'Confirmed') {
+                $html .= "<a href='#' onclick=\"event.preventDefault(); openRescheduleModal({$row->id}, '{$row->date}', '{$row->time}')\">Reschedule</a>";
+            }
+                                
+            $html .= "          <a href='#' onclick=\"event.preventDefault(); cancelAppointment({$row->id})\">Cancel</a>
+                                <a href='#' class='danger' onclick=\"event.preventDefault(); deleteAppointment({$row->id})\">Delete</a>
+                            </div>
+                        </div>
                     </div>
                 </td>
             </tr>";
         }
 
         return response($html);
+    }
+
+    /**
+     * Get appointments created after a given timestamp (for real-time polling).
+     */
+    public function latestAppointments(Request $request)
+    {
+        $lastAppId = $request->input('last_app_id');
+        $lastQuoteId = $request->input('last_quote_id');
+
+        $result = [];
+
+        if ($lastAppId !== null) {
+            $result['appointments'] = Appointment::where('id', '>', (int)$lastAppId)->get();
+        }
+
+        if ($lastQuoteId !== null) {
+            $result['quotes'] = Quote::where('id', '>', (int)$lastQuoteId)->get();
+        }
+
+        return response()->json($result);
     }
 
     /**
