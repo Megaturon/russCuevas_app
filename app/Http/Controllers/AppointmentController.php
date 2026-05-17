@@ -24,7 +24,7 @@ class AppointmentController extends Controller
 
         Appointment::create($validated);
 
-        return back()->with('success', 'Your appointment has been booked successfully!');
+        return redirect()->route('quote.index')->with('appointment_success', 'Your appointment has been booked successfully! Please fill out the order form.');
     }
     public function confirmReschedule($id)
     {

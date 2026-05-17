@@ -29,14 +29,11 @@
                 <h1>Get a Custom Quote</h1>
                 <p>Fill out the form below and we'll get back to you with a personalized estimate.</p>
                 
-                        @if(session('success'))
-                            <div class="alert alert-success" style="color: green; margin-bottom: 15px;">
-                                {{ session('success') }}
-                            </div>
-                        @endif
+
 
                         @if($errors->any())
-                            <div class="alert alert-danger" style="color: red; margin-bottom: 15px;">
+                            <div class="elegant-alert elegant-alert-danger">
+                                <i class="fas fa-exclamation-circle alert-icon"></i>
                                 <ul>
                                     @foreach($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -278,6 +275,35 @@
         }
     }
 </script>
+
+@if(session('success') || session('appointment_success'))
+    <!-- Centered Success Modal -->
+    <div id="success-modal-overlay" class="success-modal-overlay active">
+        <div class="success-modal-content">
+            <div class="success-icon-wrapper">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2 class="success-title">Success</h2>
+            <p class="success-message">{{ session('success') ?? session('appointment_success') }}</p>
+            <button class="success-continue-btn" type="button" onclick="closeSuccessModal({{ session('success') ? 'true' : 'false' }})">Continue</button>
+        </div>
+    </div>
+    <script>
+        function closeSuccessModal(isQuoteSuccess) {
+            const modal = document.getElementById('success-modal-overlay');
+            if (modal) {
+                modal.classList.remove('active');
+                // Wait for transition to finish then redirect to main page if quote success
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    if (isQuoteSuccess) {
+                        window.location.href = '/';
+                    }
+                }, 400);
+            }
+        }
+    </script>
+@endif
 
 </body>
 </html>
