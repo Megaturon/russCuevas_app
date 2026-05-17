@@ -1118,6 +1118,39 @@
                 color: #9e9e9e;
                 text-decoration: line-through;
             }
+            
+            /* Quote Statuses */
+            .status-Received {
+                background-color: #f3f4f6;
+                color: #4b5563;
+            }
+            .status-Quoted {
+                background-color: #f3e8ff;
+                color: #6b21a8;
+            }
+            .status-PartiallyPaid {
+                background-color: #fff8e6;
+                color: #b7791f;
+                position: relative;
+            }
+            .status-PartiallyPaid::before {
+                content: '';
+                display: inline-block;
+                width: 6px;
+                height: 6px;
+                background-color: #d69e2e;
+                border-radius: 50%;
+                margin-right: 6px;
+                animation: pulse 1.5s infinite;
+            }
+            .status-Accepted {
+                background-color: #e6f4ea;
+                color: #1e7e34;
+            }
+            .status-Paid {
+                background-color: #ecfdf5;
+                color: #059669;
+            }
 
             /* Dropdown Actions */
             .action-dropdown {
@@ -1366,9 +1399,19 @@
 
         <!-- Quotes Pane -->
         <div class="pane" id="quotes">
-            <div class="filter-container">
-                <label for="quote-search">Search Quotes:</label>
-                <input type="text" id="quote-search" placeholder="Search by name, email, or service..." onkeyup="filterTable('quote-search', 'quotes')">
+            <div class="unified-filter-bar">
+                <div style="flex: 1; min-width: 250px;">
+                    <div class="filter-container" style="margin-bottom: 0;">
+                        <input type="text" id="quote-search" placeholder="Search by name, email, or service..." onkeyup="filterTable('quote-search', 'quotes', 'quote-status-filters')" style="width: 100%; margin: 0;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;" class="quote-status-filters">
+                    <button class="status-filter-btn active" onclick="setStatusFilter(this, 'quotes', 'quote-search', 'quote-status-filters')">All</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'quotes', 'quote-search', 'quote-status-filters')">Received</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'quotes', 'quote-search', 'quote-status-filters')">Quoted</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'quotes', 'quote-search', 'quote-status-filters')">Partially Paid</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'quotes', 'quote-search', 'quote-status-filters')">Paid</button>
+                </div>
             </div>
             <div class="table-container">
                 <table>
@@ -1377,6 +1420,7 @@
                             <th>Client Info</th>
                             <th>Service Details</th>
                             <th>Submitted Date</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -1389,13 +1433,20 @@
                                 <span style="color: var(--text-muted); font-size: 0.8rem;">{{ $row->phone }}</span>
                             </td>
                             <td>
-                                <span class="status-pill">{{ $row->service_type }}</span>
+                                <span style="background: var(--grey-bg); color: var(--black); padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">{{ $row->service_type }}</span>
                                 @if($row->custom_service_type)
                                     <br><span style="font-size: 0.8rem; color: var(--grey-text);">{{ $row->custom_service_type }}</span>
                                 @endif
                             </td>
                             <td>
                                 {{ $row->created_at->format('M d, Y') }}
+                            </td>
+                            <td>
+                                @php
+                                    $qStatus = $row->status ?? 'Received';
+                                    $statusClass = $qStatus;
+                                @endphp
+                                <span class="status-pill status-{{ str_replace(' ', '', $qStatus) }}">{{ $qStatus }}</span>
                             </td>
                             <td>
                                 <div class="table-actions">
@@ -1515,7 +1566,13 @@
                 </div>
             </div>
 
-            <div class="quote-action-box" style="margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--grey-border); display: flex; align-items: flex-end; gap: 20px;">
+            <div id="modal-payment-history-container" style="display: none; margin-top: 40px; border-top: 2px solid var(--black); padding-top: 20px;">
+                <h3 style="font-family: var(--font-playfair); font-size: 1.2rem; margin-bottom: 15px;">Payment History</h3>
+                <div id="modal-payment-details" style="font-size: 0.9rem; line-height: 1.6; color: var(--grey-text);"></div>
+                <div id="modal-balance-container" style="margin-top: 15px; font-weight: 600;"></div>
+            </div>
+
+            <div id="modal-quote-action-box" class="quote-action-box" style="margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--grey-border); display: flex; align-items: flex-end; gap: 20px;">
                 <div style="flex: 1;">
                     <div class="detail-group" style="border-top: 2px solid var(--black); padding-top: 20px;">
                         <span class="detail-label">Message to Client (Personal Touch)</span>
@@ -1798,6 +1855,51 @@
         }
 
         document.getElementById('modal-quote-id').value = quote.id;
+
+        // Payment History Logic
+        if (quote.amount_paid && parseFloat(quote.amount_paid) > 0) {
+            document.getElementById('modal-payment-history-container').style.display = 'block';
+            
+            const amtStr = '₱' + parseFloat(quote.amount_paid).toLocaleString('en-US', {minimumFractionDigits: 2});
+            let typeStr = quote.payment_type === 'deposit' ? 'Deposit' : 'Full Payment';
+            let dateStr = quote.paid_at ? quote.paid_at.substring(0,10) : '';
+            let refStr = 'QT-' + quote.created_at.substring(0, 10).replace(/-/g, '') + '-' + String(quote.id).padStart(4, '0');
+
+            document.getElementById('modal-payment-details').innerHTML = `
+                <div><strong>Transaction Date:</strong> ${dateStr}</div>
+                <div><strong>Amount Paid:</strong> ${amtStr}</div>
+                <div><strong>Type:</strong> ${typeStr}</div>
+                <div><strong>Reference:</strong> ${refStr} <span class="status-pill status-Confirmed" style="font-size:0.6rem; padding: 2px 6px; margin-left:8px;">Success</span></div>
+            `;
+
+            if (quote.payment_type === 'deposit' && parseFloat(quote.price_quote) > parseFloat(quote.amount_paid)) {
+                const bal = parseFloat(quote.price_quote) - parseFloat(quote.amount_paid);
+                document.getElementById('modal-balance-container').innerHTML = `
+                    <div style="font-size: 1.1rem; color: var(--black); margin-bottom: 10px;">Balance Remaining: ₱${bal.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                    <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 8px 12px;" onclick="alert('Balance reminder email sent to ${quote.email}')">Send balance reminder email</button>
+                `;
+            } else {
+                document.getElementById('modal-balance-container').innerHTML = `
+                    <div style="font-size: 1.1rem; color: #059669;"><i class="fas fa-check-circle"></i> Paid in Full</div>
+                `;
+            }
+            
+            if (quote.payment_type === 'full' || quote.status === 'Paid') {
+                 document.getElementById('modal-quote-action-box').style.display = 'none';
+            } else {
+                 document.getElementById('modal-quote-action-box').style.display = 'flex';
+                 document.getElementById('modal-price-input').disabled = true;
+                 document.getElementById('modal-price-input').style.background = '#f3f4f6';
+                 document.getElementById('modal-price-input').title = 'Cannot change price after partial payment';
+            }
+        } else {
+            document.getElementById('modal-payment-history-container').style.display = 'none';
+            document.getElementById('modal-quote-action-box').style.display = 'flex';
+            document.getElementById('modal-price-input').disabled = false;
+            document.getElementById('modal-price-input').style.background = 'transparent';
+            document.getElementById('modal-price-input').title = '';
+        }
+
         quoteModalOverlay.classList.add('active');
     }
 
@@ -1861,6 +1963,16 @@
         .then(data => {
             showToast(data.message, true);
             closeQuoteModal();
+            
+            // Instantly update the status pill in the DOM
+            const quoteRow = document.getElementById('quote-row-' + id);
+            if (quoteRow) {
+                const statusCell = quoteRow.cells[3]; // 4th column is Status
+                if (statusCell) {
+                    statusCell.innerHTML = '<span class="status-pill status-Quoted">Quoted</span>';
+                }
+            }
+            
             setTimeout(() => location.reload(), 1500);
         })
         .catch(err => {
@@ -2045,9 +2157,10 @@
     // Real-time Polling for New Appointments & Quotes
     let lastPollAppId = {{ $allAppointments->max('id') ?? 0 }};
     let lastPollQuoteId = {{ $quotes->max('id') ?? 0 }};
+    let lastUpdatedStr = '{{ now()->format("Y-m-d H:i:s") }}';
     
     setInterval(() => {
-        fetch(`{{ route('admin.latest.appointments') }}?last_app_id=${lastPollAppId}&last_quote_id=${lastPollQuoteId}`, {
+        fetch(`{{ route('admin.latest.appointments') }}?last_app_id=${lastPollAppId}&last_quote_id=${lastPollQuoteId}&last_updated=${encodeURIComponent(lastUpdatedStr)}`, {
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'
             }
@@ -2078,6 +2191,49 @@
                 
                 const maxQuoteId = Math.max(...data.quotes.map(q => q.id));
                 lastPollQuoteId = maxQuoteId > lastPollQuoteId ? maxQuoteId : lastPollQuoteId;
+            }
+
+            if (data.updated_quotes && data.updated_quotes.length > 0) {
+                data.updated_quotes.forEach((quote) => {
+                    if (quote.updated_at > lastUpdatedStr) {
+                        lastUpdatedStr = quote.updated_at.replace('T', ' ').substring(0, 19);
+                    }
+
+                    // Update UI if row exists
+                    const row = document.getElementById('quote-row-' + quote.id);
+                    if (row) {
+                        const statusCell = row.cells[3];
+                        if (statusCell) {
+                            const statusStr = quote.status.replace(/\s+/g, '');
+                            statusCell.innerHTML = `<span class="status-pill status-${statusStr}">${quote.status}</span>`;
+                        }
+
+                        // Add Payment Badge next to name if paid
+                        if (quote.status === 'Paid' || quote.status === 'Partially Paid') {
+                            const nameCell = row.cells[0];
+                            const badgeStr = quote.payment_type === 'deposit' ? `Deposit ₱${parseFloat(quote.amount_paid).toLocaleString()}` : 'Paid in full';
+                            const badgeHtml = `<span style="display:inline-block; margin-left: 8px; background: #ecfdf5; color: #059669; font-size: 0.7rem; padding: 2px 6px; border-radius: 12px; font-weight: 600;"><i class="fas fa-check-circle" style="margin-right: 4px;"></i>${badgeStr}</span>`;
+                            
+                            // Check if badge already exists
+                            if (!nameCell.innerHTML.includes('fa-check-circle')) {
+                                nameCell.querySelector('strong').insertAdjacentHTML('afterend', badgeHtml);
+                            }
+
+                            // Toast notification
+                            const ref = 'QT-' + quote.created_at.substring(0, 10).replace(/-/g, '') + '-' + String(quote.id).padStart(4, '0');
+                            setTimeout(() => {
+                                showToast(`💳 ${quote.name} paid a ${quote.payment_type === 'deposit' ? 'deposit' : 'full balance'} of ₱${parseFloat(quote.amount_paid).toLocaleString()} — ${quote.service_type} · ${ref}`, true);
+                            }, delayIndex * 2000);
+                            delayIndex++;
+                        }
+
+                        // Update the button's JSON string so the modal gets the latest data
+                        const viewBtn = row.querySelector('button.btn-primary');
+                        if (viewBtn) {
+                            viewBtn.setAttribute('onclick', `openQuoteModal(${JSON.stringify(quote).replace(/"/g, '&quot;')})`);
+                        }
+                    }
+                });
             }
         })
         .catch(err => console.error('Polling error:', err));

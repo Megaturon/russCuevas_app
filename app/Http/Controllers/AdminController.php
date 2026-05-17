@@ -266,23 +266,44 @@ class AdminController extends Controller
         if ($action === 'send_quote') {
             $price = $request->price_quote;
             $messageToClient = $request->message_to_client;
-            $quote->update(['price_quote' => $price]);
+            
+            // Generate token and expiration
+            $token = \Illuminate\Support\Str::random(64);
+            $expiresAt = now()->addDays(14);
+            $quoteRef = 'QT-' . now()->format('Ymd') . '-' . str_pad($quote->id, 4, '0', STR_PAD_LEFT);
+
+            $quote->update([
+                'price_quote' => $price,
+                'status' => 'Quoted',
+                'token' => $token,
+                'token_expires_at' => $expiresAt
+            ]);
 
             $data = [
                 'title' => 'Your Price Quotation',
                 'name' => $quote->name,
-                'intro' => 'We have carefully reviewed your inspiration and details for your <strong>' . $quote->service_type . '</strong>. ' . ($messageToClient ? '<br><br><i>"' . e($messageToClient) . '"</i>' : ''),
+                'intro' => 'Hi ' . strtok($quote->name, ' ') . ', your quote is ready.<br><br>We have carefully reviewed your inspiration and details for your <strong>' . $quote->service_type . '</strong>.' . ($messageToClient ? '<br><br><i>"' . e($messageToClient) . '"</i>' : ''),
                 'details' => [
                     'Project' => $quote->service_type,
-                    'Sizing' => $quote->size === 'custom' ? 'Bespoke Measurements' : 'Standard ' . strtoupper($quote->size),
-                    'Quotation' => '₱ ' . number_format($price, 2),
-                    'Validity' => 'Valid for 30 Days'
+                    'Estimated Timeline' => '4 - 6 Weeks',
+                    'Total Amount' => '₱ ' . number_format($price, 2)
                 ],
-                'outro' => 'If you are ready to proceed with this design, you can schedule your first fitting or initial consultation through our website.'
+                'actions' => [
+                    [
+                        'label' => 'Secure Checkout (via PayMongo)',
+                        'url' => url('/quotes/' . $token . '/paymongo'),
+                        'color' => '#4F46E5'
+                    ],
+                    [
+                        'label' => 'View & Pay',
+                        'url' => url('/quotes/' . $token . '/pay'),
+                        'color' => '#1a1a1a'
+                    ]
+                ],
+                'outro' => '<span style="color: #8e9194; font-size: 11px;">This link expires on ' . $expiresAt->format('M d, Y') . '. Log in to your portal to access it anytime.</span>'
             ];
 
-            $this->sendEmail($quote->email, "Quotation for your " . $quote->service_type . " - Russ Cuevas Atelier", $data);
-
+            $this->sendEmail($quote->email, "Your Quote from Russ Cuevas Atelier — Ref: " . $quoteRef, $data);
 
             return response()->json(['message' => 'Professional quotation sent to client.']);
         }
@@ -389,6 +410,7 @@ class AdminController extends Controller
     {
         $lastAppId = $request->input('last_app_id');
         $lastQuoteId = $request->input('last_quote_id');
+        $lastUpdatedStr = $request->input('last_updated'); // e.g. "2026-05-17 15:00:00"
 
         $result = [];
 
@@ -398,6 +420,16 @@ class AdminController extends Controller
 
         if ($lastQuoteId !== null) {
             $result['quotes'] = Quote::where('id', '>', (int)$lastQuoteId)->get();
+        }
+
+        if ($lastUpdatedStr) {
+            // Find quotes that were updated after the last check, but only if they are not completely new
+            // (to avoid sending the same quote twice if it's both new and updated)
+            $query = Quote::where('updated_at', '>', $lastUpdatedStr);
+            if ($lastQuoteId !== null) {
+                $query->where('id', '<=', (int)$lastQuoteId); 
+            }
+            $result['updated_quotes'] = $query->get();
         }
 
         return response()->json($result);

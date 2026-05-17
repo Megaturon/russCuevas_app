@@ -40,7 +40,11 @@
               <a href="/login"><li>Log In</li></a>
               <a href="/signup"><li>Sign Up</li></a>
               @else
-              <li class="user-name-header">{{ auth()->user()->name }}</li>
+              <li class="user-name-header" style="font-size: 0.75rem; color: var(--grey); cursor: default; pointer-events: none; padding-bottom: 5px;">HELLO, {{ strtoupper(auth()->user()->name) }}</li>
+              <a href="{{ route('portal.appointments') }}"><li>My Appointments</li></a>
+              <a href="{{ route('portal.quotes') }}"><li>My Quotes</li></a>
+              <a href="{{ route('portal.receipts') }}"><li>My Receipts</li></a>
+              <hr style="border: 0; border-top: 1px solid var(--grey-border); margin: 5px 0;">
               @if(auth()->user()->is_admin)
               <a href="/admin"><li>Admin Dashboard</li></a>
               @endif
@@ -99,7 +103,11 @@
         if (authMenu) {
             const isAdmin = session.user.user_metadata?.role === 'admin' || session.user.email === 'admin@russcuevas.com';
             authMenu.innerHTML = `
-                <li class="user-name-header">${userName}</li>
+                <li class="user-name-header" style="font-size: 0.75rem; color: var(--grey); cursor: default; pointer-events: none; padding-bottom: 5px;">HELLO, ${userName.toUpperCase()}</li>
+                <a href="/portal/appointments"><li>My Appointments</li></a>
+                <a href="/portal/quotes"><li>My Quotes</li></a>
+                <a href="/portal/receipts"><li>My Receipts</li></a>
+                <hr style="border: 0; border-top: 1px solid var(--grey-border); margin: 5px 0;">
                 ${isAdmin ? `<a href="/admin"><li>Admin Dashboard</li></a>` : ''}
                 <li id="supabase-logout-btn">Log Out</li>
             `;

@@ -21,5 +21,17 @@ class Quote extends Model
         'size',
         'custom_size',
         'inspiration_image',
+        'status',
+        'token',
+        'token_expires_at',
+        'amount_paid',
+        'deposit_percentage',
+        'payment_type',
+        'paid_at',
+    ];
+
+    protected $casts = [
+        'token_expires_at' => 'datetime',
+        'paid_at' => 'datetime',
     ];
 }

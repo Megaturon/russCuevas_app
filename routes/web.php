@@ -70,6 +70,27 @@ Route::middleware('auth')->group(function () {
 Route::get('/appointment/{id}/confirm-reschedule', [AppointmentController::class, 'confirmReschedule'])->name('appointment.confirm_reschedule');
 Route::get('/appointment/{id}/cancel-reschedule', [AppointmentController::class, 'cancelReschedule'])->name('appointment.cancel_reschedule');
 
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ReceiptController;
+
+// Token-based Payment Routes (No login required)
+Route::get('/quotes/{token}/paymongo', [CheckoutController::class, 'paymongoRedirect'])->name('checkout.paymongo');
+Route::get('/quotes/{token}/pay', [CheckoutController::class, 'showPayment'])->name('checkout.pay');
+Route::post('/quotes/{token}/process-payment', [CheckoutController::class, 'processPayment'])->name('checkout.process_payment');
+Route::get('/quotes/{token}/payment-success', [CheckoutController::class, 'successCallback'])->name('checkout.payment_success');
+
+use App\Http\Controllers\ClientPortalController;
+
+Route::middleware('auth')->prefix('portal')->group(function () {
+    Route::get('/appointments', [ClientPortalController::class, 'appointments'])->name('portal.appointments');
+    Route::get('/quotes', [ClientPortalController::class, 'quotes'])->name('portal.quotes');
+    Route::get('/receipts', [ClientPortalController::class, 'receipts'])->name('portal.receipts');
+});
+
+// Formal Receipt Route (Public for seamless demo flow)
+Route::get('/receipts/{reference}', [ReceiptController::class, 'show'])->name('receipts.show');
+Route::get('/receipts/{reference}/download', [ReceiptController::class, 'download'])->name('receipts.download');
+
 use App\Http\Controllers\AdminController;
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
