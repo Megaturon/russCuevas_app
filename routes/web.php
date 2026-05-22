@@ -101,3 +101,21 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('/filter-appointments', [AdminController::class, 'filterAppointments'])->name('admin.filter.appointments');
     Route::get('/latest-appointments', [AdminController::class, 'latestAppointments'])->name('admin.latest.appointments');
 });
+
+// Chatbot route
+Route::post('/chatbot/send', function (\Illuminate\Http\Request $request) {
+    $message = $request->input('message');
+    
+    $reply = "I'm sorry, I can't answer that right now. For further questions, contact us through our Facebook page: https://www.facebook.com/russcuevascouture";
+    if (stripos($message, 'hello') !== false || stripos($message, 'hi') !== false) {
+        $reply = "Hello! How can I help you today?";
+    } elseif (stripos($message, 'appointment') !== false || stripos($message, 'book') !== false) {
+        $reply = "You can book an appointment by clicking the 'Book an Appointment' button on our home page!";
+    } elseif (stripos($message, 'price') !== false || stripos($message, 'cost') !== false) {
+        $reply = "Our prices vary depending on the design. Please submit a quote request or book a consultation.";
+    }
+    
+    broadcast(new \App\Events\ChatMessageEvent($reply, 'Bot'));
+    
+    return response()->json(['status' => 'success']);
+});
