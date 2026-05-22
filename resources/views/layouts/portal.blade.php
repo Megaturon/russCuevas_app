@@ -9,35 +9,39 @@
     @vite(['resources/css/styles2.css'])
     <style>
         body {
-            background-color: #faf9f6;
-            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            font-family: var(--font-inter, 'Inter', sans-serif);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            color: #111;
         }
         main {
             flex-grow: 1;
             padding: 4rem 2rem;
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             width: 100%;
         }
         .portal-header {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-family: var(--font-playfair, 'Playfair Display', serif);
+            font-size: 2rem;
             font-weight: 400;
-            font-style: italic;
-            color: #1a1a1a;
-            margin-bottom: 2rem;
+            color: #111;
+            margin-bottom: 2.5rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            justify-content: space-between;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 1.5rem;
+        }
+        .portal-header i {
+            display: none; /* Hide generic icons for a cleaner look */
         }
         .portal-card {
             background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            overflow: hidden;
+            border: 1px solid #eaeaea;
+            border-radius: 0;
         }
         .portal-table {
             width: 100%;
@@ -45,19 +49,24 @@
         }
         .portal-table th {
             text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            color: #888;
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #eee;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: #111;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #111;
             text-align: left;
-            background: #fdfdfd;
+            background: #fff;
         }
         .portal-table td {
             padding: 1.5rem;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #eaeaea;
             vertical-align: middle;
+            font-size: 0.85rem;
             color: #333;
+        }
+        .portal-table tr:hover td {
+            background-color: #fdfdfd;
         }
         .portal-table tr:last-child td {
             border-bottom: none;
@@ -65,63 +74,95 @@
         .status-pill {
             display: inline-flex;
             align-items: center;
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
+            padding: 4px 10px;
+            border-radius: 2px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid transparent;
+        }
+        .status-pending, .status-received { background: transparent; color: #888; border-color: #ccc; }
+        .status-confirmed, .status-accepted, .status-paid { background: #111; color: #fff; }
+        .status-rescheduled { background: #f5f5f5; color: #111; border-color: #111; }
+        .status-cancelled, .status-declined, .status-expired { background: transparent; color: #999; text-decoration: line-through; border-color: #eee; }
+        .status-quoted { background: #fff; color: #111; border-color: #111; }
+        .status-partially-paid, .status-partiallypaid { background: transparent; color: #111; border-color: #111; }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #111;
+            color: #fff;
+            padding: 0.8rem 1.8rem;
             font-size: 0.75rem;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .status-pending, .status-received { background: #fdf6e3; color: #b58900; }
-        .status-confirmed, .status-accepted { background: #e8f5e9; color: #2e7d32; }
-        .status-rescheduled { background: #e3f2fd; color: #1565c0; }
-        .status-cancelled, .status-declined, .status-expired { background: #ffebee; color: #c62828; text-decoration: line-through; opacity: 0.7; }
-        .status-quoted { background: #fff3e0; color: #e65100; font-weight: 600; border: 1px solid #ffe0b2; }
-
-        .btn-primary {
-            display: inline-block;
-            background: #1a1a1a;
-            color: #fff;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-decoration: none;
-            border: 1px solid #1a1a1a;
+            border: 1px solid #111;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         .btn-primary:hover {
-            background: transparent;
-            color: #1a1a1a;
+            background: #fff;
+            color: #111;
         }
         .btn-secondary {
-            display: inline-block;
-            background: transparent;
-            color: #1a1a1a;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            color: #111;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.7rem;
+            font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 1px;
             text-decoration: none;
-            border: 1px solid #eee;
+            border: 1px solid #eaeaea;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         .btn-secondary:hover {
-            border-color: #1a1a1a;
+            border-color: #111;
         }
         .empty-state {
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             text-align: center;
-            color: #666;
+            color: #555;
+            background: #fcfcfc;
+            border: 1px dashed #eaeaea;
         }
-        .empty-state i {
-            font-size: 3rem;
-            color: #ccc;
-            margin-bottom: 1rem;
+        .empty-state h3 {
+            font-family: var(--font-playfair, 'Playfair Display', serif);
+            font-size: 1.5rem;
+            color: #111;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
         }
         .empty-state p {
-            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 2rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
         }
+        
+        .portal-alert {
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.85rem;
+            border: 1px solid #eaeaea;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .portal-alert-success { background: #fff; border-left: 3px solid #111; }
+        .portal-alert-error { background: #fff; border-left: 3px solid #e53e3e; }
     </style>
 </head>
 <body>
@@ -132,28 +173,16 @@
 
 <main>
     @if(session('success'))
-    <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
-        <div class="flex">
-            <div class="flex-shrink-0">
-                <i class="fas fa-check-circle text-green-500"></i>
-            </div>
-            <div class="ml-3">
-                <p class="text-sm text-green-700">{{ session('success') }}</p>
-            </div>
-        </div>
+    <div class="portal-alert portal-alert-success">
+        <i class="fas fa-check" style="color: #111;"></i>
+        <span>{{ session('success') }}</span>
     </div>
     @endif
 
     @if(session('error'))
-    <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
-        <div class="flex">
-            <div class="flex-shrink-0">
-                <i class="fas fa-exclamation-circle text-red-500"></i>
-            </div>
-            <div class="ml-3">
-                <p class="text-sm text-red-700">{{ session('error') }}</p>
-            </div>
-        </div>
+    <div class="portal-alert portal-alert-error">
+        <i class="fas fa-exclamation-triangle" style="color: #e53e3e;"></i>
+        <span>{{ session('error') }}</span>
     </div>
     @endif
 

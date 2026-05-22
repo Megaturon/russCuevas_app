@@ -65,11 +65,13 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             
+            $welcomeMsg = 'Welcome back, ' . explode(' ', Auth::user()->name)[0] . '!';
+
             if (Auth::user()->is_admin) {
-                return redirect('/admin');
+                return redirect('/admin')->with('success', $welcomeMsg);
             }
             
-            return redirect()->intended('/main');
+            return redirect()->intended('/main')->with('success', $welcomeMsg);
         }
 
         return back()->withErrors([
@@ -203,11 +205,13 @@ class AuthController extends Controller
 
             Auth::login($user);
 
+            $welcomeMsg = 'Welcome back, ' . explode(' ', $user->name)[0] . '!';
+
             if ($user->is_admin) {
-                return redirect('/admin')->with('success', 'Logged in successfully via Google!');
+                return redirect('/admin')->with('success', $welcomeMsg);
             }
 
-            return redirect()->intended('/main')->with('success', 'Logged in successfully via Google!');
+            return redirect()->intended('/main')->with('success', $welcomeMsg);
             
         } catch (\Exception $e) {
             \Log::error('Google Auth Error: ' . $e->getMessage());

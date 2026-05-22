@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="portal-header">
-    <i class="fas fa-receipt text-gray-400"></i> My Receipts
+    My Receipts
 </div>
 
 <div class="portal-card">
@@ -23,26 +23,26 @@
                 @foreach($receipts as $receipt)
                 <tr>
                     <td>
-                        <div class="font-bold text-gray-800 text-sm tracking-wider">{{ $receipt->reference }}</div>
+                        <div style="font-weight: 600; font-family: var(--font-inter, sans-serif); letter-spacing: 1px;">{{ $receipt->reference }}</div>
                     </td>
                     <td>
-                        <div class="font-medium text-sm">{{ $receipt->service }}</div>
-                        <div class="text-xs text-gray-500 uppercase tracking-wide mt-1">{{ $receipt->type }}</div>
+                        <div style="font-weight: 600;">{{ $receipt->service }}</div>
+                        <div style="font-size: 0.75rem; color: #888; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px;">{{ $receipt->type }}</div>
                     </td>
                     <td>
-                        <div class="font-medium text-sm">{{ \Carbon\Carbon::parse($receipt->date_issued)->format('M j, Y') }}</div>
+                        <div style="font-weight: 500;">{{ \Carbon\Carbon::parse($receipt->date_issued)->format('M j, Y') }}</div>
                     </td>
                     <td>
                         @if($receipt->amount)
-                            <div class="font-bold text-gray-900">₱{{ number_format($receipt->amount, 2) }}</div>
+                            <div style="font-weight: 600;">₱{{ number_format($receipt->amount, 2) }}</div>
                         @else
-                            <div class="text-sm text-gray-500 italic">No Charge</div>
+                            <div style="font-size: 0.75rem; color: #aaa; font-style: italic;">No Charge</div>
                         @endif
                     </td>
                     <td>
-                        <div class="flex gap-2">
-                            <a href="{{ route('receipts.show', $receipt->reference) }}" class="btn-secondary text-xs py-2 px-3 text-center inline-block">View</a>
-                            <a href="{{ route('receipts.show', ['reference' => $receipt->reference, 'download' => 'pdf']) }}" class="btn-primary text-xs py-2 px-3 text-center inline-block"><i class="fas fa-download mr-1"></i> PDF</a>
+                        <div style="display: flex; gap: 8px;">
+                            <a href="{{ route('receipts.show', $receipt->reference) }}" class="btn-secondary">View</a>
+                            <a href="{{ route('receipts.show', ['reference' => $receipt->reference, 'download' => 'pdf']) }}" class="btn-primary" style="padding: 0.6rem 1.2rem; font-size: 0.7rem;"><i class="fas fa-download" style="margin-right: 6px;"></i> PDF</a>
                         </div>
                     </td>
                 </tr>
@@ -51,9 +51,9 @@
         </table>
     @else
         <div class="empty-state">
-            <i class="fas fa-file-invoice"></i>
-            <h3 class="text-xl font-medium text-gray-900 mb-2">No receipts yet</h3>
-            <p>They will appear here automatically after a confirmed appointment or an accepted quote.</p>
+            <h3 style="font-size: 2rem; margin-bottom: 1rem; color: #ddd;">&mdash;</h3>
+            <h3>No Receipts Yet</h3>
+            <p>Your transaction records will appear here automatically once a payment is processed or an appointment is confirmed.</p>
         </div>
     @endif
 </div>
