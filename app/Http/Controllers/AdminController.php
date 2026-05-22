@@ -46,7 +46,11 @@ class AdminController extends Controller
         $users = User::orderBy('created_at', 'asc')->get();
 
         // KPI Calculations
-        $totalRevenuePending = Quote::whereNotNull('price_quote')->sum('price_quote');
+        $totalRevenuePending = Quote::where('status', 'Quoted')
+                                     ->orWhereNull('status')
+                                     ->whereNotNull('price_quote')
+                                     ->whereNull('paid_at')
+                                     ->sum('price_quote');
         
         $totalQuotes = Quote::count();
         $totalAppointments = Appointment::count();
@@ -57,34 +61,34 @@ class AdminController extends Controller
             ->orderBy('total', 'desc')
             ->first();
 
-        // New Metrics for Business Overview Overhaul
-        $thisWeekStart = now()->startOfWeek();
-        $lastWeekStart = now()->subWeek()->startOfWeek();
-        $lastWeekEnd = now()->subWeek()->endOfWeek();
+        // 7-Day Rolling Windows for accurately comparing "vs last week"
+        $now = now();
+        $last7DaysStart = $now->copy()->subDays(7);
+        $previous7DaysStart = $now->copy()->subDays(14);
 
-        // Revenue
-        $thisWeekRevenue = Quote::where('created_at', '>=', $thisWeekStart)
+        // Revenue Growth
+        $thisWeekRevenue = Quote::where('created_at', '>=', $last7DaysStart)
             ->whereNotNull('price_quote')
             ->sum('price_quote');
-        $lastWeekRevenue = Quote::whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])
+        $lastWeekRevenue = Quote::whereBetween('created_at', [$previous7DaysStart, $last7DaysStart])
             ->whereNotNull('price_quote')
             ->sum('price_quote');
-        $revenueGrowthWeek = $lastWeekRevenue > 0 ? round((($thisWeekRevenue - $lastWeekRevenue) / $lastWeekRevenue) * 100, 1) : 100;
+        $revenueGrowthWeek = $lastWeekRevenue > 0 ? round((($thisWeekRevenue - $lastWeekRevenue) / $lastWeekRevenue) * 100, 1) : ($thisWeekRevenue > 0 ? 100 : 0);
 
-        // Quotes
-        $thisWeekQuotes = Quote::where('created_at', '>=', $thisWeekStart)->count();
-        $lastWeekQuotes = Quote::whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])->count();
-        $quotesGrowthWeek = $lastWeekQuotes > 0 ? round((($thisWeekQuotes - $lastWeekQuotes) / $lastWeekQuotes) * 100, 1) : 100;
+        // Quotes Growth
+        $thisWeekQuotes = Quote::where('created_at', '>=', $last7DaysStart)->count();
+        $lastWeekQuotes = Quote::whereBetween('created_at', [$previous7DaysStart, $last7DaysStart])->count();
+        $quotesGrowthWeek = $lastWeekQuotes > 0 ? round((($thisWeekQuotes - $lastWeekQuotes) / $lastWeekQuotes) * 100, 1) : ($thisWeekQuotes > 0 ? 100 : 0);
 
-        // Appointments
-        $thisWeekApps = Appointment::where('created_at', '>=', $thisWeekStart)->count();
-        $lastWeekApps = Appointment::whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])->count();
-        $appsGrowthWeek = $lastWeekApps > 0 ? round((($thisWeekApps - $lastWeekApps) / $lastWeekApps) * 100, 1) : 100;
+        // Appointments Growth
+        $thisWeekApps = Appointment::where('created_at', '>=', $last7DaysStart)->count();
+        $lastWeekApps = Appointment::whereBetween('created_at', [$previous7DaysStart, $last7DaysStart])->count();
+        $appsGrowthWeek = $lastWeekApps > 0 ? round((($thisWeekApps - $lastWeekApps) / $lastWeekApps) * 100, 1) : ($thisWeekApps > 0 ? 100 : 0);
 
-        // Conversion Rate Comparison
+        // Conversion Rate Growth (Absolute Difference)
         $thisWeekConv = $thisWeekQuotes > 0 ? ($thisWeekApps / $thisWeekQuotes) * 100 : 0;
         $lastWeekConv = $lastWeekQuotes > 0 ? ($lastWeekApps / $lastWeekQuotes) * 100 : 0;
-        $convGrowthWeek = $lastWeekConv > 0 ? round($thisWeekConv - $lastWeekConv, 1) : $thisWeekConv;
+        $convGrowthWeek = round($thisWeekConv - $lastWeekConv, 1);
 
         // Service Distribution (Ranked)
         $serviceDistribution = Quote::select('service_type', \DB::raw('count(*) as total'))
@@ -136,6 +140,10 @@ class AdminController extends Controller
         $pendingAppointments = Appointment::where('status', 'Pending')->orderBy('created_at', 'desc')->get();
         $pendingAppointmentsCount = $pendingAppointments->count();
         
+        $payments = Quote::whereNotNull('price_quote')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
         return view('admin.dashboard', compact(
             'appointments', 
             'pastAppointments',
@@ -158,7 +166,8 @@ class AdminController extends Controller
             'serviceDistribution',
             'sparklineData',
             'statusBreakdown',
-            'recentActivities'
+            'recentActivities',
+            'payments'
         ));
     }
 
@@ -193,21 +202,37 @@ class AdminController extends Controller
         if ($action === 'reschedule') {
             $new_date = $request->new_date;
             $new_time = $request->new_time;
+            $reason = $request->reschedule_reason;
+            
             $appointment->update([
                 'date' => $new_date,
                 'time' => $new_time,
                 'status' => 'Rescheduled'
             ]);
 
+            $details = [
+                'New Schedule' => Carbon::parse($new_date)->format('F d') . ' | ' . Carbon::parse($new_time)->format('g:i A'),
+                'Status' => 'Rescheduled'
+            ];
+            
+            if (!empty($reason)) {
+                $details['Reason for Reschedule'] = $reason;
+            }
+
+            $newDateObj = Carbon::parse($new_date);
+            $validityHours = 24;
+            if ($newDateObj->isToday()) {
+                $validityHours = 2;
+            } elseif ($newDateObj->isTomorrow()) {
+                $validityHours = 12;
+            }
+
             $data = [
                 'title' => 'Appointment Rescheduled',
                 'name' => $appointment->name,
                 'intro' => 'Your appointment has been <strong>rescheduled</strong> to a new time slot.',
-                'details' => [
-                    'New Schedule' => Carbon::parse($new_date)->format('F d') . ' | ' . Carbon::parse($new_time)->format('g:i A'),
-                    'Status' => 'Rescheduled'
-                ],
-                'outro' => 'We have updated our calendar. Please let us know if this new schedule works for you by clicking one of the buttons below.',
+                'details' => $details,
+                'outro' => 'We have updated our calendar. Please let us know if this new schedule works for you by clicking one of the buttons below.<br><br><span style="color: #ef4444; font-size: 0.85em;"><strong>Note:</strong> This link is valid for ' . $validityHours . ' hours. If we do not receive a response, the appointment will be cancelled to accommodate other clients.</span>',
                 'actions' => [
                     [
                         'label' => 'Confirm Schedule',
@@ -314,6 +339,43 @@ class AdminController extends Controller
         }
 
         return response()->json(['message' => 'Action not found.'], 400);
+    }
+
+    /**
+     * Handle payment updates (e.g., adding partial physical store payments).
+     */
+    public function paymentAction(Request $request)
+    {
+        $id = $request->id;
+        $quote = Quote::findOrFail($id);
+        
+        $amountReceived = (float) $request->amount_received;
+        
+        if ($amountReceived <= 0) {
+            return response()->json(['message' => 'Invalid amount.'], 400);
+        }
+
+        $newTotalPaid = ($quote->amount_paid ?? 0) + $amountReceived;
+        
+        // Determine if it's fully paid now
+        if ($newTotalPaid >= $quote->price_quote) {
+            $quote->update([
+                'amount_paid' => $newTotalPaid,
+                'in_person_amount' => ($quote->in_person_amount ?? 0) + $amountReceived,
+                'status' => 'Paid',
+                'paid_at' => now(),
+            ]);
+            $msg = 'Payment recorded successfully. Balance is fully paid.';
+        } else {
+            $quote->update([
+                'amount_paid' => $newTotalPaid,
+                'in_person_amount' => ($quote->in_person_amount ?? 0) + $amountReceived,
+                'status' => 'Pending Balance'
+            ]);
+            $msg = 'Payment recorded successfully. Remaining balance updated.';
+        }
+
+        return response()->json(['message' => $msg]);
     }
 
     /**

@@ -11,21 +11,32 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
     
     <!-- Fonts and Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     
     <style>
         :root {
-            --black: #000000;
+            --black: #111111;
             --white: #ffffff;
-            --grey-light: #f5f5f5;
+            --grey-light: #f5f5f3;
             --grey-border: #e5e5e5;
-            --grey-text: #666666;
+            --grey-text: #888888;
             --grey-dark: #333333;
             
+            --bg-body: #f5f5f3;
+            --bg-main: #f5f5f3;
+            --bg-topbar: #ffffff;
+            --bg-sidebar: #111111;
+            --bg-table-header: #f5f5f3;
+            --text-main: #111111;
+            --text-sidebar: #888888;
+            
             --font-serif: 'Playfair Display', Georgia, serif;
+            --font-serif-display: 'Cormorant Garamond', serif;
             --font-sans: 'Inter', sans-serif;
         }
+
+
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
@@ -51,94 +62,124 @@
         }
 
         body {
-            background-color: var(--grey-light);
-            color: var(--black);
+            background: var(--bg-body);
+            color: var(--text-main);
             font-family: var(--font-sans);
             display: flex;
             height: 100vh;
             overflow: hidden;
             -webkit-font-smoothing: antialiased;
+            padding: 15px;
+            gap: 15px;
         }
 
         /* Sidebar Styles */
         .sidebar {
-            width: 280px;
-            background-color: var(--black);
-            color: var(--white);
+            width: 260px;
+            background-color: var(--bg-sidebar);
+            color: var(--text-sidebar);
             display: flex;
             flex-direction: column;
             z-index: 10;
+            padding: 20px 0 0 0;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         .sidebar-header {
-            padding: 25px 24px;
-            border-bottom: 1px solid var(--grey-dark);
+            padding: 0 20px 30px 20px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
+            border-bottom: 1px solid #333;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-header img {
+            width: 60px !important;
+            height: auto !important;
+            mix-blend-mode: screen;
         }
 
         .sidebar-header h2 {
             font-family: var(--font-sans);
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-size: 1.1rem;
+            font-weight: 700;
             color: var(--white);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            margin: 0;
+            text-align: center;
+        }
+        
+        .sidebar-header p {
+            font-size: 0.75rem;
+            color: var(--grey-text);
+            margin: 0;
+            text-align: center;
         }
 
         .sidebar-nav {
             flex: 1;
-            padding: 30px 0;
+            padding: 0;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .nav-item {
-            padding: 15px 30px;
+            padding: 12px 25px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 15px;
-            font-size: 0.85rem;
-            font-weight: 400;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            border-left: 1px solid transparent;
-            color: #999;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            color: var(--text-sidebar);
+            position: relative;
+            border-left: 3px solid transparent;
         }
 
         .nav-item i {
             width: 20px;
             text-align: center;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            color: var(--grey-text);
+            transition: all 0.2s ease;
         }
 
         .nav-item:hover {
             color: var(--white);
+            background-color: #222;
         }
 
         .nav-item.active {
             color: var(--white);
-            background-color: rgba(255,255,255,0.05);
-            border-left-color: var(--white);
+            background-color: transparent;
+            border-left: 3px solid var(--white); 
+            font-weight: 600;
+        }
+        
+        .nav-item.active i {
+            color: var(--white);
         }
 
         .sidebar-footer {
-            padding: 20px 30px;
-            border-top: 1px solid var(--grey-dark);
+            padding: 20px;
+            margin-top: auto;
         }
 
         .logout-btn {
             display: flex;
             align-items: center;
             gap: 15px;
-            color: #999;
+            color: var(--grey-text);
             text-decoration: none;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: 0.9rem;
+            font-weight: 500;
             transition: color 0.3s;
+            padding: 12px 25px;
         }
 
         .logout-btn:hover {
@@ -151,32 +192,102 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            background-color: var(--white);
+            background-color: var(--bg-main);
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         .topbar {
-            padding: 30px 40px;
-            border-bottom: 1px solid var(--grey-border);
+            padding: 15px 40px;
+            background-color: var(--bg-topbar);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: var(--white);
+            border-bottom: 1px solid var(--grey-border);
         }
 
         .topbar h1 {
             font-family: var(--font-sans);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 600;
             color: var(--black);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin: 0;
+        }
+        
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-wrapper input {
+            padding: 10px 20px;
+            border-radius: 8px 0 0 8px;
+            border: 1px solid var(--grey-border);
+            border-right: none;
+            background: var(--grey-light);
+            font-size: 0.85rem;
+            outline: none;
+            width: 300px;
+            transition: border-color 0.3s;
+        }
+
+        .search-wrapper input:focus {
+            border-color: var(--black);
+        }
+
+        .search-btn {
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 0 20px;
+            height: 38px; /* match input approx */
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-btn:hover {
+            background: #000;
+        }
+        
+        .topbar-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .topbar-icons i {
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            transition: background 0.3s;
+        }
+
+        .topbar-icons i:hover {
+            background: #e2e8f0;
         }
 
         .content-area {
             flex: 1;
             padding: 40px;
             overflow-y: auto;
-            background-color: var(--white);
+            background: var(--bg-main);
+        }
+
+        #mainInboundChart {
+            background: transparent !important;
+            max-height: 220px;
         }
 
         /* Pane Switching */
@@ -369,26 +480,25 @@
 
         th {
             position: sticky;
-            top: -40px;
-            background-color: #ffffff;
+            top: 0;
+            background-color: var(--bg-table-header);
             z-index: 10;
             font-family: var(--font-sans);
-            color: var(--black);
-            font-size: 0.7rem;
+            color: var(--grey-text);
+            font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             padding: 15px 20px;
-            border-bottom: 2px solid var(--black);
+            border-bottom: 1px solid var(--grey-border);
         }
 
         td {
-            padding: 20px;
+            padding: 15px 20px;
             font-size: 0.85rem;
-            color: var(--grey-dark);
+            color: var(--text-main);
             border-bottom: 1px solid var(--grey-border);
-            vertical-align: top;
-            line-height: 1.5;
+            vertical-align: middle;
         }
 
         tr {
@@ -396,8 +506,7 @@
         }
 
         tr:hover td {
-            background-color: #fafafa;
-        }
+            background-color: var(--grey-light);
         }
 
         strong {
@@ -405,46 +514,29 @@
             font-weight: 600;
         }
 
-        /* Status Pills (Minimalist Tags) */
+        /* Status Pills */
         .status-pill {
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 4px 10px;
+            padding: 4px 0;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            border: 1px solid var(--black);
-            background-color: transparent;
-            color: var(--black);
-            white-space: nowrap;
         }
 
         .status-Confirmed { 
-            background-color: var(--black); 
-            color: var(--white); 
-            border-color: var(--black);
+            color: #10b981; /* Green */
         }
         
         .status-Rescheduled { 
-            background-color: var(--grey-dark);
-            color: var(--white);
-            border-color: var(--grey-dark);
+            color: #3b82f6; /* Blue */
         }
         
         .status-Cancelled { 
-            background-color: var(--grey-border);
-            color: var(--grey-text);
-            border-color: var(--grey-border);
-            text-decoration: line-through;
-            opacity: 0.7;
+            color: #ef4444; /* Red */
         }
         
         .status-Pending { 
-            background-color: var(--white);
-            color: var(--black);
-            border: 1.5px solid var(--black);
+            color: #f59e0b; /* Orange */
         }
 
         /* Inputs & Buttons */
@@ -453,7 +545,6 @@
             gap: 10px;
             flex-wrap: wrap;
             align-items: center;
-        }
         }
 
         input[type="date"], input[type="time"], input.price-quote-input {
@@ -791,23 +882,17 @@
 <!-- Sidebar -->
 <aside class="sidebar">
     <div class="sidebar-header">
-        <img src="/images/RC_logo.jpg" alt="Russ Cuevas Logo" style="width: 40px; height: 40px;">
+        <img src="/images/RC_logo.jpg" alt="Russ Cuevas Logo">
         <h2>Administrator</h2>
+        <p>admin@russcuevas.com</p>
     </div>
     <nav class="sidebar-nav">
+        <div style="padding: 15px 25px 10px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-text); font-weight: 700;">Main Menu</div>
         <div class="nav-item active" data-target="overview">
             <i class="fas fa-chart-line"></i>
             Business Overview
         </div>
-        <div class="nav-item" data-target="notifications">
-            <i class="fas fa-bell"></i>
-            Notifications
-            @if($tomorrowAppointments->count() + $pendingAppointmentsCount > 0)
-                <span style="background: var(--black); color: var(--white); font-size: 0.6rem; padding: 2px 6px; border-radius: 10px; margin-left: auto; border: 1px solid rgba(255,255,255,0.3);">
-                    {{ $tomorrowAppointments->count() + $pendingAppointmentsCount }}
-                </span>
-            @endif
-        </div>
+
         <div class="nav-item" data-target="appointments">
             <i class="fas fa-calendar-alt"></i>
             Appointments
@@ -819,6 +904,10 @@
         <div class="nav-item" data-target="quotes">
             <i class="fas fa-file-invoice-dollar"></i>
             Quote Requests
+        </div>
+        <div class="nav-item" data-target="payments">
+            <i class="fas fa-wallet"></i>
+            Payments
         </div>
         <div class="nav-item" data-target="users">
             <i class="fas fa-users"></i>
@@ -841,6 +930,95 @@
 <main class="main-content">
     <header class="topbar">
         <h1 id="page-title">Appointments</h1>
+        <div class="topbar-right">
+            <div class="search-wrapper">
+                <input type="text" id="global-search" placeholder="Search information" oninput="performGlobalSearch()">
+                <button class="search-btn" onclick="performGlobalSearch()"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="topbar-icons" style="position: relative;">
+                <i class="fas fa-bell" onclick="toggleNotificationDropdown()" style="cursor: pointer; position: relative;">
+                    @if($tomorrowAppointments->count() + $pendingAppointmentsCount > 0)
+                        <span style="position: absolute; top: -5px; right: -8px; background: var(--black); color: var(--white); border: 2px solid var(--white); border-radius: 50%; font-size: 0.55rem; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-family: sans-serif; font-weight: bold; box-sizing: content-box;">
+                            {{ $tomorrowAppointments->count() + $pendingAppointmentsCount }}
+                        </span>
+                    @endif
+                </i>
+                
+                <!-- Notification Dropdown -->
+                <div id="notification-dropdown" style="display: none; position: absolute; top: 40px; right: 0; width: 450px; max-width: 90vw; max-height: 80vh; background: var(--white); box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 1px solid var(--grey-border); border-radius: 12px; z-index: 2000; overflow-y: auto; padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2 style="font-family: var(--font-sans); font-size: 1.2rem; font-weight: 700; color: var(--black); margin: 0;">Notifications</h2>
+                        <div style="font-size: 0.8rem; color: var(--grey-text);">{{ $tomorrowAppointments->count() + $pendingAppointmentsCount }} Unread</div>
+                    </div>
+                    
+                    @if($pendingAppointments->count() > 0)
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-text); margin-bottom: 10px;">Action Required</h3>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                @foreach($pendingAppointments as $app)
+                                    <div class="notification-card" style="flex-direction: column; padding: 15px; gap: 10px;">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <strong>{{ $app->name }}</strong>
+                                            <span style="color: #f59e0b; font-size: 0.75rem; font-weight: bold;">Pending</span>
+                                        </div>
+                                        <div style="font-size: 0.8rem; color: var(--grey-text);">{{ \Carbon\Carbon::parse($app->date)->format('M d') }} • {{ \Carbon\Carbon::parse($app->time)->format('g:i A') }}</div>
+                                        <div style="display: flex; gap: 8px; margin-top: 5px;">
+                                            <button class="btn btn-success" style="padding: 4px 8px; font-size: 0.65rem;" onclick="confirmAppointment({{ $app->id }})">Confirm</button>
+                                            <button class="btn btn-danger" style="padding: 4px 8px; font-size: 0.65rem;" onclick="deleteAppointment({{ $app->id }})">Decline</button>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($tomorrowAppointments->count() > 0)
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-text); margin-bottom: 10px;">Tomorrow</h3>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                @foreach($tomorrowAppointments as $app)
+                                    <div class="notification-card" style="flex-direction: column; padding: 15px; gap: 5px;">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <strong>{{ $app->name }}</strong>
+                                            <span style="color: #10b981; font-size: 0.75rem; font-weight: bold;">Confirmed</span>
+                                        </div>
+                                        <div style="font-size: 0.8rem; color: var(--grey-text);">{{ \Carbon\Carbon::parse($app->time)->format('g:i A') }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                    
+                    @if($newTodayQuotes->count() > 0)
+                        <div>
+                            <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-text); margin-bottom: 10px;">Recent Inquiries</h3>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                @foreach($newTodayQuotes as $quote)
+                                    <div class="notification-card" style="padding: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick='toggleNotificationDropdown(); document.querySelector("[data-target=\"quotes\"]").click(); openQuoteModal(@json($quote))'>
+                                        <div>
+                                            <strong style="font-size: 0.9rem;">New Quote: {{ $quote->name }}</strong>
+                                            <div style="font-size: 0.8rem; color: var(--grey-text);">{{ $quote->created_at->diffForHumans() }}</div>
+                                        </div>
+                                        <i class="fas fa-chevron-right" style="color: var(--grey-text); font-size: 0.8rem;"></i>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($tomorrowAppointments->count() == 0 && $pendingAppointments->count() == 0 && $newTodayQuotes->count() == 0)
+                        <div style="text-align: center; padding: 30px 10px; color: var(--grey-text);">
+                            <i class="fas fa-bell-slash" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
+                            <p style="font-size: 0.9rem;">You're all caught up!</p>
+                        </div>
+                    @endif
+                </div>
+                
+                <div style="width: 1px; height: 30px; background: var(--grey-border); margin: 0 10px;"></div>
+                
+                <!-- User Profile Chip Removed -->
+            </div>
+        </div>
     </header>
 
     <div class="content-area">
@@ -850,136 +1028,7 @@
             @include('admin.overview')
         </div>
 
-        <!-- Notifications Pane -->
-        <div class="pane" id="notifications">
-            <div style="max-width: 1000px; margin: 0 auto;">
-                
-                <!-- Notification Hub Header -->
-                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;">
-                    <div>
-                        <h2 style="font-family: var(--font-serif); font-size: 2.2rem; letter-spacing: 1px; margin-bottom: 8px;">Notification Hub</h2>
-                        <p style="color: var(--grey-text); font-size: 0.9rem; letter-spacing: 0.5px;">Manage your immediate priorities and pending approvals.</p>
-                    </div>
-                    <div style="display: flex; gap: 20px;">
-                        <div style="text-align: right; border-right: 1px solid var(--grey-border); padding-right: 20px;">
-                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--black);">{{ $tomorrowAppointments->count() }}</div>
-                            <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-text);">For Tomorrow</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--black);">{{ $pendingAppointmentsCount }}</div>
-                            <div style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-text);">Pending Actions</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Priority Schedule Section -->
-                <div style="margin-bottom: 60px;">
-                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
-                        <i class="fas fa-calendar-check" style="font-size: 1.1rem; color: var(--black);"></i>
-                        <h3 style="font-family: var(--font-sans); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--black);">Tomorrow's Schedule</h3>
-                    </div>
-
-                    @if($tomorrowAppointments->count() > 0)
-                        <div style="display: flex; flex-direction: column; gap: 15px;">
-                            @foreach($tomorrowAppointments as $app)
-                                <div class="notification-card priority-card">
-                                    <div class="time-col">
-                                        <div class="time-main">{{ \Carbon\Carbon::parse($app->time)->format('g:i') }}</div>
-                                        <div class="time-ampm">{{ \Carbon\Carbon::parse($app->time)->format('A') }}</div>
-                                    </div>
-                                    <div class="info-col">
-                                        <div class="info-header">
-                                            <div class="client-name">{{ $app->name }}</div>
-                                            <span class="status-pill status-confirmed">Confirmed</span>
-                                        </div>
-                                        <div class="client-email"><i class="fas fa-envelope"></i> {{ $app->email }}</div>
-                                        @if($app->notes)
-                                        <div class="card-notes">
-                                            <span class="notes-label">Preparation Notes:</span>
-                                            <p>"{{ $app->notes }}"</p>
-                                        </div>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <div class="empty-state-card">
-                            <i class="far fa-calendar-alt"></i>
-                            <p>No confirmed appointments for tomorrow.</p>
-                        </div>
-                    @endif
-                </div>
-
-                <!-- Action Required Section -->
-                <div style="margin-bottom: 60px;">
-                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
-                        <i class="fas fa-exclamation-circle" style="font-size: 1.1rem; color: var(--black);"></i>
-                        <h3 style="font-family: var(--font-sans); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--black);">Action Required</h3>
-                    </div>
-
-                    @if($pendingAppointments->count() > 0)
-                        <div style="display: flex; flex-direction: column; gap: 15px;">
-                            @foreach($pendingAppointments as $app)
-                                <div class="notification-card pending-card">
-                                    <div class="date-col">
-                                        <div class="date-month">{{ \Carbon\Carbon::parse($app->date)->format('M') }}</div>
-                                        <div class="date-day">{{ \Carbon\Carbon::parse($app->date)->format('d') }}</div>
-                                    </div>
-                                    <div class="info-col">
-                                        <div class="info-header">
-                                            <div class="client-name">{{ $app->name }}</div>
-                                            <span class="status-pill status-pending">Pending Approval</span>
-                                        </div>
-                                        <div class="client-email"><i class="fas fa-clock"></i> {{ \Carbon\Carbon::parse($app->time)->format('g:i A') }} • {{ $app->email }}</div>
-                                        <div class="card-notes" style="background: rgba(0,0,0,0.02);">
-                                            <p>"{{ $app->notes ?: 'Requesting a session.' }}"</p>
-                                        </div>
-                                    </div>
-                                    <div class="action-col">
-                                        <button class="btn btn-success btn-sm-compact" onclick="confirmAppointment({{ $app->id }})">Confirm</button>
-                                        <button class="btn btn-warning btn-sm-compact" onclick="openRescheduleModal({{ $app->id }}, '{{ $app->date }}', '{{ $app->time }}')">Reschedule</button>
-                                        <button class="btn btn-danger btn-sm-compact" onclick="deleteAppointment({{ $app->id }})">Delete</button>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <div class="empty-state-card">
-                            <i class="far fa-check-circle"></i>
-                            <p>All appointment requests have been processed.</p>
-                        </div>
-                    @endif
-                </div>
-
-                <!-- Recent Inquiries -->
-                <div>
-                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
-                        <i class="fas fa-paper-plane" style="font-size: 1.1rem; color: var(--black);"></i>
-                        <h3 style="font-family: var(--font-sans); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--black);">Recent Inquiries</h3>
-                    </div>
-
-                    @if($newTodayQuotes->count() > 0)
-                        <div style="display: flex; flex-direction: column; gap: 12px;">
-                            @foreach($newTodayQuotes as $quote)
-                                <div class="activity-card">
-                                    <div class="icon-circle">
-                                        <i class="fas fa-file-invoice-dollar"></i>
-                                    </div>
-                                    <div class="activity-info">
-                                        <div class="activity-title">New Quote Request from <strong>{{ $quote->name }}</strong></div>
-                                        <div class="activity-meta">Service: {{ $quote->service_type }} • {{ $quote->created_at->diffForHumans() }}</div>
-                                    </div>
-                                    <button class="btn btn-primary btn-outline-sm" onclick='document.querySelector("[data-target=\"quotes\"]").click(); openQuoteModal(@json($quote))'>Review Quote</button>
-                                </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <p style="color: var(--grey-text); font-style: italic; font-size: 0.9rem; padding-left: 30px;">No new quote inquiries today.</p>
-                    @endif
-                </div>
-            </div>
-        </div>
+        <!-- Overview Pane -->
 
         <style>
             .notification-card {
@@ -1037,27 +1086,26 @@
             
             /* Status Filter Buttons */
             .status-filter-btn {
-                background: var(--white);
-                border: 1px solid var(--grey-border);
+                background: var(--bg-body);
+                border: 1px solid transparent;
                 color: var(--grey-text);
-                padding: 8px 16px;
-                font-size: 0.75rem;
+                padding: 8px 18px;
+                font-size: 0.85rem;
                 font-family: var(--font-sans);
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 1px;
+                font-weight: 500;
                 cursor: pointer;
                 transition: all 0.2s ease;
-                border-radius: 4px;
+                border-radius: 20px;
+                text-transform: capitalize;
             }
             .status-filter-btn:hover {
-                border-color: var(--black);
+                background: #e5e7eb;
                 color: var(--black);
             }
             .status-filter-btn.active {
                 background: var(--black);
                 color: var(--white);
-                border-color: var(--black);
+                font-weight: 600;
             }
 
             /* Unified Filter Bar */
@@ -1066,89 +1114,47 @@
                 flex-wrap: wrap;
                 align-items: center;
                 gap: 15px;
-                background: var(--white);
-                padding: 15px 20px;
-                border-radius: 6px;
-                border: 1px solid var(--grey-border);
+                background: transparent;
+                padding-bottom: 15px;
+                border-bottom: 1px solid var(--grey-border);
                 margin-bottom: 20px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.02);
             }
 
             /* Status Pills Overhaul */
             .status-pill {
                 display: inline-flex;
                 align-items: center;
-                padding: 6px 12px;
-                border-radius: 4px;
+                padding: 4px 0;
                 font-size: 0.75rem;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 1px;
+                font-weight: 600;
             }
             .status-Pending {
-                background-color: #fff8e6;
                 color: #b7791f;
-                position: relative;
-            }
-            .status-Pending::before {
-                content: '';
-                display: inline-block;
-                width: 6px;
-                height: 6px;
-                background-color: #d69e2e;
-                border-radius: 50%;
-                margin-right: 6px;
-                animation: pulse 1.5s infinite;
-            }
-            @keyframes pulse {
-                0% { box-shadow: 0 0 0 0 rgba(214, 158, 46, 0.7); }
-                70% { box-shadow: 0 0 0 6px rgba(214, 158, 46, 0); }
-                100% { box-shadow: 0 0 0 0 rgba(214, 158, 46, 0); }
             }
             .status-Confirmed {
-                background-color: #e6f4ea;
-                color: #1e7e34;
+                color: #10b981;
             }
             .status-Rescheduled {
-                background-color: #e3f2fd;
-                color: #0d47a1;
+                color: #3b82f6;
             }
             .status-Cancelled {
-                background-color: #f5f5f5;
-                color: #9e9e9e;
-                text-decoration: line-through;
+                color: #ef4444;
             }
             
             /* Quote Statuses */
             .status-Received {
-                background-color: #f3f4f6;
                 color: #4b5563;
             }
             .status-Quoted {
-                background-color: #f3e8ff;
                 color: #6b21a8;
             }
             .status-PartiallyPaid {
-                background-color: #fff8e6;
                 color: #b7791f;
-                position: relative;
-            }
-            .status-PartiallyPaid::before {
-                content: '';
-                display: inline-block;
-                width: 6px;
-                height: 6px;
-                background-color: #d69e2e;
-                border-radius: 50%;
-                margin-right: 6px;
-                animation: pulse 1.5s infinite;
             }
             .status-Accepted {
-                background-color: #e6f4ea;
-                color: #1e7e34;
+                color: #10b981;
             }
             .status-Paid {
-                background-color: #ecfdf5;
                 color: #059669;
             }
 
@@ -1237,28 +1243,20 @@
         <!-- Appointments Pane -->
         <div class="pane" id="appointments">
             <div class="unified-filter-bar">
-                <!-- Search -->
-                <div style="flex: 1; min-width: 250px;">
-                    <div class="filter-container" style="margin-bottom: 0;">
-                        <input type="text" id="appointment-search" placeholder="Search appointments..." onkeyup="filterTable('appointment-search', 'appointments', 'appointment-status-filters')" style="width: 100%; margin: 0;">
-                    </div>
-                </div>
-                
                 <!-- Status Filters -->
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;" class="appointment-status-filters">
-                    <button class="status-filter-btn active" onclick="setStatusFilter(this, 'appointments', 'appointment-search', 'appointment-status-filters')">All</button>
-                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'appointments', 'appointment-search', 'appointment-status-filters')">Pending</button>
-                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'appointments', 'appointment-search', 'appointment-status-filters')">Confirmed</button>
-                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'appointments', 'appointment-search', 'appointment-status-filters')">Rescheduled</button>
-                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'appointments', 'appointment-search', 'appointment-status-filters')">Cancelled</button>
+                    <button class="status-filter-btn active" onclick="setStatusFilter(this, 'appointments', 'global-search', 'appointment-status-filters')">All</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'appointments', 'global-search', 'appointment-status-filters')">Pending</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'appointments', 'global-search', 'appointment-status-filters')">Confirmed</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'appointments', 'global-search', 'appointment-status-filters')">Rescheduled</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'appointments', 'global-search', 'appointment-status-filters')">Cancelled</button>
                 </div>
+                
+                <div style="flex: 1;"></div>
 
                 <!-- Date Presets & Range -->
                 <div id="date-filter-controls" style="display: flex; align-items: center; gap: 10px; border-left: 1px solid var(--grey-border); padding-left: 15px;">
-                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.75rem;" onclick="setDatePreset('today', 'filter-start-date', 'filter-end-date')">Today</button>
-                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.75rem;" onclick="setDatePreset('week', 'filter-start-date', 'filter-end-date')">This Week</button>
-                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.75rem;" onclick="setDatePreset('month', 'filter-start-date', 'filter-end-date')">This Month</button>
-                    <div style="display: flex; gap: 5px; align-items: center; margin-left: 10px;">
+                    <div style="display: flex; gap: 5px; align-items: center;">
                         <input type="date" id="filter-start-date" onchange="triggerDateFilter()" style="margin: 0; padding: 6px; font-size: 0.8rem;">
                         <span style="color: var(--grey-text); font-size: 0.8rem;">to</span>
                         <input type="date" id="filter-end-date" onchange="triggerDateFilter()" style="margin: 0; padding: 6px; font-size: 0.8rem;">
@@ -1312,16 +1310,18 @@
                             </td>
                             <td style="overflow: visible;">
                                 <div style="display: flex; gap: 8px; align-items: center;">
-                                    @if($row->status !== 'Confirmed')
+                                    @if($row->status === 'Pending')
                                     <button class="btn btn-success" onclick="confirmAppointment({{ $row->id }})" style="padding: 6px 12px; font-size: 0.75rem;">Confirm</button>
-                                    @else
-                                    <button class="btn btn-warning" onclick="openRescheduleModal({{ $row->id }}, '{{ $row->date }}', '{{ $row->time }}')" style="padding: 6px 12px; font-size: 0.75rem;">Reschedule</button>
+                                    @elseif($row->status === 'Rescheduled')
+                                    <button class="btn" disabled style="padding: 6px 12px; font-size: 0.75rem; background-color: #9ca3af; color: white; border: none; cursor: not-allowed;">Pending Client</button>
+                                    @elseif($row->status === 'Confirmed')
+                                    <button class="btn btn-warning" onclick="openRescheduleModal({{ $row->id }}, '{{ $row->date }}', '{{ $row->time }}', '{{ addslashes($row->name) }}', '{{ addslashes($row->email) }}')" style="padding: 6px 12px; font-size: 0.75rem;">Reschedule</button>
                                     @endif
                                     <div class="action-dropdown">
                                         <button class="btn btn-secondary action-dropdown-btn" onclick="toggleDropdown(event, {{ $row->id }})" style="padding: 6px 10px;"><i class="fas fa-ellipsis-h"></i></button>
                                         <div class="action-dropdown-content" id="dropdown-{{ $row->id }}">
-                                            @if($row->status !== 'Confirmed')
-                                            <a href="#" onclick="event.preventDefault(); openRescheduleModal({{ $row->id }}, '{{ $row->date }}', '{{ $row->time }}')">Reschedule</a>
+                                            @if($row->status === 'Pending' || $row->status === 'Confirmed')
+                                            <a href="#" onclick="event.preventDefault(); openRescheduleModal({{ $row->id }}, '{{ $row->date }}', '{{ $row->time }}', '{{ addslashes($row->name) }}', '{{ addslashes($row->email) }}')">Reschedule</a>
                                             @endif
                                             <a href="#" onclick="event.preventDefault(); cancelAppointment({{ $row->id }})">Cancel</a>
                                             <a href="#" class="danger" onclick="event.preventDefault(); deleteAppointment({{ $row->id }})">Delete</a>
@@ -1341,15 +1341,10 @@
         <!-- History Pane -->
         <div class="pane" id="history">
             <div class="unified-filter-bar">
-                <div style="flex: 1; min-width: 250px;">
-                    <div class="filter-container" style="margin-bottom: 0;">
-                        <input type="text" id="history-search" placeholder="Search past records..." onkeyup="filterTable('history-search', 'history', 'history-status-filters')" style="width: 100%; margin: 0;">
-                    </div>
-                </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;" class="history-status-filters">
-                    <button class="status-filter-btn active" onclick="setStatusFilter(this, 'history', 'history-search', 'history-status-filters')">All</button>
-                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'history', 'history-search', 'history-status-filters')">Confirmed</button>
-                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'history', 'history-search', 'history-status-filters')">Cancelled</button>
+                    <button class="status-filter-btn active" onclick="setStatusFilter(this, 'history', 'global-search', 'history-status-filters')">All</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'history', 'global-search', 'history-status-filters')">Confirmed</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'history', 'global-search', 'history-status-filters')">Cancelled</button>
                 </div>
             </div>
             <div class="table-container">
@@ -1400,17 +1395,11 @@
         <!-- Quotes Pane -->
         <div class="pane" id="quotes">
             <div class="unified-filter-bar">
-                <div style="flex: 1; min-width: 250px;">
-                    <div class="filter-container" style="margin-bottom: 0;">
-                        <input type="text" id="quote-search" placeholder="Search by name, email, or service..." onkeyup="filterTable('quote-search', 'quotes', 'quote-status-filters')" style="width: 100%; margin: 0;">
-                    </div>
-                </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;" class="quote-status-filters">
-                    <button class="status-filter-btn active" onclick="setStatusFilter(this, 'quotes', 'quote-search', 'quote-status-filters')">All</button>
-                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'quotes', 'quote-search', 'quote-status-filters')">Received</button>
-                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'quotes', 'quote-search', 'quote-status-filters')">Quoted</button>
-                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'quotes', 'quote-search', 'quote-status-filters')">Partially Paid</button>
-                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'quotes', 'quote-search', 'quote-status-filters')">Paid</button>
+                    <button class="status-filter-btn active" onclick="setStatusFilter(this, 'quotes', 'global-search', 'quote-status-filters')">All</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'quotes', 'global-search', 'quote-status-filters')">Received</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'quotes', 'global-search', 'quote-status-filters')">Quoted</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'quotes', 'global-search', 'quote-status-filters')">Quote Records</button>
                 </div>
             </div>
             <div class="table-container">
@@ -1461,13 +1450,104 @@
             </div>
         </div>
 
+        <!-- Payments Pane -->
+        <div class="pane" id="payments">
+            <div class="unified-filter-bar">
+                <div style="display: flex; gap: 8px; align-items: center;" class="payment-status-filters">
+                    <button class="status-filter-btn active" onclick="setStatusFilter(this, 'payments', 'global-search', 'payment-status-filters')">All</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'payments', 'global-search', 'payment-status-filters')">Full Payment</button>
+                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'payments', 'global-search', 'payment-status-filters')">Partial Payment</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Client Info</th>
+                            <th>Service Type</th>
+                            <th>Amount Paid / Total</th>
+                            <th>Payment Type</th>
+                            <th>Status</th>
+                            <th>Date Received</th>
+                            <th>Receipt</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($payments as $pay)
+                        <tr class="table-row">
+                            <td>
+                                <strong>{{ $pay->name }}</strong><br>
+                                <span style="color: var(--grey-text); font-size: 0.8rem;">{{ $pay->email }}</span>
+                            </td>
+                            <td>{{ $pay->service_type }}</td>
+                            <td>
+                                @php
+                                    $paid = $pay->amount_paid ?? 0;
+                                    $total = $pay->price_quote;
+                                @endphp
+                                <strong>₱{{ number_format($paid, 2) }}</strong><br>
+                                <span style="color: var(--grey-text); font-size: 0.8rem;">of ₱{{ number_format($total, 2) }}</span>
+                            </td>
+                            <td>
+                                @php
+                                    if ($paid >= $total) {
+                                        $pType = 'Full Payment';
+                                    } elseif ($paid > 0) {
+                                        $pType = 'Partial Payment';
+                                    } else {
+                                        $pType = 'Unpaid';
+                                    }
+                                @endphp
+                                {{ $pType }}
+                            </td>
+                            <td class="status-cell" data-status="{{ $pType }}">
+                                <span class="status-pill status-{{ str_replace(' ', '', $pay->status ?? 'Pending') }}">{{ $pay->status ?? 'Pending' }}</span>
+                            </td>
+                            <td>
+                                @if($pay->paid_at)
+                                <div style="font-weight: 600; color: var(--black);">
+                                    {{ \Carbon\Carbon::parse($pay->paid_at)->format('M d, Y') }}
+                                </div>
+                                <div style="color: var(--grey-text); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">
+                                    {{ \Carbon\Carbon::parse($pay->paid_at)->format('g:i A') }}
+                                </div>
+                                @else
+                                <span style="color: var(--grey-text);">N/A</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($paid > 0)
+                                    @php
+                                        $ref = 'RC-QTE-' . str_pad($pay->id, 5, '0', STR_PAD_LEFT);
+                                    @endphp
+                                    <button onclick="openReceiptModal('{{ route('receipts.show', $ref) }}')" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 5px;">
+                                        <i class="fas fa-file-invoice"></i> View
+                                    </button>
+                                @else
+                                    <span style="color: var(--grey-text); font-size: 0.8rem; font-style: italic;">No Receipt</span>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    @if($paid < $total)
+                                    <button class="btn btn-primary" onclick='openUpdatePaymentModal({{ $pay->id }}, {{ $total }}, {{ $paid }})'>Update Payment</button>
+                                    @else
+                                    <button class="btn btn-secondary" disabled>Fully Paid</button>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- Users Pane -->
         <div class="pane" id="users">
-            <div class="filter-container">
-                <label for="user-search">Search Users:</label>
-                <input type="text" id="user-search" placeholder="Search by name, email, or address..." onkeyup="filterTable('user-search', 'users')">
-            </div>
-            <div class="table-container">
+            <div class="table-container" style="margin-top: 20px;">
                 <table>
                     <thead>
                         <tr>
@@ -1604,13 +1684,26 @@
         </div>
         <div class="modal-body">
             <input type="hidden" id="reschedule-id">
-            <div class="detail-group">
-                <span class="detail-label">New Date</span>
-                <input type="date" id="reschedule-date" class="price-quote-input" style="width: 100%; margin: 0; background: var(--white); border: 1px solid var(--black); padding: 10px;">
+            <div style="margin-bottom: 20px; padding: 15px; background: #f9fafb; border-left: 3px solid #000;">
+                <div style="font-weight: 600; font-size: 1.1rem; margin-bottom: 5px; color: var(--black);" id="reschedule-client-name"></div>
+                <div style="color: #6b7280; font-size: 0.85rem; margin-bottom: 10px;" id="reschedule-client-email"></div>
+                <div style="font-size: 0.9rem;">
+                    <span style="color: #6b7280;">Current Schedule:</span> <strong id="reschedule-current-datetime"></strong>
+                </div>
             </div>
-            <div class="detail-group">
-                <span class="detail-label">New Time</span>
-                <input type="time" id="reschedule-time" class="price-quote-input" style="width: 100%; margin: 0; background: var(--white); border: 1px solid var(--black); padding: 10px;">
+            <div style="display: flex; gap: 15px;">
+                <div class="detail-group" style="flex: 1;">
+                    <span class="detail-label">New Date</span>
+                    <input type="date" id="reschedule-date" class="price-quote-input" style="width: 100%; margin: 0; background: var(--white); border: 1px solid var(--black); padding: 10px;">
+                </div>
+                <div class="detail-group" style="flex: 1;">
+                    <span class="detail-label">New Time</span>
+                    <input type="time" id="reschedule-time" class="price-quote-input" style="width: 100%; margin: 0; background: var(--white); border: 1px solid var(--black); padding: 10px;">
+                </div>
+            </div>
+            <div class="detail-group" style="margin-top: 15px;">
+                <span class="detail-label">Reason for Reschedule (Required)</span>
+                <textarea id="reschedule-reason" class="price-quote-input" style="width: 100%; margin: 0; background: var(--white); border: 1px solid var(--black); padding: 10px; min-height: 80px;" placeholder="Briefly explain why the appointment is being rescheduled..." required></textarea>
             </div>
             <div style="margin-top: 30px;">
                 <button class="btn btn-primary" style="width: 100%; padding: 15px;" onclick="submitReschedule()">Save New Schedule</button>
@@ -1657,6 +1750,56 @@
     </div>
 </div>
 
+<!-- View Receipt Modal -->
+<div class="modal-overlay" id="viewReceiptModalOverlay" onclick="closeReceiptModal(event)">
+    <div class="modal-content" style="max-width: 800px; width: 90%; height: 90vh; display: flex; flex-direction: column;" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2>View Receipt</h2>
+            <button class="close-modal-btn" onclick="closeReceiptModal()">&times;</button>
+        </div>
+        <div class="modal-body" style="flex: 1; padding: 0; overflow: hidden; background: #f3f4f6;">
+            <iframe id="receiptIframe" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+</div>
+
+<!-- Update Payment Modal -->
+<div class="modal-overlay" id="updatePaymentModalOverlay" onclick="closeUpdatePaymentModal(event)">
+    <div class="modal-content" style="max-width: 400px;" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2>Update Payment</h2>
+            <button class="close-modal-btn" onclick="closeUpdatePaymentModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="update-payment-id">
+            
+            <div style="background: var(--grey-light); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="color: var(--grey-text); font-size: 0.85rem;">Total Price Quote</span>
+                    <strong id="modal-payment-total"></strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="color: var(--grey-text); font-size: 0.85rem;">Currently Paid</span>
+                    <strong id="modal-payment-paid" style="color: #059669;"></strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--grey-border); padding-top: 8px; margin-top: 8px;">
+                    <span style="color: var(--grey-text); font-size: 0.85rem; font-weight: 600;">Pending Balance</span>
+                    <strong id="modal-payment-balance" style="color: var(--black);"></strong>
+                </div>
+            </div>
+
+            <div class="detail-group">
+                <span class="detail-label">Amount Received Today (PHP)</span>
+                <input type="text" id="update-payment-amount" oninput="formatPaymentAmount(this)" class="price-quote-input" style="width: 100%; max-width: none; font-size: 1.1rem; font-weight: 600; padding: 12px; background: var(--white); border: 1px solid var(--black);" placeholder="Enter amount">
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <button class="btn btn-primary" style="width: 100%; padding: 15px;" onclick="submitPaymentUpdate(event)">Log Payment</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -1680,7 +1823,7 @@
         if (confirmActionCallback) {
             confirmActionCallback();
         }
-        closeConfirmModal(null, true);
+        // Do not close modal here! Let the action handle it so the spinner is visible.
     });
 
     function showToast(message, success) {
@@ -1705,7 +1848,47 @@
         }, 3000);
     }
 
-    // Sidebar Navigation Logic
+    // Global Search Logic
+    function handleGlobalSearch(event) {
+        if (event.key === 'Enter') {
+            performGlobalSearch();
+        }
+    }
+
+    function performGlobalSearch() {
+        const activePane = document.querySelector('.pane.active');
+        if (activePane) {
+            const paneId = activePane.id;
+            let groupClass = null;
+            if (paneId === 'appointments') groupClass = 'appointment-status-filters';
+            if (paneId === 'history') groupClass = 'history-status-filters';
+            if (paneId === 'quotes') groupClass = 'quote-status-filters';
+            if (paneId === 'payments') groupClass = 'payment-status-filters';
+            
+            filterTable('global-search', paneId, groupClass);
+        }
+    }
+
+    // Notifications Dropdown Logic
+    function toggleNotificationDropdown() {
+        const dropdown = document.getElementById('notification-dropdown');
+        if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+            dropdown.style.display = 'block';
+        } else {
+            dropdown.style.display = 'none';
+        }
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('notification-dropdown');
+        const bellIcon = document.querySelector('.fa-bell');
+        if (dropdown.style.display === 'block' && !dropdown.contains(event.target) && event.target !== bellIcon) {
+            dropdown.style.display = 'none';
+        }
+    });
+
+    // Sidebar navigation logic
     const navItems = document.querySelectorAll('.nav-item');
     const panes = document.querySelectorAll('.pane');
     const pageTitle = document.getElementById('page-title');
@@ -1723,11 +1906,40 @@
             
             // Update Title
             pageTitle.textContent = item.textContent.trim();
+
+            // Clear global search and reset table
+            const globalSearch = document.getElementById('global-search');
+            if (globalSearch) {
+                globalSearch.value = '';
+                performGlobalSearch(); // Reset filter
+            }
+
+            // Keep track of active tab in URL
+            if (history.pushState) {
+                history.pushState(null, null, '#' + targetId);
+            } else {
+                window.location.hash = targetId;
+            }
         });
     });
 
+    // Check hash on load to restore active tab
+    if (window.location.hash) {
+        const hash = window.location.hash.substring(1);
+        const targetNav = document.querySelector(`.nav-item[data-target="${hash}"]`);
+        if (targetNav) {
+            targetNav.click();
+        }
+    }
+
     // Appointment actions
-    function sendAppointmentAction(id, action, date=null, time=null, buttonElement = null) {
+    function sendAppointmentAction(id, action, date=null, time=null, reason=null, buttonElement = null) {
+        // Handle case where reason is omitted but buttonElement is provided (e.g. from confirm/cancel)
+        if (typeof reason === 'object' && reason !== null && buttonElement === null) {
+            buttonElement = reason;
+            reason = null;
+        }
+
         if (buttonElement) {
             buttonElement.disabled = true;
             buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
@@ -1738,6 +1950,7 @@
         formData.append('appointment_action', action);
         if(date) formData.append('new_date', date);
         if(time) formData.append('new_time', time);
+        if(reason) formData.append('reschedule_reason', reason);
 
         fetch("{{ route('admin.appointment.action') }}", {
             method: 'POST',
@@ -1747,7 +1960,13 @@
         .then(res => res.json())
         .then(data => {
             showToast(data.message, true);
-            setTimeout(() => location.reload(), 1000);
+            setTimeout(() => {
+                const activePane = document.querySelector('.pane.active');
+                if (activePane) {
+                    window.location.hash = activePane.id;
+                }
+                window.location.reload();
+            }, 1000);
         })
         .catch(err => {
             if (buttonElement) {
@@ -1758,10 +1977,27 @@
         });
     }
 
-    function openRescheduleModal(id, date, time) {
+    function openRescheduleModal(id, date, time, name, email) {
         document.getElementById('reschedule-id').value = id;
         document.getElementById('reschedule-date').value = date;
         document.getElementById('reschedule-time').value = time;
+        
+        // Display client details
+        if(document.getElementById('reschedule-client-name')) {
+            document.getElementById('reschedule-client-name').textContent = name;
+            document.getElementById('reschedule-client-email').textContent = email;
+            
+            // Format current datetime for display
+            try {
+                let d = new Date(date + 'T' + time);
+                let formatted = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' at ' + 
+                                d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                document.getElementById('reschedule-current-datetime').textContent = formatted;
+            } catch(e) {
+                document.getElementById('reschedule-current-datetime').textContent = date + ' ' + time;
+            }
+        }
+        
         document.getElementById('rescheduleModalOverlay').style.display = 'flex';
     }
 
@@ -1776,13 +2012,16 @@
         const id = document.getElementById('reschedule-id').value;
         const date = document.getElementById('reschedule-date').value;
         const time = document.getElementById('reschedule-time').value;
+        const reason = document.getElementById('reschedule-reason').value.trim();
+        
         if(!date || !time) return showToast('Select date and time', false);
+        if(!reason) return showToast('Reason is required', false);
         
         btn.disabled = true;
-        btn.textContent = 'Processing...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
         
-        sendAppointmentAction(id, 'reschedule', date, time, btn);
-        closeRescheduleModal();
+        sendAppointmentAction(id, 'reschedule', date, time, reason, btn);
+        // Do not close modal here! Let the action handle it so the spinner is visible.
     }
 
     function confirmAppointment(id) { 
@@ -1996,6 +2235,89 @@
         });
     }
 
+    // Payment Actions
+    function openUpdatePaymentModal(id, total, paid) {
+        document.getElementById('update-payment-id').value = id;
+        
+        const balance = total - paid;
+        
+        document.getElementById('modal-payment-total').textContent = '₱' + parseFloat(total).toLocaleString('en-US', {minimumFractionDigits: 2});
+        document.getElementById('modal-payment-paid').textContent = '₱' + parseFloat(paid).toLocaleString('en-US', {minimumFractionDigits: 2});
+        document.getElementById('modal-payment-balance').textContent = '₱' + parseFloat(balance).toLocaleString('en-US', {minimumFractionDigits: 2});
+        
+        document.getElementById('update-payment-amount').value = ''; // Reset
+        document.getElementById('update-payment-amount').max = balance; // Recommend not overpaying, but HTML5 max doesn't strictly prevent typing
+        
+        document.getElementById('updatePaymentModalOverlay').style.display = 'flex';
+    }
+
+    function closeUpdatePaymentModal(e) {
+        if (!e || e.target.id === 'updatePaymentModalOverlay' || e.target.classList.contains('close-modal-btn')) {
+            document.getElementById('updatePaymentModalOverlay').style.display = 'none';
+        }
+    }
+
+    function openReceiptModal(url) {
+        document.getElementById('receiptIframe').src = url;
+        document.getElementById('viewReceiptModalOverlay').style.display = 'flex';
+    }
+
+    function closeReceiptModal(e) {
+        if (!e || e.target.id === 'viewReceiptModalOverlay' || e.target.classList.contains('close-modal-btn')) {
+            document.getElementById('viewReceiptModalOverlay').style.display = 'none';
+            document.getElementById('receiptIframe').src = '';
+        }
+    }
+
+    function formatPaymentAmount(input) {
+        let val = input.value.replace(/[^0-9.]/g, '');
+        const parts = val.split('.');
+        let whole = parts[0];
+        if (whole) {
+            whole = parseInt(whole, 10).toLocaleString('en-US');
+        }
+        let decimal = parts.length > 1 ? '.' + parts.slice(1).join('').replace(/\./g, '') : '';
+        input.value = whole + decimal;
+    }
+
+    function submitPaymentUpdate(event) {
+        const btn = event.target;
+        const id = document.getElementById('update-payment-id').value;
+        const amountStr = document.getElementById('update-payment-amount').value;
+        const amount = parseFloat(amountStr.replace(/,/g, ''));
+        
+        if(isNaN(amount) || amount <= 0) return showToast('Enter a valid amount greater than 0', false);
+        
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('amount_received', amount);
+
+        fetch("{{ route('admin.payment.action') }}", {
+            method: 'POST',
+            body: formData,
+            headers: { 'X-CSRF-TOKEN': csrfToken }
+        })
+        .then(res => res.json())
+        .then(data => {
+            showToast(data.message, true);
+            setTimeout(() => {
+                const activePane = document.querySelector('.pane.active');
+                if (activePane) {
+                    window.location.hash = activePane.id;
+                }
+                window.location.reload();
+            }, 1000);
+        })
+        .catch(err => {
+            btn.disabled = false;
+            btn.textContent = 'Log Payment';
+            showToast('Error recording payment', false);
+        });
+    }
+
     // Real-time Table Filtering with Status
     function filterTable(inputId, paneId, groupClass = null) {
         const input = document.getElementById(inputId);
@@ -2018,9 +2340,36 @@
 
         for (let i = 1; i < tr.length; i++) {
             let rowStatusEl = tr[i].querySelector('.status-pill');
+            let dataStatusEl = tr[i].querySelector('.status-cell');
             let showByStatus = true;
-            if (rowStatusEl && activeStatus !== 'All') {
-                showByStatus = (rowStatusEl.textContent.trim().toLowerCase() === activeStatus.toLowerCase());
+            
+            if (activeStatus === 'Quote Records') {
+                showByStatus = true;
+            } else if (activeStatus === 'All') {
+                if (paneId === 'quotes') {
+                    let statusText = '';
+                    if (dataStatusEl && dataStatusEl.hasAttribute('data-status')) {
+                        statusText = dataStatusEl.getAttribute('data-status').toLowerCase();
+                    } else if (rowStatusEl) {
+                        statusText = rowStatusEl.textContent.trim().toLowerCase();
+                    }
+                    if (statusText === 'paid' || statusText === 'partially paid' || statusText === 'pending balance') {
+                        showByStatus = false;
+                    }
+                }
+            } else {
+                let statusText = '';
+                if (dataStatusEl && dataStatusEl.hasAttribute('data-status')) {
+                    statusText = dataStatusEl.getAttribute('data-status').toLowerCase();
+                } else if (rowStatusEl) {
+                    statusText = rowStatusEl.textContent.trim().toLowerCase();
+                }
+                
+                if (statusText) {
+                    showByStatus = (statusText === activeStatus.toLowerCase());
+                } else {
+                    showByStatus = false;
+                }
             }
 
             let showBySearch = filter === '';
@@ -2393,22 +2742,17 @@
         // Main Traffic Chart
         const trafficData = @json($trafficData);
         new Chart(document.getElementById('mainInboundChart').getContext('2d'), {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: Object.keys(trafficData),
                 datasets: [{
                     label: 'Inquiries',
                     data: Object.values(trafficData),
-                    borderColor: '#000',
-                    backgroundColor: 'rgba(0,0,0,0.02)',
-                    borderWidth: 2.5,
-                    pointBackgroundColor: '#000',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    fill: true,
-                    tension: 0.4
+                    backgroundColor: '#111',
+                    borderRadius: 4,
+                    borderWidth: 0,
+                    barPercentage: 0.5,
+                    maxBarThickness: 40
                 }]
             },
             options: {
@@ -2416,11 +2760,11 @@
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: { 
-                    x: { grid: { display: false }, ticks: { font: { size: 10 } } }, 
+                    x: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 10 }, color: '#888' } }, 
                     y: { 
                         beginAtZero: true,
-                        grid: { color: '#f5f5f5' },
-                        ticks: { stepSize: 1, font: { size: 10 } }
+                        grid: { color: 'rgba(0,0,0,0.05)' },
+                        ticks: { stepSize: 1, font: { size: 10 }, color: '#888' }
                     } 
                 }
             }
@@ -2428,15 +2772,26 @@
 
         // Status Donut Chart
         const statusData = @json($statusBreakdown);
+        
+        // Define monochrome colors based on status
+        const getColorForStatus = (status) => {
+            const s = status.toLowerCase();
+            if(s.includes('confirm')) return '#111111'; // Dark ink for confirmed
+            if(s.includes('reschedule')) return '#888888'; // Medium gray for rescheduled
+            if(s.includes('pend')) return '#cccccc'; // Light gray for pending
+            return '#eeeeee'; // Very light gray for others
+        };
+
         new Chart(document.getElementById('appointmentStatusDonut').getContext('2d'), {
             type: 'doughnut',
             data: {
                 labels: statusData.map(d => d.status),
                 datasets: [{
                     data: statusData.map(d => d.total),
-                    backgroundColor: ['#000', '#333', '#666', '#999'],
-                    borderWidth: 0,
-                    hoverOffset: 15
+                    backgroundColor: statusData.map(d => getColorForStatus(d.status)),
+                    borderWidth: 2,
+                    borderColor: '#ffffff',
+                    hoverOffset: 5
                 }]
             },
             options: {
@@ -2446,7 +2801,7 @@
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { boxWidth: 10, font: { size: 10, weight: '600' }, padding: 20 }
+                        labels: { boxWidth: 10, font: { size: 10, weight: '500' }, color: '#111', padding: 20 }
                     }
                 }
             }
