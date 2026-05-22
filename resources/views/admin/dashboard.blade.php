@@ -8,6 +8,8 @@
     
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
     
     <!-- Fonts and Icons -->
@@ -874,7 +876,11 @@
         }
 
 
-
+        @media (max-width: 900px) {
+            .sales-grid-responsive {
+                grid-template-columns: 1fr !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -912,6 +918,15 @@
         <div class="nav-item" data-target="users">
             <i class="fas fa-users"></i>
             User Accounts
+        </div>
+        <div style="padding: 15px 25px 10px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--grey-text); font-weight: 700;">Analytics</div>
+        <div class="nav-item" data-target="sales">
+            <i class="fas fa-chart-pie"></i>
+            Sales
+        </div>
+        <div class="nav-item" data-target="reports">
+            <i class="fas fa-file-pdf"></i>
+            Reports
         </div>
     </nav>
     <div class="sidebar-footer">
@@ -1585,6 +1600,207 @@
             </div>
         </div>
 
+        <!-- Sales Pane -->
+        <div class="pane" id="sales">
+            
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h2 style="font-size: 1.8rem; font-weight: 700; color: #111; letter-spacing: -0.5px; margin:0;">Sales Analytics</h2>
+                    <p style="color: var(--grey-text); font-size: 0.95rem; margin: 5px 0 0;">Financial health and conversion metrics.</p>
+                </div>
+                
+                <!-- Filter Form -->
+                <form method="GET" action="/admin" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="hidden" name="tab" value="sales">
+                    <select name="sales_date_range" style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem;">
+                        <option value="All" {{ $salesDateRange == 'All' ? 'selected' : '' }}>All Time</option>
+                        <option value="Today" {{ $salesDateRange == 'Today' ? 'selected' : '' }}>Today</option>
+                        <option value="7Days" {{ $salesDateRange == '7Days' ? 'selected' : '' }}>Last 7 Days</option>
+                        <option value="ThisMonth" {{ $salesDateRange == 'ThisMonth' ? 'selected' : '' }}>This Month</option>
+                        <option value="YTD" {{ $salesDateRange == 'YTD' ? 'selected' : '' }}>Year to Date</option>
+                    </select>
+                    
+                    <select name="sales_service" style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem;">
+                        <option value="All">All Services</option>
+                        <option value="Wedding Gown" {{ $salesService == 'Wedding Gown' ? 'selected' : '' }}>Wedding Gown</option>
+                        <option value="Prom Dress" {{ $salesService == 'Prom Dress' ? 'selected' : '' }}>Prom Dress</option>
+                        <option value="Suit/Tuxedo" {{ $salesService == 'Suit/Tuxedo' ? 'selected' : '' }}>Suit/Tuxedo</option>
+                        <option value="Custom Wear" {{ $salesService == 'Custom Wear' ? 'selected' : '' }}>Custom Wear</option>
+                    </select>
+                    
+                    <select name="sales_status" style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem;">
+                        <option value="All" {{ $salesStatus == 'All' ? 'selected' : '' }}>All Statuses</option>
+                        <option value="Fully Paid" {{ $salesStatus == 'Fully Paid' ? 'selected' : '' }}>Fully Paid</option>
+                        <option value="Partially Paid" {{ $salesStatus == 'Partially Paid' ? 'selected' : '' }}>Partially Paid</option>
+                    </select>
+                    
+                    <button type="submit" class="btn btn-primary" style="padding: 8px 15px; font-size: 0.9rem;" onclick="window.location.hash='sales';">Apply Filters</button>
+                </form>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                <!-- Metric 1: Financials -->
+                <div style="background: linear-gradient(135deg, #333333 0%, #111111 100%); color: white; border-radius: 12px; padding: 25px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); position: relative; overflow: hidden;">
+                    <div style="position: absolute; right: -20px; top: -20px; opacity: 0.05; font-size: 8rem;"><i class="fas fa-wallet"></i></div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; position: relative; z-index: 2;">
+                        <div style="font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; color: #aaaaaa;">FINANCIAL SUMMARY</div>
+                        <div style="background: rgba(255,255,255,0.1); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-coins" style="color: #ffffff;"></i>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 2;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #cccccc; font-size: 0.9rem;">Gross Invoiced</span>
+                            <span style="font-weight: 700;">P{{ number_format($grossRevenue, 2) }}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">
+                            <span style="color: #cccccc; font-size: 0.9rem;">Total Collected</span>
+                            <span style="font-weight: 700; color: #ffffff;">P{{ number_format($totalCollected, 2) }}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                            <span style="color: #cccccc; font-size: 0.9rem;">Outstanding Balance</span>
+                            <span style="font-weight: 700; color: #bbbbbb;">P{{ number_format($outstandingBalance, 2) }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metric 2: Conversion -->
+                <div style="background: linear-gradient(135deg, #444444 0%, #222222 100%); color: white; border-radius: 12px; padding: 25px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); position: relative; overflow: hidden;">
+                    <div style="position: absolute; right: -20px; top: -20px; opacity: 0.05; font-size: 8rem;"><i class="fas fa-bullseye"></i></div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; position: relative; z-index: 2;">
+                        <div style="font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; color: #aaaaaa;">CONVERSION RATE</div>
+                        <div style="background: rgba(255,255,255,0.1); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-chart-line" style="color: #ffffff;"></i>
+                        </div>
+                    </div>
+                    <div style="font-size: 2.5rem; font-weight: 700; letter-spacing: -1px; margin-bottom: 5px; position: relative; z-index: 2;">{{ number_format($conversionRate, 1) }}%</div>
+                    <p style="color: #cccccc; font-size: 0.85rem; margin: 0; position: relative; z-index: 2;">Percentage of quotes converted to paid orders.</p>
+                </div>
+
+                <!-- Metric 3: AOV -->
+                <div style="background: linear-gradient(135deg, #555555 0%, #333333 100%); color: white; border-radius: 12px; padding: 25px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); position: relative; overflow: hidden;">
+                    <div style="position: absolute; right: -20px; top: -20px; opacity: 0.05; font-size: 8rem;"><i class="fas fa-shopping-cart"></i></div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; position: relative; z-index: 2;">
+                        <div style="font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; color: #aaaaaa;">AVERAGE ORDER VALUE</div>
+                        <div style="background: rgba(255,255,255,0.1); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-receipt" style="color: #ffffff;"></i>
+                        </div>
+                    </div>
+                    <div style="font-size: 2.5rem; font-weight: 700; letter-spacing: -1px; margin-bottom: 5px; position: relative; z-index: 2;">P{{ number_format($aov, 2) }}</div>
+                    <p style="color: #cccccc; font-size: 0.85rem; margin: 0; position: relative; z-index: 2;">Average collected per paid order.</p>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 2fr 1.2fr; gap: 20px; margin-bottom: 30px;" class="sales-grid-responsive">
+                
+                <!-- Main Chart -->
+                <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; display: flex; flex-direction: column;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                        <h3 style="margin: 0; font-weight: 600; font-size: 1.1rem; color: #1e293b;">Revenue Trajectory (6 Months)</h3>
+                        <div style="padding: 4px 10px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 20px; font-size: 0.75rem; font-weight: 600; color: #495057;">
+                            <i class="fas fa-circle" style="color: #495057; font-size: 0.5rem; margin-right: 4px; vertical-align: middle;"></i> Live Data
+                        </div>
+                    </div>
+                    <div style="position: relative; flex-grow: 1; min-height: 300px; width: 100%;">
+                        <canvas id="salesTrendChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Service Breakdown and Recent -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Service Breakdown -->
+                    <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;">
+                        <h3 style="margin: 0 0 20px 0; font-weight: 600; font-size: 1.1rem; color: #1e293b;">Revenue by Service Type</h3>
+                        <div style="position: relative; height: 200px; width: 100%;">
+                            <canvas id="revenueByServiceChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent High Value -->
+                    <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; flex-grow: 1;">
+                        <h3 style="margin: 0 0 20px 0; font-weight: 600; font-size: 1.1rem; color: #1e293b;">Recent Payments</h3>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            @foreach($paidQuotes->take(3) as $pq)
+                            <div style="display: flex; align-items: center; padding-bottom: 15px; border-bottom: 1px solid #f8fafc; {{ $loop->last ? 'border-bottom: none; padding-bottom: 0;' : '' }}">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: #f1f3f5; color: #495057; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-right: 15px; flex-shrink: 0;">
+                                    <i class="fas fa-arrow-down"></i>
+                                </div>
+                                <div style="flex-grow: 1; overflow: hidden;">
+                                    <div style="font-weight: 600; font-size: 0.95rem; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $pq->name }}</div>
+                                    <div style="font-size: 0.8rem; color: #64748b;">{{ \Carbon\Carbon::parse($pq->updated_at)->diffForHumans() }}</div>
+                                </div>
+                                <div style="font-weight: 700; color: #0f172a; font-size: 1rem;">
+                                    +P{{ number_format($pq->amount_paid, 0) }}
+                                </div>
+                            </div>
+                            @endforeach
+                            
+                            @if($paidQuotes->isEmpty())
+                            <div style="text-align: center; padding: 30px 0; color: #94a3b8; font-size: 0.9rem;">
+                                <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i><br>
+                                No recent payments
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Pane -->
+        <div class="pane" id="reports">
+            <div class="unified-filter-bar">
+                <div style="display: flex; gap: 15px; align-items: center;" class="report-actions">
+                    <button class="btn btn-primary" onclick="exportSalesPDF()" style="padding: 10px 20px;"><i class="fas fa-file-pdf"></i> Export to PDF</button>
+                    <button class="btn btn-success" onclick="exportSalesExcel()" style="padding: 10px 20px; background-color: #10b981; border:none;"><i class="fas fa-file-excel"></i> Export to Excel</button>
+                </div>
+            </div>
+            
+            <div class="table-container" style="margin-top: 20px;" id="reports-table-container">
+                <div id="pdf-header" style="display:none; text-align:center; margin-bottom: 20px;">
+                    <h2 style="font-family: serif; margin-bottom: 5px;">RUSS CUEVAS</h2>
+                    <h4 style="margin: 0; color: #555;">Official Sales Report</h4>
+                    <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">Generated on: {{ now()->format('F d, Y') }}</p>
+                </div>
+                <table id="salesReportTable">
+                    <thead>
+                        <tr>
+                            <th>CLIENT INFO</th>
+                            <th>SERVICE TYPE</th>
+                            <th>DATE COMPLETED</th>
+                            <th>AMOUNT COLLECTED</th>
+                            <th>PAYMENT STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($paidQuotes as $quote)
+                        <tr>
+                            <td>
+                                <div><strong>{{ $quote->name }}</strong></div>
+                                <div style="font-size: 0.8rem; color: var(--grey-text);">{{ $quote->email }}</div>
+                            </td>
+                            <td>{{ $quote->service_type }}</td>
+                            <td>{{ \Carbon\Carbon::parse($quote->updated_at)->format('M d, Y g:i A') }}</td>
+                            <td style="font-weight: 600; color: #10b981;">P{{ number_format($quote->amount_paid, 2) }}</td>
+                            <td>
+                                @if($quote->status === 'Paid')
+                                    <span style="color: #10b981; font-weight: 500;">Fully Paid</span>
+                                @else
+                                    <span style="color: #f59e0b; font-weight: 500;">Partially Paid</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 20px;">No sales data available.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </main>
 
@@ -1906,6 +2122,13 @@
             
             // Update Title
             pageTitle.textContent = item.textContent.trim();
+
+            const topbarRight = document.querySelector('.topbar-right');
+            if (targetId === 'sales' || targetId === 'reports') {
+                if (topbarRight) topbarRight.style.display = 'none';
+            } else {
+                if (topbarRight) topbarRight.style.display = 'flex';
+            }
 
             // Clear global search and reset table
             const globalSearch = document.getElementById('global-search');
@@ -2861,6 +3084,151 @@
         if (!e || e.target.id === 'dayAppointmentsModalOverlay' || e.target.classList.contains('close-modal-btn')) {
             document.getElementById('dayAppointmentsModalOverlay').classList.remove('active');
         }
+    }
+
+    // Sales Trend Chart Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+        const salesLabels = @json($monthlySalesLabels);
+        const salesData = @json($monthlySalesData);
+        
+        // Reverse arrays so oldest month is first, newest is last (left to right)
+        salesLabels.reverse();
+        salesData.reverse();
+
+        new Chart(document.getElementById('salesTrendChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: salesLabels,
+                datasets: [{
+                    label: 'Revenue (PHP)',
+                    data: salesData,
+                    borderColor: '#111111',
+                    backgroundColor: 'rgba(17, 17, 17, 0.05)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#111111',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'P' + context.parsed.y.toLocaleString(undefined, {minimumFractionDigits: 2});
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return 'P' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Revenue by Service Doughnut Chart
+        const revenueByServiceRaw = @json($revenueByService ?? []);
+        const serviceLabels = Object.keys(revenueByServiceRaw);
+        const serviceData = Object.values(revenueByServiceRaw);
+
+        new Chart(document.getElementById('revenueByServiceChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: serviceLabels.length > 0 ? serviceLabels : ['No Data'],
+                datasets: [{
+                    data: serviceData.length > 0 ? serviceData : [1],
+                    backgroundColor: [
+                        '#111111',
+                        '#333333',
+                        '#555555',
+                        '#777777',
+                        '#999999',
+                        '#bbbbbb',
+                        '#dddddd'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20,
+                            font: {
+                                size: 12,
+                                family: "'Inter', sans-serif"
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                if (serviceData.length === 0) return 'No Data';
+                                return ' P' + context.parsed.toLocaleString(undefined, {minimumFractionDigits: 2});
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    // Export Functions
+    function exportSalesPDF() {
+        const tableContainer = document.getElementById('reports-table-container');
+        const header = document.getElementById('pdf-header');
+        
+        // Show header for PDF
+        header.style.display = 'block';
+        
+        // Configuration for html2pdf
+        const opt = {
+            margin:       0.5,
+            filename:     'Sales_Report_' + new Date().toISOString().split('T')[0] + '.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+        };
+
+        // Generate PDF
+        html2pdf().set(opt).from(tableContainer).save().then(() => {
+            // Hide header again after export
+            header.style.display = 'none';
+        });
+    }
+
+    function exportSalesExcel() {
+        // Find the table
+        const table = document.getElementById('salesReportTable');
+        
+        // Convert to workbook
+        const wb = XLSX.utils.table_to_book(table, {sheet: "Sales Report"});
+        
+        // Export file
+        XLSX.writeFile(wb, 'Sales_Report_' + new Date().toISOString().split('T')[0] + '.xlsx');
     }
 </script>
 
