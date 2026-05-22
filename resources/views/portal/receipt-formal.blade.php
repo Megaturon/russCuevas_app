@@ -297,6 +297,18 @@
             <span>Processing Fee</span>
             <span>₱0.00</span>
         </div>
+        
+        @if(isset($receiptData['in_person_amount']) && $receiptData['in_person_amount'] > 0)
+        <div class="r-total-row" style="margin-top: 8px;">
+            <span>Online Payment</span>
+            <span>₱{{ number_format($receiptData['amount'] - $receiptData['in_person_amount'], 2) }}</span>
+        </div>
+        <div class="r-total-row">
+            <span>In-Person Payment</span>
+            <span>₱{{ number_format($receiptData['in_person_amount'], 2) }}</span>
+        </div>
+        @endif
+
         <div class="r-total-final">
             <span>Total Paid</span>
             <span>@if($receiptData['amount']) ₱{{ number_format($receiptData['amount'], 2) }} @else ₱0.00 @endif</span>
@@ -314,7 +326,14 @@
         
         @if($receiptData['amount'])
         <div style="text-align: right; font-size: 0.8rem; color: #6b7280; margin-top: 16px;">
-            Paid via Secure Gateway &bull; {{ \Carbon\Carbon::parse($receiptData['date_issued'])->format('M d, Y') }}
+            @if(isset($receiptData['in_person_amount']) && $receiptData['in_person_amount'] >= $receiptData['amount'])
+                Paid In-Person
+            @elseif(isset($receiptData['in_person_amount']) && $receiptData['in_person_amount'] > 0)
+                Paid via Secure Gateway & In-Person
+            @else
+                Paid via Secure Gateway
+            @endif
+            &bull; {{ \Carbon\Carbon::parse($receiptData['date_issued'])->format('M d, Y') }}
         </div>
         @endif
     </div>

@@ -78,6 +78,7 @@ class ReceiptController extends Controller
             $receiptData['service_type'] = 'Bespoke: ' . $model->service_type . $paymentTypeLabel;
             
             $receiptData['amount'] = $model->amount_paid ?? $model->price_quote;
+            $receiptData['in_person_amount'] = $model->in_person_amount ?? 0;
             $receiptData['client_notes'] = $model->details;
             
             if ($model->payment_type === 'deposit') {

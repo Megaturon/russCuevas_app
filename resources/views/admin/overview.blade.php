@@ -1,10 +1,7 @@
-<div class="overview-header">
-    <div class="welcome-text">
-        <h2 style="font-family: var(--font-sans); font-size: 1.8rem; font-weight: 700; margin-bottom: 5px;">Business Analytics</h2>
-        <p style="color: var(--grey-text); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px;">Performance overview for {{ now()->format('F Y') }}</p>
-    </div>
-    <div class="date-badge">
-        <i class="far fa-calendar-alt" style="margin-right: 8px;"></i> {{ now()->format('M d, Y') }}
+<div style="background-color: #111111; color: #ffffff; padding: 40px; border-radius: 12px; margin-bottom: 20px; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="position: relative; z-index: 2;">
+        <h2 style="font-family: var(--font-sans); font-size: 2rem; margin-bottom: 10px; font-weight: 700;">Welcome to Administrator Dashboard</h2>
+        <p style="color: #888888; font-size: 0.95rem; margin-bottom: 0;">The best place for premium tailoring administration and oversight.</p>
     </div>
 </div>
 
@@ -101,23 +98,13 @@
         </div>
     </div>
 
-    <!-- Ranked Services -->
-    <div class="analytics-panel service-panel">
+    <!-- Status Breakdown -->
+    <div class="analytics-panel status-panel">
         <div class="panel-header">
-            <h3>Top Requested Services</h3>
+            <h3>Appointment Status Distribution</h3>
         </div>
-        <div class="ranked-list">
-            @foreach($serviceDistribution->take(5) as $service)
-            <div class="ranked-item">
-                <div class="ranked-info">
-                    <span class="service-name">{{ $service->service_type }}</span>
-                    <span class="service-count">{{ $service->total }} requests</span>
-                </div>
-                <div class="rank-bar-container">
-                    <div class="rank-bar" style="width: {{ ($service->total / ($serviceDistribution->first()->total ?: 1)) * 100 }}%"></div>
-                </div>
-            </div>
-            @endforeach
+        <div class="status-chart-wrapper">
+            <canvas id="appointmentStatusDonut"></canvas>
         </div>
     </div>
 </div>
@@ -154,26 +141,36 @@
         </div>
     </div>
 
-    <!-- Status Breakdown -->
-    <div class="analytics-panel status-panel">
+    <!-- Ranked Services -->
+    <div class="analytics-panel service-panel">
         <div class="panel-header">
-            <h3>Appointment Status Distribution</h3>
+            <h3>Top Requested Services</h3>
         </div>
-        <div class="status-chart-wrapper">
-            <canvas id="appointmentStatusDonut"></canvas>
+        <div class="ranked-list">
+            @foreach($serviceDistribution->take(5) as $index => $service)
+            <div class="ranked-item">
+                <div class="ranked-info">
+                    <span class="service-name">{{ $service->service_type }}</span>
+                    <span class="service-count">{{ $service->total }} requests</span>
+                </div>
+                <div class="rank-bar-container">
+                    <div class="rank-bar" style="width: {{ ($service->total / ($serviceDistribution->first()->total ?: 1)) * 100 }}%; background: {{ $index % 2 == 0 ? '#111111' : '#888888' }};"></div>
+                </div>
+            </div>
+            @endforeach
         </div>
     </div>
 </div>
 
 <style>
     :root {
-        --accent: #000000;
-        --accent-light: #f5f5f5;
-        --border-color: #eee;
-        --text-main: #111;
-        --text-muted: #888;
-        --success: #000; /* Keeping monochrome but could use subtle green if user allows, for now sticking to high contrast black */
-        --error: #999;
+        --accent: #111111;
+        --accent-light: #e5e5e5;
+        --border-color: #e5e5e5;
+        --text-main: #111111;
+        --text-muted: #888888;
+        --success: #111111;
+        --error: #888888;
     }
 
     .overview-header {
@@ -201,17 +198,20 @@
 
     .stat-card-v2 {
         background: #fff;
-        border: 1px solid var(--border-color);
+        border: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        border-radius: 12px;
         padding: 24px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         position: relative;
-        transition: border-color 0.3s;
+        transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .stat-card-v2:hover {
-        border-color: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.06);
     }
 
     .card-label-v2 {
@@ -238,10 +238,12 @@
     }
 
     .value-v2 {
-        font-size: 2rem;
+        font-family: var(--font-sans);
+        font-size: 2.2rem;
         font-weight: 800;
         color: var(--text-main);
-        letter-spacing: -0.5px;
+        letter-spacing: -1px;
+        line-height: 1;
     }
 
     .card-meta {
@@ -280,7 +282,9 @@
 
     .analytics-panel {
         background: #fff;
-        border: 1px solid var(--border-color);
+        border: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        border-radius: 12px;
         padding: 30px;
     }
 
@@ -359,7 +363,9 @@
 
     .activity-feed-modern {
         background: #fff;
-        border: 1px solid var(--border-color);
+        border: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        border-radius: 12px;
         padding: 30px;
     }
 
@@ -430,15 +436,26 @@
     }
 
     .activity-tag {
-        font-size: 0.6rem;
+        font-size: 0.65rem;
         font-weight: 700;
         text-transform: uppercase;
-        padding: 2px 8px;
-        border: 1px solid var(--accent);
+        padding: 4px 10px;
+        letter-spacing: 0.5px;
     }
 
-    .activity-tag.quote { background: var(--accent); color: #fff; }
-    .activity-tag.appointment { background: #fff; color: var(--accent); }
+    .activity-tag.quote { 
+        background: transparent; 
+        color: #888; 
+        border: 1px solid #888; 
+        border-radius: 4px;
+    }
+    
+    .activity-tag.appointment { 
+        background: #111; 
+        color: #fff; 
+        border: 1px solid #111; 
+        border-radius: 20px; /* inverted pill */
+    }
 
     .status-chart-wrapper {
         height: 250px;

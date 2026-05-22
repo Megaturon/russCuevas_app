@@ -29,6 +29,31 @@ class AppointmentController extends Controller
     public function confirmReschedule($id)
     {
         $appointment = Appointment::findOrFail($id);
+        
+        if ($appointment->status !== 'Rescheduled') {
+            return view('emails.response_success', [
+                'title' => 'Link Invalid',
+                'message' => 'This link is no longer valid or the appointment has already been processed.'
+            ]);
+        }
+
+        $newDateObj = \Carbon\Carbon::parse($appointment->date);
+        $validityHours = 24;
+        if ($newDateObj->isToday()) {
+            $validityHours = 2;
+        } elseif ($newDateObj->isTomorrow()) {
+            $validityHours = 12;
+        }
+
+        // Check if the validity window has passed since the reschedule was sent (updated_at)
+        if (now()->diffInHours($appointment->updated_at) >= $validityHours) {
+            $appointment->update(['status' => 'Cancelled']);
+            return view('emails.response_success', [
+                'title' => 'Link Expired',
+                'message' => 'The ' . $validityHours . '-hour window to confirm this rescheduled appointment has expired. The appointment has been automatically cancelled to free up the slot.'
+            ]);
+        }
+
         $appointment->update(['status' => 'Confirmed']);
 
         // Notify Admin
@@ -58,6 +83,31 @@ class AppointmentController extends Controller
     public function cancelReschedule($id)
     {
         $appointment = Appointment::findOrFail($id);
+        
+        if ($appointment->status !== 'Rescheduled') {
+            return view('emails.response_success', [
+                'title' => 'Link Invalid',
+                'message' => 'This link is no longer valid or the appointment has already been processed.'
+            ]);
+        }
+
+        $newDateObj = \Carbon\Carbon::parse($appointment->date);
+        $validityHours = 24;
+        if ($newDateObj->isToday()) {
+            $validityHours = 2;
+        } elseif ($newDateObj->isTomorrow()) {
+            $validityHours = 12;
+        }
+
+        // Check if the validity window has passed since the reschedule was sent (updated_at)
+        if (now()->diffInHours($appointment->updated_at) >= $validityHours) {
+            $appointment->update(['status' => 'Cancelled']);
+            return view('emails.response_success', [
+                'title' => 'Link Expired',
+                'message' => 'The ' . $validityHours . '-hour window to respond to this rescheduled appointment has expired. The appointment has been automatically cancelled.'
+            ]);
+        }
+
         $appointment->update(['status' => 'Cancelled']);
 
         // Notify Admin

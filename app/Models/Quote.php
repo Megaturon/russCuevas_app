@@ -25,6 +25,7 @@ class Quote extends Model
         'token',
         'token_expires_at',
         'amount_paid',
+        'in_person_amount',
         'deposit_percentage',
         'payment_type',
         'paid_at',
