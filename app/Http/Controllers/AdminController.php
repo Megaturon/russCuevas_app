@@ -14,7 +14,7 @@ class AdminController extends Controller
     /**
      * Display the admin dashboard.
      */
-    public function index()
+    public function index(Request $request)
     {
         $now = Carbon::now();
         $today = $now->toDateString();
@@ -45,12 +45,22 @@ class AdminController extends Controller
         $quotes = Quote::orderBy('created_at', 'desc')->get();
         $users = User::orderBy('created_at', 'asc')->get();
 
-        // KPI Calculations
-        $totalRevenuePending = Quote::where('status', 'Quoted')
-                                     ->orWhereNull('status')
-                                     ->whereNotNull('price_quote')
-                                     ->whereNull('paid_at')
-                                     ->sum('price_quote');
+        // KPI Calculations: Pending Revenue
+        $pendingQuotes = Quote::whereNotNull('price_quote')
+            ->where(function($q) {
+                $q->whereNull('status')
+                  ->orWhere('status', '!=', 'Paid');
+            })
+            ->get();
+
+        $totalRevenuePending = 0;
+        foreach ($pendingQuotes as $pq) {
+            $price = (float) $pq->price_quote;
+            $paid = (float) ($pq->amount_paid ?? 0);
+            if ($price > $paid) {
+                $totalRevenuePending += ($price - $paid);
+            }
+        }
         
         $totalQuotes = Quote::count();
         $totalAppointments = Appointment::count();
@@ -107,6 +117,85 @@ class AdminController extends Controller
         $statusBreakdown = Appointment::select('status', \DB::raw('count(*) as total'))
             ->groupBy('status')
             ->get();
+
+        // --- SALES & REPORTS ANALYTICS ---
+        
+        $salesDateRange = $request->query('sales_date_range', 'All');
+        $salesService = $request->query('sales_service', 'All');
+        $salesStatus = $request->query('sales_status', 'All');
+
+        $salesQuery = Quote::query();
+
+        // Apply Date Filter
+        if ($salesDateRange !== 'All') {
+            if ($salesDateRange === 'Today') {
+                $salesQuery->whereDate('updated_at', Carbon::today());
+            } elseif ($salesDateRange === '7Days') {
+                $salesQuery->where('updated_at', '>=', Carbon::now()->subDays(7));
+            } elseif ($salesDateRange === 'ThisMonth') {
+                $salesQuery->where('updated_at', '>=', Carbon::now()->startOfMonth());
+            } elseif ($salesDateRange === 'YTD') {
+                $salesQuery->where('updated_at', '>=', Carbon::now()->startOfYear());
+            }
+        }
+
+        // Apply Service Filter
+        if ($salesService !== 'All') {
+            $salesQuery->where('service_type', $salesService);
+        }
+
+        // Apply Status Filter
+        if ($salesStatus !== 'All') {
+            if ($salesStatus === 'Fully Paid') {
+                $salesQuery->where('status', 'Paid');
+            } elseif ($salesStatus === 'Partially Paid') {
+                $salesQuery->where('status', 'Partially Paid');
+            }
+        }
+
+        $filteredQuotes = $salesQuery->get();
+
+        $paidOrdersInPeriod = $filteredQuotes->filter(function($q) {
+            return in_array($q->status, ['Paid', 'Partially Paid', 'Confirmed']);
+        });
+
+        // Financial & Revenue Reports
+        $grossRevenue = $paidOrdersInPeriod->sum('price_quote');
+        $totalCollected = $paidOrdersInPeriod->sum('amount_paid');
+        $outstandingBalance = $grossRevenue - $totalCollected;
+
+        // Revenue by Service Type
+        $revenueByService = $paidOrdersInPeriod->groupBy('service_type')->map(function ($row) {
+            return $row->sum('amount_paid');
+        });
+
+        // Sales & Conversion Analytics
+        $totalQuotesInPeriod = $filteredQuotes->count();
+        $paidOrdersCount = $paidOrdersInPeriod->count();
+
+        $conversionRate = $totalQuotesInPeriod > 0 ? ($paidOrdersCount / $totalQuotesInPeriod) * 100 : 0;
+        $aov = $paidOrdersCount > 0 ? ($totalCollected / $paidOrdersCount) : 0;
+
+        // Last 6 months sales data for chart
+        $monthlySalesLabels = [];
+        $monthlySalesData = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $monthStart = Carbon::now()->subMonths($i)->startOfMonth();
+            $monthEnd = Carbon::now()->subMonths($i)->endOfMonth();
+            
+            $sales = Quote::whereBetween('updated_at', [$monthStart, $monthEnd])
+                          ->where('amount_paid', '>', 0)
+                          ->sum('amount_paid'); 
+            
+            $monthlySalesLabels[] = $monthStart->format('M Y');
+            $monthlySalesData[] = $sales;
+        }
+
+        // Paid Quotes Table
+        $paidQuotes = Quote::where('amount_paid', '>', 0)
+            ->orderBy('updated_at', 'desc')
+            ->get();
+        // ---------------------------------
 
         // Recent Activity Feed
         $recentActivities = Quote::latest()->take(5)->get()->map(function($item) {
@@ -167,7 +256,19 @@ class AdminController extends Controller
             'sparklineData',
             'statusBreakdown',
             'recentActivities',
-            'payments'
+            'payments',
+            'grossRevenue',
+            'totalCollected',
+            'outstandingBalance',
+            'revenueByService',
+            'conversionRate',
+            'aov',
+            'monthlySalesLabels',
+            'monthlySalesData',
+            'paidQuotes',
+            'salesDateRange',
+            'salesService',
+            'salesStatus'
         ));
     }
 
