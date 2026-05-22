@@ -685,6 +685,8 @@
     div.style.maxWidth = '80%';
     div.style.fontFamily = "'Inter', sans-serif";
     div.style.fontSize = "0.9rem";
+    div.style.wordBreak = "break-word";
+    div.style.overflowWrap = "break-word";
     if (sender === 'user') {
       div.style.alignSelf = 'flex-end';
       div.style.background = '#c5a48e';
@@ -696,7 +698,19 @@
       div.style.color = '#1f2937';
       div.style.borderRadius = '15px 15px 15px 0';
     }
-    div.textContent = msg;
+    
+    // Escape HTML to prevent XSS
+    let safeMsg = msg.replace(/[&<>'"]/g, tag => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+    }[tag] || tag));
+
+    // Convert URLs to clickable links
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    safeMsg = safeMsg.replace(urlRegex, url => {
+      return `<a href="${url}" target="_blank" style="text-decoration: underline; font-weight: bold;">${url}</a>`;
+    });
+
+    div.innerHTML = safeMsg;
     chatMessages.appendChild(div);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
