@@ -7,8 +7,9 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  @vite(['resources/css/styles2.css'])
+  @vite(['resources/css/styles2.css', 'resources/js/app.js'])
   <style>
     html {
         scroll-behavior: smooth;
@@ -93,30 +94,7 @@
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
-    .mp-card-hover {
-        position: absolute;
-        inset: 0;
-        background: rgba(0,0,0,0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity 0.4s ease;
-    }
-    .mp-masonry-large:hover .mp-card-hover,
-    .mp-masonry-small:hover .mp-card-hover {
-        opacity: 1;
-    }
-    .mp-card-hover span {
-        color: #fff;
-        font-family: 'Inter', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        border: 1px solid #fff;
-        padding: 10px 20px;
-        font-size: 0.8rem;
-    }
-
+    /* Removed .mp-card-hover CSS as we use Tailwind classes now */
     @media (max-width: 768px) {
         .mp-masonry-group {
             grid-template-columns: 1fr;
@@ -442,6 +420,33 @@
     </div>
   </section>
 
+  <!-- Chatbot UI -->
+  <div id="chatbot-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end;">
+    <!-- Chat Window -->
+    <div id="chat-window" style="display: none; width: 300px; height: 400px; background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); overflow: hidden; display: none; flex-direction: column;">
+      <div style="background: #1a1a1a; color: white; padding: 15px; font-family: 'Playfair Display', serif; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 1.1rem; font-style: italic;">Russ Cuevas Assistant</span>
+        <button onclick="toggleChat()" style="background: none; border: none; color: white; cursor: pointer;"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="chat-messages" style="flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-family: 'Inter', sans-serif; font-size: 0.9rem; background: #faf9f6;">
+        <!-- Messages will appear here -->
+        <div style="align-self: flex-start; background: #e5e7eb; color: #1f2937; padding: 8px 12px; border-radius: 15px 15px 15px 0; max-width: 80%;">
+          Hello! How can I help you today?
+        </div>
+      </div>
+      <div style="padding: 10px; border-top: 1px solid #ddd; background: white; display: flex; gap: 10px;">
+        <input type="text" id="chat-input" placeholder="Type a message..." style="flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+        <button onclick="sendChatMessage()" style="background: #1a1a1a; color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-paper-plane" style="font-size: 0.8rem;"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Chat Toggle Button -->
+    <button id="chat-toggle-btn" onclick="toggleChat()" style="background: #1a1a1a; color: white; border: none; border-radius: 50%; width: 60px; height: 60px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-top: 10px; transition: transform 0.3s ease;">
+      <i class="fas fa-comment-dots"></i>
+    </button>
+  </div>
+
 </main>
 
 <x-footer></x-footer>
@@ -532,17 +537,17 @@
       
       var largeHtml = '';
       if (chunk[0]) {
-        largeHtml = '<div class="mp-masonry-large" onclick="mpOpenLbCategory(\'' + cat + '\', ' + i + ')" style="background-image:url(\'' + chunk[0].thumb + '\')"><div class="mp-card-hover"><span>View</span></div></div>';
+        largeHtml = '<div class="mp-masonry-large group" onclick="mpOpenLbCategory(\'' + cat + '\', ' + i + ')" style="background-image:url(\'' + chunk[0].thumb + '\')"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span class="text-white font-sans uppercase tracking-widest border border-white px-5 py-2 text-sm">View</span></div></div>';
       }
       
       var smallHtml = '';
       if (chunk[1] || chunk[2]) {
         smallHtml += '<div class="mp-masonry-small-col">';
         if (chunk[1]) {
-          smallHtml += '<div class="mp-masonry-small" onclick="mpOpenLbCategory(\'' + cat + '\', ' + (i+1) + ')" style="background-image:url(\'' + chunk[1].thumb + '\')"><div class="mp-card-hover"><span>View</span></div></div>';
+          smallHtml += '<div class="mp-masonry-small group" onclick="mpOpenLbCategory(\'' + cat + '\', ' + (i+1) + ')" style="background-image:url(\'' + chunk[1].thumb + '\')"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span class="text-white font-sans uppercase tracking-widest border border-white px-5 py-2 text-sm">View</span></div></div>';
         }
         if (chunk[2]) {
-          smallHtml += '<div class="mp-masonry-small" onclick="mpOpenLbCategory(\'' + cat + '\', ' + (i+2) + ')" style="background-image:url(\'' + chunk[2].thumb + '\')"><div class="mp-card-hover"><span>View</span></div></div>';
+          smallHtml += '<div class="mp-masonry-small group" onclick="mpOpenLbCategory(\'' + cat + '\', ' + (i+2) + ')" style="background-image:url(\'' + chunk[2].thumb + '\')"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span class="text-white font-sans uppercase tracking-widest border border-white px-5 py-2 text-sm">View</span></div></div>';
         }
         smallHtml += '</div>';
       }
@@ -628,6 +633,79 @@
     if (e.key === 'Escape')     mpCloseLb();
   });
 
+  // Chatbot Logic
+  const chatWindow = document.getElementById('chat-window');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chat-input');
+  
+  function toggleChat() {
+    if (chatWindow.style.display === 'none') {
+      chatWindow.style.display = 'flex';
+      document.getElementById('chat-toggle-btn').style.transform = 'scale(0.8)';
+    } else {
+      chatWindow.style.display = 'none';
+      document.getElementById('chat-toggle-btn').style.transform = 'scale(1)';
+    }
+  }
+
+  function appendMessage(msg, sender) {
+    const div = document.createElement('div');
+    div.style.padding = '8px 12px';
+    div.style.maxWidth = '80%';
+    div.style.fontFamily = "'Inter', sans-serif";
+    div.style.fontSize = "0.9rem";
+    if (sender === 'user') {
+      div.style.alignSelf = 'flex-end';
+      div.style.background = '#c5a48e';
+      div.style.color = 'white';
+      div.style.borderRadius = '15px 15px 0 15px';
+    } else {
+      div.style.alignSelf = 'flex-start';
+      div.style.background = '#e5e7eb';
+      div.style.color = '#1f2937';
+      div.style.borderRadius = '15px 15px 15px 0';
+    }
+    div.textContent = msg;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function sendChatMessage() {
+    const msg = chatInput.value.trim();
+    if (!msg) return;
+    
+    appendMessage(msg, 'user');
+    chatInput.value = '';
+    
+    // Post to backend
+    fetch('/chatbot/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      },
+      body: JSON.stringify({ message: msg })
+    }).catch(err => console.error(err));
+  }
+  
+  chatInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') sendChatMessage();
+  });
+
+  // Laravel Echo Websocket Listener
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      if (window.Echo) {
+        window.Echo.channel('chatbot')
+          .listen('ChatMessageEvent', (e) => {
+             // Only append if it's from Bot (our route sends as 'Bot')
+             if(e.user === 'Bot') {
+               appendMessage(e.message, 'bot');
+             }
+          });
+      }
+    }, 1000); // slight delay to ensure Echo is initialized
+  });
 
 </script>
 
