@@ -106,7 +106,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 Route::post('/chatbot/send', function (\Illuminate\Http\Request $request) {
     $message = $request->input('message');
     
-    $reply = "I received your message: '{$message}'. I am a simple bot!";
+    $reply = "I'm sorry, I can't answer that right now. For further questions, contact us through our Facebook page: https://www.facebook.com/russcuevascouture";
     if (stripos($message, 'hello') !== false || stripos($message, 'hi') !== false) {
         $reply = "Hello! How can I help you today?";
     } elseif (stripos($message, 'appointment') !== false || stripos($message, 'book') !== false) {

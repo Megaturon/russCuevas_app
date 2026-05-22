@@ -433,6 +433,7 @@
         <div style="align-self: flex-start; background: #e5e7eb; color: #1f2937; padding: 8px 12px; border-radius: 15px 15px 15px 0; max-width: 80%;">
           Hello! How can I help you today?
         </div>
+        <div id="chat-suggested-questions" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px;"></div>
       </div>
       <div style="padding: 10px; border-top: 1px solid #ddd; background: white; display: flex; gap: 10px;">
         <input type="text" id="chat-input" placeholder="Type a message..." style="flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-family: 'Inter', sans-serif; font-size: 0.9rem;">
@@ -637,6 +638,36 @@
   const chatWindow = document.getElementById('chat-window');
   const chatMessages = document.getElementById('chat-messages');
   const chatInput = document.getElementById('chat-input');
+  const suggestedQuestionsContainer = document.getElementById('chat-suggested-questions');
+  const starterQuestions = [
+    'How do I book an appointment?',
+    'How much do your gowns usually cost?',
+    'Do you accept custom gown designs?',
+    'How can I request a quote?'
+  ];
+
+  function renderStarterQuestions() {
+    if (!suggestedQuestionsContainer) return;
+    suggestedQuestionsContainer.innerHTML = '';
+
+    starterQuestions.forEach((question) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = question;
+      button.style.border = '1px solid #d1d5db';
+      button.style.background = '#ffffff';
+      button.style.color = '#1f2937';
+      button.style.borderRadius = '999px';
+      button.style.padding = '6px 10px';
+      button.style.fontSize = '0.75rem';
+      button.style.cursor = 'pointer';
+      button.style.textAlign = 'left';
+      button.addEventListener('click', () => {
+        sendChatMessage(question);
+      });
+      suggestedQuestionsContainer.appendChild(button);
+    });
+  }
   
   function toggleChat() {
     if (chatWindow.style.display === 'none') {
@@ -670,8 +701,8 @@
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
-  function sendChatMessage() {
-    const msg = chatInput.value.trim();
+  function sendChatMessage(prefilledMessage = null) {
+    const msg = (prefilledMessage ?? chatInput.value).trim();
     if (!msg) return;
     
     appendMessage(msg, 'user');
@@ -694,6 +725,8 @@
 
   // Laravel Echo Websocket Listener
   document.addEventListener('DOMContentLoaded', () => {
+    renderStarterQuestions();
+
     setTimeout(() => {
       if (window.Echo) {
         window.Echo.channel('chatbot')
