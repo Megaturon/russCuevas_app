@@ -51,6 +51,7 @@
             </div>
         </div>
     </div>
+    <x-chatbot />
     <x-footer></x-footer>
 </main>
 

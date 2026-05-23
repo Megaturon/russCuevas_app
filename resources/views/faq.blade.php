@@ -71,6 +71,7 @@
         </div>
     </main>
 	
+    <x-chatbot />
     <x-footer></x-footer>
 	
     <script>
