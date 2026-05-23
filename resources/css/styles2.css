@@ -985,8 +985,8 @@ header.scrolled .navbtns a:hover {
 }
 
 .user-dropdown-luxury li:hover {
-    background-color: var(--background-color);
-    color: var(--text-muted);
+    background-color: #000000;
+    color: #ffffff;
     padding-left: 30px;
 }
 
