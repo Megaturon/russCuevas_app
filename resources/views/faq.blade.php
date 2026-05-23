@@ -24,8 +24,10 @@
                         <span class="text-lg font-semibold text-gray-800">Do you accept custom orders for RTW styles?</span>
                         <svg class="faq-icon w-6 h-6 text-gray-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                        <p>Yes, we do! Please email us at <a href="mailto:custom@russcuevascouture.com" class="text-blue-600 hover:underline">custom@russcuevascouture.com</a> for more information.</p>
+                    <div class="faq-answer overflow-hidden transition-all duration-400 ease-in-out opacity-0" style="max-height: 0px;">
+                        <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                            <p>Yes, we do! Please email us at <a href="mailto:custom@russcuevascouture.com" class="text-blue-600 hover:underline">custom@russcuevascouture.com</a> for more information.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -34,8 +36,10 @@
                         <span class="text-lg font-semibold text-gray-800">How do I place a custom order?</span>
                         <svg class="faq-icon w-6 h-6 text-gray-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                        <p>You can place a custom order by booking a consultation with us.</p>
+                    <div class="faq-answer overflow-hidden transition-all duration-400 ease-in-out opacity-0" style="max-height: 0px;">
+                        <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                            <p>You can place a custom order by booking a consultation with us.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -44,8 +48,10 @@
                         <span class="text-lg font-semibold text-gray-800">Are consultations in-person or virtual?</span>
                         <svg class="faq-icon w-6 h-6 text-gray-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                        <p>We offer both in-person and virtual consultations depending on your preference.</p>
+                    <div class="faq-answer overflow-hidden transition-all duration-400 ease-in-out opacity-0" style="max-height: 0px;">
+                        <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                            <p>We offer both in-person and virtual consultations depending on your preference.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -54,8 +60,10 @@
                         <span class="text-lg font-semibold text-gray-800">Where are your stores located?</span>
                         <svg class="faq-icon w-6 h-6 text-gray-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                        <p>We have a store located in Russ Cuevas Couture Kalawaan, Pasig City, Metro Manila, 1600, NCR, Philippines.</p>
+                    <div class="faq-answer overflow-hidden transition-all duration-400 ease-in-out opacity-0" style="max-height: 0px;">
+                        <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                            <p>We have a store located in Russ Cuevas Couture Kalawaan, Pasig City, Metro Manila, 1600, NCR, Philippines.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,22 +74,39 @@
 	
     <script>
         // FAQ Toggle Logic
-const faqItems = document.querySelectorAll('.faq-item');
+        const faqItems = document.querySelectorAll('.faq-item');
     
         faqItems.forEach(item => {
             const button = item.querySelector('.faq-button');
             const answer = item.querySelector('.faq-answer');
             const icon = item.querySelector('.faq-icon');
 
+            // Apply transition styles dynamically in JS to ensure smooth height changes
+            answer.style.transition = 'max-height 0.4s ease-in-out, opacity 0.4s ease-in-out';
+
             button.addEventListener('click', () => {
+                const isOpen = answer.style.maxHeight !== '0px';
+
+                // Close all other items
                 faqItems.forEach(otherItem => {
+                    const otherAnswer = otherItem.querySelector('.faq-answer');
+                    const otherIcon = otherItem.querySelector('.faq-icon');
                     if (otherItem !== item) {
-                        otherItem.querySelector('.faq-answer').classList.add('hidden');
-                        otherItem.querySelector('.faq-icon').classList.remove('rotate-180');
+                        otherAnswer.style.maxHeight = '0px';
+                        otherAnswer.style.opacity = '0';
+                        otherIcon.classList.remove('rotate-180');
                     }
                 });
-                answer.classList.toggle('hidden');
-                icon.classList.toggle('rotate-180');
+
+                if (!isOpen) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    answer.style.opacity = '1';
+                    icon.classList.add('rotate-180');
+                } else {
+                    answer.style.maxHeight = '0px';
+                    answer.style.opacity = '0';
+                    icon.classList.remove('rotate-180');
+                }
             });
         });
     </script>
