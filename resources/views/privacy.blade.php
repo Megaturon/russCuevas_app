@@ -1,68 +1,96 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="{{ asset('images/RC_logo.jpg') }}" type="image/jpeg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Russ Cuevas Artelier</title>
+    
     @vite(['resources/css/styles2.css'])
-    <title>FAQ - Russ Cuevas Artelier</title>
-    
-    <!-- React, ReactDOM, and Babel Scripts -->
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
-<body>
-    <header>
-        <x-nav-bar></x-nav-bar>
-    </header>
-    <main class="quote-page">
-        <div class="quote-container">
-			<h1 class="page-title">Privacy Policy</h1>
+<body style="background-color: #ffffff; color: #333; overflow-x: hidden;">
     
-        <p>This Privacy Policy describes how Russ Cuevas Couture collects, uses, and protects your information...</p>
-    
-        <h2>Information Collection</h2>
-        <p>We collect information when you register on our site, place an order, or subscribe to our newsletter.</p>
-    
-        <h2>Use of Information</h2>
-        <p>Your information helps us personalize your experience and improve customer service.</p>
-    
-        <!-- New Sections Start Here -->
-    
-        <h2>Online Store Terms</h2>
-        <p>The Site is an online store. The Company provides The Site to allow buyers to purchase products listed on the site.</p>
-        <p>You agree to release the company from any responsibility with any dispute that arises with another user of The Site. You agree that The Company cannot be deemed liable for your use of The Site. You agree to use The Company’s products and services at your own risk.</p>
-    
-        <h2>User Eligibility and Responsibility</h2>
-        <p>The Company’s products and services are available only to persons at the age of 18 years or older. Please do not use the site if you do not satisfy this condition.</p>
-        <p>The Company reserves the right to refuse service at its own discretion at any time.</p>
-        <p>You agree to the following hyperlinked policies: <a href="#">Privacy Policy</a>.</p>
-        <p>You agree that you are responsible for all activity created under your account. You agree to keep your password private. You agree to inform The Company if there has been a breach in your account.</p>
-        <p>You agree to keep your account information, and any content you create, accurate, current, and complete.</p>
-        <p>You agree to comply with all applicable domestic and international laws regarding your use of The Site. You agree not to use The Site for illegal activities.</p>
-        <p>You agree not to be involved in activity that negatively impacts The Company’s branding, revenue, and the quality of product and service.</p>
-    
-        <h2>Buying</h2>
-        <p>You agree to pay for all orders or cancel the order within the time allocated by the seller.</p>
-    
-        <h2>Intellectual Property</h2>
-        <p>The Company reserves the right to remove user-created content that impacts its own intellectual property at its own discretion.</p>
-    
-        <h2>No Guarantee</h2>
-        <p>The Company reserves the right to perform maintenance on The Site as required.</p>
-        <p>The Company does not guarantee continuous, uninterrupted access to The Site.</p>
-        <p>The Company does not guarantee that private information will remain private, as third parties may unlawfully intercept access or private communication and transmissions.</p>
-        <p>You agree not to hold The Company liable for the impact of the downtime caused by maintenance or any unscheduled system activity.</p>
-    
-        <h2>Indemnity</h2>
-        <p>You agree to indemnify and hold The Company harmless from any claim or demand arising out of your breach of this agreement or the documents it incorporates by reference, or your violation of any law or the rights of a third party.</p>
-    
-        <h2>No Agency</h2>
-        <p>The terms and provisions of this Agreement shall not be interpreted as creating an agency, partnership, joint venture, employee-employer, or franchisor-franchisee relationship between yourself and The Company. A Member may not bind or obligate The Company without The Company’s prior written consent.</p>
-    
+    <x-nav-bar></x-nav-bar>
+
+    <!-- Header Section -->
+    <section style="background-color: #faf9f6; padding: 120px 20px 80px; text-align: center; border-bottom: 1px solid #eee;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <span style="font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; color: #888; display: block; margin-bottom: 20px;">Legal Information</span>
+            <h1 style="font-family: var(--font-serif); font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 400; margin-bottom: 30px; letter-spacing: -1px; color: #1a1a1a;">Privacy Policy</h1>
+            <p style="font-family: var(--font-sans); font-size: 1.1rem; color: #666; line-height: 1.8; font-style: italic;">"Protecting your personal information and trust."</p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <main style="max-width: 1000px; margin: 0 auto; padding: 40px 20px 80px;">
+        <div style="background-color: #ffffff; border: 1px solid #f0f0f0; border-radius: 2px; padding: 60px 50px; box-shadow: 0 30px 60px rgba(0,0,0,0.02); position: relative; margin-top: -40px; z-index: 10;">
+            
+            <div style="font-family: var(--font-sans); font-size: 1.15rem; line-height: 1.7; color: #444;">
+                
+                <div style="margin-bottom: 50px; text-align: center; border-left: 4px solid #c5a48e; padding: 15px 30px; background-color: #fffdfb;">
+                    <p style="font-size: 1.25rem; color: #1a1a1a; font-family: var(--font-serif); font-style: italic; line-height: 1.6;">
+                        "At <strong>Russ Cuevas Artelier</strong>, we value your privacy and are committed to protecting any personal information you share with us. This Privacy Policy outlines how we collect, use, and safeguard your data when you interact with us through our website, social media platforms, email communications, and in-person transactions."
+                    </p>
+                </div>
+
+                <!-- 1. Information We Collect -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">1. Information We Collect</h2>
+                    <p style="margin-bottom: 15px;">We may collect the following types of personal information:</p>
+                    <ul style="list-style-type: disc; padding-left: 20px; margin-bottom: 15px;">
+                        <li style="margin-bottom: 8px;">Name</li>
+                        <li style="margin-bottom: 8px;">Email address</li>
+                        <li style="margin-bottom: 8px;">Phone number</li>
+                        <li style="margin-bottom: 8px;">Art preferences or custom order details</li>
+                        <li style="margin-bottom: 8px;">Any other information voluntarily submitted through forms, inquiries, or purchases</li>
+                    </ul>
+                </div>
+
+                <!-- 2. How We Use Your Information -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">2. How We Use Your Information</h2>
+                    <p style="margin-bottom: 15px;">We use your personal data to:</p>
+                    <ul style="list-style-type: disc; padding-left: 20px; margin-bottom: 15px;">
+                        <li style="margin-bottom: 8px;">Respond to your inquiries or requests</li>
+                        <li style="margin-bottom: 8px;">Send updates on new collections, events, and promotions (only if you opt-in)</li>
+                        <li style="margin-bottom: 8px;">Improve our services and website based on feedback</li>
+                    </ul>
+                </div>
+                
+                <!-- 3. Data Sharing and Protection -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">3. Data Sharing and Protection</h2>
+                    <p style="margin-bottom: 15px;">We <strong>do not sell or rent</strong> your personal information. Data is only shared with trusted service providers (e.g., payment processors, delivery services) as necessary to fulfill transactions. We implement appropriate security measures to protect your data from unauthorized access.</p>
+                </div>
+                
+                <!-- 4. Your Rights -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">4. Your Rights</h2>
+                    <p style="margin-bottom: 15px;">You have the right to:</p>
+                    <ul style="list-style-type: disc; padding-left: 20px; margin-bottom: 15px;">
+                        <li style="margin-bottom: 8px;">Access the personal data we hold about you</li>
+                        <li style="margin-bottom: 8px;">Request corrections or deletions</li>
+                        <li style="margin-bottom: 8px;">Opt-out of marketing communications at any time</li>
+                    </ul>
+                    <p style="margin-bottom: 15px;">To exercise any of these rights, contact us at <strong>custom@russcuevascouture.com</strong>.</p>
+                </div>
+                
+                <!-- 5. Policy Updates -->
+                <div style="margin-bottom: 45px;">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;">5. Policy Updates</h2>
+                    <p style="margin-bottom: 15px;">We may update this policy periodically. Any significant changes will be communicated via our website or email.</p>
+                </div>
+
+                <p style="font-style: italic; color: #888; border-top: 1px solid #eee; margin-top: 50px; padding-top: 20px;">
+                    Last updated: May 2026
+                </p>
+                
+            </div>
         </div>
     </main>
+
+    <x-footer></x-footer>
+
 </body>
 </html>

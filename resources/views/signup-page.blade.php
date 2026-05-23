@@ -1,57 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <link rel="icon" href="{{ asset('images/RC_logo.jpg') }}" type="image/jpeg">
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | Russ Cuevas</title>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  @vite(['resources/css/styles.css'])
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-
-</head>
-<body>
-
-  <!-- Header copied in directly -->
-  <!-- Signup Form -->
+  <title>Sign Up - Russ Cuevas</title>
   
-  <div class="signup-container"> 
-    <h1>Sign up</h1>
-	  <form action="" method="post">
-	
-	  <div class="user-details"> 
-	    <div class="input-box"> 
-	    <span> Full Name</span>
-      <input type="text" name="fullname" placeholder="Enter your full name" required>
-	  </div>
-	
-    <div class="input-box"> 
-       <span>Address </span>
-       <input type="text" name="address" placeholder="Enter your address" required>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  
+  @vite(['resources/css/styles2.css'])
+</head>
+<body class="auth-page">
+  <header>
+    <x-nav-bar></x-nav-bar>
+  </header>
+  
+  <a href="/" class="close-auth"><i class="fas fa-times"></i></a>
+
+  <div class="auth-centered-wrapper">
+    <div class="auth-bg-carousel">
+      <div class="carousel-item active" style="background-image: url('/img/slide1.jpg');"></div>
+      <div class="carousel-item" style="background-image: url('/img/slide2.webp');"></div>
+      <div class="carousel-item" style="background-image: url('/img/slide3.jpg');"></div>
+      <div class="auth-overlay"></div>
     </div>
 
-    <div class="input-box"> 
-         <span>Email</span>
-         <input type="email" name="email" placeholder="your@email.com" required> 
-    </div>
-	
-      <div class="input-box"> 
-          <label for="phone">Contact Number</label>
-          <input type="number"  name="contact" id="contact" placeholder="Enter contact number" required> 
-      </div>
-	
-      <div class="input-box pass-box"> 
-          <label for="password">Password</label>
-          <input type="password" name="password" id="password" placeholder="Enter your password" required>  
-      </div>
-    </div>
+    <div class="auth-card" style="max-width: 600px;">
+      <h1>Create Account</h1>
 
-    <!-- Fix here: add login-links class -->
-    <div class="login-links">
-      <button type="submit" name="register" id="create-button" class="create-btn">Create Account</button>
-      <a href="/login" id="signup-link" class="login-link">Already have an account?</a>
-    </div>
-  </form>
-</div>
+      @if ($errors->any())
+          <div class="alert alert-danger" style="color: #721c24; background-color: rgba(248, 215, 218, 0.8); border: 1px solid #f5c6cb; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 0.8rem;">
+              <ul style="list-style: none; padding: 0;">
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div>
+      @endif
 
+      <form action="{{ route('signup') }}" method="post" class="auth-form">
+        @csrf
+        <div class="signup-grid">
+            <div class="form-group">
+                <label for="fullname">Full Name <span class="required-asterisk">*</span></label>
+                <input type="text" id="fullname" name="fullname" value="{{ old('fullname') }}" required placeholder="Enter your name">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address <span class="required-asterisk">*</span></label>
+                <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="Enter your email">
+            </div>
+
+            <div class="form-group">
+                <label for="contact">Contact Number <span class="required-asterisk">*</span></label>
+                <input type="text" id="contact" name="contact" value="{{ old('contact') }}" required placeholder="Enter your phone number">
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address <span class="required-asterisk">*</span></label>
+                <input type="text" id="address" name="address" value="{{ old('address') }}" required placeholder="Enter your address">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password <span class="required-asterisk">*</span></label>
+                <input type="password" id="password" name="password" required placeholder="Create a password">
+            </div>
+
+            <div class="form-group">
+                <label for="password_confirmation">Confirm Password <span class="required-asterisk">*</span></label>
+                <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Confirm your password">
+            </div>
+        </div>
+
+        <div class="auth-links" style="justify-content: center;">
+          <a href="/login" class="auth-link">Already have an account? Sign In</a>
+        </div>
+
+        <button type="submit" class="auth-btn">Create Account</button>
+        
+        <div style="text-align: center; margin: 15px 0; position: relative;">
+            <hr style="border-top: 1px solid #ccc; margin: 0; position: absolute; width: 100%; top: 50%; z-index: 1;">
+            <span style="background: var(--bg-color, white); padding: 0 10px; position: relative; z-index: 2; color: #666; border-radius: 4px;">or</span>
+        </div>
+
+        <a href="/auth/google" class="auth-btn" style="background-color: #fff; color: #333; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none;">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 18px; height: 18px;">
+            Sign up with Google
+        </a>
+      </form>
+    </div>
+  </div>
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const items = document.querySelectorAll('.carousel-item');
+        let current = 0;
+        
+        setInterval(() => {
+            items[current].classList.remove('active');
+            current = (current + 1) % items.length;
+            items[current].classList.add('active');
+        }, 5000);
+    });
+  </script>
 </body>
 </html>

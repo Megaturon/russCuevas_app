@@ -5,7 +5,18 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: [
+                'resources/css/app.css', 
+                'resources/js/app.js',
+                'resources/js/bootstrap.js',
+                'resources/css/styles.css',
+                'resources/css/styles2.css',
+                'resources/css/styles_appointments.css',
+                'resources/css/styles_forgetpass.css',
+                'resources/css/styles_resetpass.css',
+                'resources/css/our-story.css',
+                'resources/js/navbar.js'
+            ],
             refresh: true,
         }),
         tailwindcss(),
