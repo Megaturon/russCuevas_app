@@ -48,7 +48,13 @@
 
         <div class="form-group">
           <label for="password">Password <span class="required-asterisk">*</span></label>
+          <div class="password-field" style="position: relative">
           <input type="password" id="password" name="password" required placeholder="Enter your password">
+          <button type="button" id="toggle-pass"
+              style="position: absolute; inset-block: 0; right: 0; display: grid; place-items: center; padding-inline: 3; margin-right: 15px; font-size:var(--text-sm); overflow: hidden; outline: none; background-color: transparent; border: none; opacity: 0.5;"
+              aria-label="Toggle password visibility" style="color: var(--muted-foreground);"><i
+              class="fa-solid fa-eye"></i></button>
+          </div>
         </div>
 
         <div class="auth-links">
@@ -83,6 +89,24 @@
             items[current].classList.add('active');
         }, 5000);
     });
+
+    const loginPassword = document.querySelector('#password');
+    const togglePass = document.querySelector('#toggle-pass');
+
+    if (togglePass && loginPassword && togglePass.dataset.bound !== 'true') {
+        togglePass.dataset.bound = 'true';
+        togglePass.addEventListener('click', () => {
+            const nextType = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            loginPassword.setAttribute('type', nextType);
+
+            const icon = togglePass.querySelector('i');
+            if (icon) {
+                const isText = nextType === 'text';
+                icon.classList.toggle('fa-eye', !isText);
+                icon.classList.toggle('fa-eye-slash', isText);
+            }
+        });
+    }
   </script>
 </body>
 </html>
