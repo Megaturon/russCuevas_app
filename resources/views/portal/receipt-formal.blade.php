@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="{{ asset('images/RC_logo.jpg') }}" type="image/jpeg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receipt {{ $receiptData['reference'] }} - Russ Cuevas</title>
@@ -350,3 +351,4 @@
 
 </body>
 </html>
+
