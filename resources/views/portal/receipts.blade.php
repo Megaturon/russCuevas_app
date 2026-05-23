@@ -3,7 +3,7 @@
 @section('title', 'My Receipts')
 
 @section('content')
-<div class="portal-header">
+<div class="portal-header" style="margin-top: 30px">
     My Receipts
 </div>
 
