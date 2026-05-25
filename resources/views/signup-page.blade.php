@@ -20,9 +20,9 @@
 
   <div class="auth-centered-wrapper">
     <div class="auth-bg-carousel">
-      <div class="carousel-item active" style="background-image: url('/img/slide1.jpg');"></div>
-      <div class="carousel-item" style="background-image: url('/img/slide2.webp');"></div>
-      <div class="carousel-item" style="background-image: url('/img/slide3.jpg');"></div>
+      <div class="carousel-item active" style="background-image: url('/img/4.jpg');"></div>
+      <div class="carousel-item" style="background-image: url('/img/5.jpg');"></div>
+      <div class="carousel-item" style="background-image: url('/img/model3.jpg');"></div>
       <div class="auth-overlay"></div>
     </div>
 
@@ -64,12 +64,18 @@
 
             <div class="form-group">
                 <label for="password">Password <span class="required-asterisk">*</span></label>
-                <input type="password" id="password" name="password" required placeholder="Create a password">
+                <div style="position: relative;">
+                    <input type="password" id="password" name="password" required placeholder="Create a password" style="width: 100%; padding-right: 40px; box-sizing: border-box;">
+                    <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('password', this)" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #666;"></i>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="password_confirmation">Confirm Password <span class="required-asterisk">*</span></label>
-                <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Confirm your password">
+                <div style="position: relative;">
+                    <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Confirm your password" style="width: 100%; padding-right: 40px; box-sizing: border-box;">
+                    <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('password_confirmation', this)" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #666;"></i>
+                </div>
             </div>
         </div>
 
@@ -93,6 +99,18 @@
   </div>
 
   <script>
+    function togglePasswordVisibility(inputId, icon) {
+        const input = document.getElementById(inputId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
         const items = document.querySelectorAll('.carousel-item');
