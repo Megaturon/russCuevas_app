@@ -309,13 +309,13 @@
   <div class="slider">
     <div class="list">
       <div class="item">
-        <img src="/images/slide1.jpg" alt="Slide 1">
+        <img src="/img/4.jpg" alt="Slide 1">
       </div>
       <div class="item">
-        <img src="/images/slide2.webp" alt="Slide 2">
+        <img src="/img/5.jpg" alt="Slide 2">
       </div>
       <div class="item">
-        <img src="/images/slide3.jpg" alt="Slide 3">
+        <img src="/img/model3.jpg" alt="Slide 3">
       </div>
     </div>
     <ul class="dots">
