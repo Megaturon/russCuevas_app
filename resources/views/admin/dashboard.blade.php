@@ -1751,7 +1751,26 @@
 
         <!-- Reports Pane -->
         <div class="pane" id="reports">
-            <div class="unified-filter-bar">
+            <div class="unified-filter-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <select id="report-filter-service" onchange="filterReports()" style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem; background-color: #ffffff; color: #333; height: 38px; outline: none; box-sizing: border-box;">
+                        <option value="">All Services</option>
+                        <option value="Wedding Gown">Wedding Gown</option>
+                        <option value="Prom Dress">Prom Dress</option>
+                        <option value="Suit/Tuxedo">Suit/Tuxedo</option>
+                        <option value="Custom Wear">Custom Wear</option>
+                    </select>
+                    
+                    <input type="date" id="report-filter-date" onchange="filterReports()" style="padding: 8px 12px; margin-bottom: 0; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem; background-color: #ffffff; color: #333; height: 38px; outline: none; box-sizing: border-box;" title="Date Completed">
+                    
+                    <select id="report-filter-status" onchange="filterReports()" style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem; background-color: #ffffff; color: #333; height: 38px; outline: none; box-sizing: border-box;">
+                        <option value="">All Payment Statuses</option>
+                        <option value="Fully Paid">Fully Paid</option>
+                        <option value="Partially Paid">Partially Paid</option>
+                    </select>
+
+                    <button class="btn btn-secondary" onclick="clearReportFilters()" style="padding: 0 15px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem; background-color: #f8fafc; color: #475569; height: 38px; cursor: pointer; outline: none; box-sizing: border-box;">Clear Filters</button>
+                </div>
                 <div style="display: flex; gap: 15px; align-items: center;" class="report-actions">
                     <button class="btn btn-primary" onclick="exportSalesPDF()" style="padding: 10px 20px;"><i class="fas fa-file-pdf"></i> Export to PDF</button>
                     <button class="btn btn-success" onclick="exportSalesExcel()" style="padding: 10px 20px; background-color: #10b981; border:none;"><i class="fas fa-file-excel"></i> Export to Excel</button>
@@ -1776,7 +1795,7 @@
                     </thead>
                     <tbody>
                         @forelse($paidQuotes as $quote)
-                        <tr>
+                        <tr class="report-row" data-service="{{ $quote->service_type }}" data-date="{{ \Carbon\Carbon::parse($quote->updated_at)->format('Y-m-d') }}" data-status="{{ $quote->status === 'Paid' ? 'Fully Paid' : 'Partially Paid' }}">
                             <td>
                                 <div><strong>{{ $quote->name }}</strong></div>
                                 <div style="font-size: 0.8rem; color: var(--grey-text);">{{ $quote->email }}</div>
@@ -1793,10 +1812,13 @@
                             </td>
                         </tr>
                         @empty
-                        <tr>
+                        <tr id="reports-empty-row-original">
                             <td colspan="5" style="text-align: center; padding: 20px;">No sales data available.</td>
                         </tr>
                         @endforelse
+                        <tr id="reports-empty-row" style="display: none;">
+                            <td colspan="5" style="text-align: center; padding: 20px;">No records match the selected filters.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -3221,12 +3243,61 @@
         });
     }
 
+    function filterReports() {
+        const service = document.getElementById('report-filter-service').value.toLowerCase();
+        const date = document.getElementById('report-filter-date').value;
+        const status = document.getElementById('report-filter-status').value.toLowerCase();
+        
+        const rows = document.querySelectorAll('#salesReportTable tbody tr.report-row');
+        let visibleCount = 0;
+        
+        rows.forEach(row => {
+            const rowService = row.getAttribute('data-service').toLowerCase();
+            const rowDate = row.getAttribute('data-date');
+            const rowStatus = row.getAttribute('data-status').toLowerCase();
+            
+            let show = true;
+            if (service && rowService !== service) show = false;
+            if (date && rowDate !== date) show = false;
+            if (status && rowStatus !== status) show = false;
+            
+            if (show) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+        
+        const emptyRow = document.getElementById('reports-empty-row');
+        if (emptyRow) {
+            if (visibleCount === 0 && rows.length > 0) {
+                emptyRow.style.display = '';
+            } else {
+                emptyRow.style.display = 'none';
+            }
+        }
+    }
+
+    function clearReportFilters() {
+        document.getElementById('report-filter-service').value = '';
+        document.getElementById('report-filter-date').value = '';
+        document.getElementById('report-filter-status').value = '';
+        filterReports();
+    }
+
     function exportSalesExcel() {
         // Find the table
         const table = document.getElementById('salesReportTable');
         
+        // Clone the table to manipulate for export
+        const cloneTable = table.cloneNode(true);
+        // Remove hidden rows so they aren't exported
+        const hiddenRows = cloneTable.querySelectorAll('tr[style*="display: none"]');
+        hiddenRows.forEach(row => row.parentNode.removeChild(row));
+        
         // Convert to workbook
-        const wb = XLSX.utils.table_to_book(table, {sheet: "Sales Report"});
+        const wb = XLSX.utils.table_to_book(cloneTable, {sheet: "Sales Report"});
         
         // Export file
         XLSX.writeFile(wb, 'Sales_Report_' + new Date().toISOString().split('T')[0] + '.xlsx');
