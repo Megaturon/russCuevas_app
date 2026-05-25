@@ -2,6 +2,16 @@
 
 ### Cuevas, Renzo
 * **Core Backend & System Setup**
+* Initial Page Setup for:
+    * Login Page
+    * Sign up Page
+    * Home Page
+    * Forget/Reset Password Page
+    * FAQ
+    * Privacy Policy
+    * Appointments
+* Password Button Implementation
+* System Finalizations
 
 ### Dela Cruz, Denise J.
 * **UI Foundation**
