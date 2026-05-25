@@ -12,6 +12,7 @@
     * Appointments
 * Password Button Implementation
 * System Finalizations
+* Manual
 
 ### Dela Cruz, Denise J.
 * **UI Foundation**
