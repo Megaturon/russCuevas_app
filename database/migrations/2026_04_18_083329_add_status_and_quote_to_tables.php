@@ -9,11 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('appointments', function (Blueprint $table) {
-            $table->string('status')->default('Pending')->after('notes');
+            if (!Schema::hasColumn('appointments', 'status')) {
+                $table->string('status')->default('Pending')->after('notes');
+            }
         });
 
         Schema::table('quotes', function (Blueprint $table) {
-            $table->decimal('price_quote', 10, 2)->nullable()->after('selected_materials');
+            if (!Schema::hasColumn('quotes', 'price_quote')) {
+                $table->decimal('price_quote', 10, 2)->nullable()->after('selected_materials');
+            }
         });
     }
 

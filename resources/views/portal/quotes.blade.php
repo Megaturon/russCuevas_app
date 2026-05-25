@@ -32,9 +32,13 @@
                     <td>
                         @php
                             $statusClass = strtolower(str_replace(' ', '-', $quote->status));
+                            $displayStatus = $quote->status;
+                            if (strtolower($quote->status) === 'pending' || strtolower($quote->status) === 'received') {
+                                $displayStatus = 'To Review';
+                            }
                         @endphp
                         <span class="status-pill status-{{ $statusClass }}">
-                            {{ $quote->status }}
+                            {{ $displayStatus }}
                         </span>
                     </td>
                     <td>
@@ -46,7 +50,7 @@
                             @endphp
                             <a href="{{ route('receipts.show', $ref) }}" class="btn-secondary">View Receipt</a>
                         @else
-                            <span style="font-size: 0.75rem; color: #aaa; font-style: italic;">No actions available</span>
+                            <span style="font-size: 0.75rem; color: #aaa; font-style: italic;">Quote is under review of the admin.</span>
                         @endif
                     </td>
                 </tr>

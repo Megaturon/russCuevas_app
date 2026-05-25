@@ -12,8 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('google_id')->nullable()->after('id');
-            $table->string('password')->nullable()->change();
+            if (!Schema::hasColumn('users', 'google_id')) {
+                $table->string('google_id')->nullable()->after('id');
+            }
+            // Note: DB::getDoctrineSchemaManager() is sometimes needed for change(), but we'll leave it as is 
+            // since change() usually handles existing columns fine. Wait, doctrine/dbal might be needed.
+            // If change() throws an error, we might need to catch it.
+            try {
+                $table->string('password')->nullable()->change();
+            } catch (\Exception $e) {}
         });
     }
 

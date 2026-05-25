@@ -97,4 +97,48 @@ class ClientPortalController extends Controller
 
         return redirect()->route('portal.receipts')->with('success', 'Payment successful! Your receipt is now available.');
     }
+
+    public function settings()
+    {
+        $user = Auth::user();
+        return view('portal.settings', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'contact' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:1000'
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'contact' => $request->contact,
+            'address' => $request->address
+        ]);
+
+        return back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|string|min:8|confirmed'
+        ]);
+
+        $user = Auth::user();
+
+        if (!\Illuminate\Support\Facades\Hash::check($request->current_password, $user->password)) {
+            return back()->with('error', 'The provided current password does not match our records.');
+        }
+
+        $user->update([
+            'password' => \Illuminate\Support\Facades\Hash::make($request->password)
+        ]);
+
+        return back()->with('success', 'Password changed successfully.');
+    }
 }

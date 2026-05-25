@@ -28,7 +28,7 @@
             
             --bg-body: #f5f5f3;
             --bg-main: #f5f5f3;
-            --bg-topbar: #ffffff;
+            --bg-topbar: #111111;
             --bg-sidebar: #111111;
             --bg-table-header: #f5f5f3;
             --text-main: #111111;
@@ -213,7 +213,7 @@
             font-family: var(--font-sans);
             font-size: 1.25rem;
             font-weight: 600;
-            color: var(--black);
+            color: var(--white);
             margin: 0;
         }
         
@@ -231,21 +231,26 @@
         .search-wrapper input {
             padding: 10px 20px;
             border-radius: 8px 0 0 8px;
-            border: 1px solid var(--grey-border);
+            border: 1px solid #333333;
             border-right: none;
-            background: var(--grey-light);
+            background: #222222;
+            color: var(--white);
             font-size: 0.85rem;
             outline: none;
             width: 300px;
             transition: border-color 0.3s;
         }
 
+        .search-wrapper input::placeholder {
+            color: #888888;
+        }
+
         .search-wrapper input:focus {
-            border-color: var(--black);
+            border-color: #888888;
         }
 
         .search-btn {
-            background: var(--black);
+            background: #333333;
             color: var(--white);
             border: none;
             padding: 0 20px;
@@ -259,7 +264,7 @@
         }
         
         .search-btn:hover {
-            background: #000;
+            background: #444444;
         }
         
         .topbar-icons {
@@ -273,12 +278,13 @@
             cursor: pointer;
             padding: 8px;
             border-radius: 50%;
-            background: #f1f5f9;
+            background: #222222;
+            color: var(--white);
             transition: background 0.3s;
         }
 
         .topbar-icons i:hover {
-            background: #e2e8f0;
+            background: #333333;
         }
 
         .content-area {
@@ -904,9 +910,9 @@
             <i class="fas fa-calendar-alt"></i>
             Appointments
         </div>
-        <div class="nav-item" data-target="history">
-            <i class="fas fa-history"></i>
-            Appointment Records
+        <div class="nav-item" data-target="history" style="padding-left: 55px; font-size: 0.85rem; padding-top: 8px; padding-bottom: 8px;">
+            <i class="fas fa-history" style="font-size: 0.9rem;"></i>
+            Appointment History
         </div>
         <div class="nav-item" data-target="quotes">
             <i class="fas fa-file-invoice-dollar"></i>
@@ -1290,7 +1296,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Client Info</th><th>Schedule</th><th>Notes</th><th>Status</th><th>Actions</th>
+                            <th>Client Info</th><th>Service Type</th><th>Schedule</th><th>Notes</th><th>Status</th><th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1299,6 +1305,9 @@
                             <td>
                                 <strong>{{ $row->name }}</strong><br>
                                 <span style="color:var(--grey-text); font-size: 0.85rem;">{{ $row->email }}</span>
+                            </td>
+                            <td>
+                                <span style="background: #e2e8f0; color: var(--black); padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">{{ $row->service_type ?? 'Fitting / Consultation' }}</span>
                             </td>
                             <td>
                                 <div style="font-weight: 600; font-family: var(--font-playfair); font-size: 1rem;">
@@ -1356,18 +1365,123 @@
 
         <!-- History Pane -->
         <div class="pane" id="history">
-            <div class="unified-filter-bar">
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;" class="history-status-filters">
-                    <button class="status-filter-btn active" onclick="setStatusFilter(this, 'history', 'global-search', 'history-status-filters')">All</button>
-                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'history', 'global-search', 'history-status-filters')">Confirmed</button>
-                    <button class="status-filter-btn" onclick="setStatusFilter(this, 'history', 'global-search', 'history-status-filters')">Cancelled</button>
+            <div class="unified-filter-bar" style="margin-bottom: 20px;">
+                <div style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label for="history-status-filter" style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--grey-text); letter-spacing: 1px;">Status Filter</label>
+                        <select id="history-status-filter" onchange="applyHistoryFilters()" style="padding: 0 15px; height: 40px; border: 1px solid var(--grey-border); border-radius: 6px; font-size: 0.85rem; outline: none; background: white; min-width: 150px; font-family: var(--font-sans); box-sizing: border-box;">
+                            <option value="All">All Statuses</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Cancelled">Cancelled</option>
+                            <option value="Completed">Completed</option>
+                            <option value="No Show">No Show</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label for="history-service-filter" style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--grey-text); letter-spacing: 1px;">Service Type</label>
+                        <select id="history-service-filter" onchange="applyHistoryFilters()" style="padding: 0 15px; height: 40px; border: 1px solid var(--grey-border); border-radius: 6px; font-size: 0.85rem; outline: none; background: white; min-width: 150px; font-family: var(--font-sans); box-sizing: border-box;">
+                            <option value="All">All Services</option>
+                            <option value="Fitting / Consultation">Fitting / Consultation</option>
+                            <option value="Measurements">Measurements</option>
+                            <option value="Style Consultation">Style Consultation</option>
+                            <option value="Pick-up">Pick-up</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label for="history-date-filter" style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--grey-text); letter-spacing: 1px;">Schedule Date</label>
+                        <input type="date" id="history-date-filter" onchange="applyHistoryFilters()" style="padding: 0 15px; height: 40px; border: 1px solid var(--grey-border); border-radius: 6px; font-size: 0.85rem; outline: none; background: white; font-family: var(--font-sans); box-sizing: border-box;">
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="clearHistoryFilters()" style="padding: 0 15px; border: 1px solid var(--grey-border); border-radius: 6px; font-size: 0.85rem; background-color: var(--grey-light); color: var(--grey-text); height: 40px; cursor: pointer; outline: none; box-sizing: border-box;">
+                        Clear Filters
+                    </button>
                 </div>
             </div>
+            
+            <script>
+                function clearHistoryFilters() {
+                    document.getElementById('history-status-filter').value = 'All';
+                    document.getElementById('history-service-filter').value = 'All';
+                    document.getElementById('history-date-filter').value = '';
+                    const searchInput = document.getElementById('global-search');
+                    if (searchInput) searchInput.value = '';
+                    applyHistoryFilters();
+                }
+
+                function applyHistoryFilters() {
+                    const searchInput = document.getElementById('global-search');
+                    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+                    const statusFilter = document.getElementById('history-status-filter').value.toLowerCase();
+                    const serviceFilter = document.getElementById('history-service-filter').value.toLowerCase();
+                    
+                    // Parse the raw date string from the date picker (YYYY-MM-DD)
+                    const dateFilterVal = document.getElementById('history-date-filter').value;
+                    let targetDateString = '';
+                    if (dateFilterVal) {
+                        // The table renders date like "June 01" or "May 29" or "May 29, 2026"
+                        // To make it robust, we'll format the input date to "Month DD"
+                        const d = new Date(dateFilterVal + 'T00:00:00');
+                        const month = d.toLocaleString('en-US', { month: 'long' });
+                        const day = d.getDate().toString().padStart(2, '0');
+                        // e.g. "May 29" or "June 01"
+                        targetDateString = `${month} ${day}`.toLowerCase();
+                        
+                        // We also get the abbreviated version e.g. "May 29" instead of "May 29"
+                        // Or if Carbon uses full month vs abbr, let's keep it simple.
+                        // Wait, Carbon::parse()->format('F d') outputs full month name and 2-digit day.
+                        // e.g. "June 01", "May 29"
+                    }
+                    
+                    const pane = document.getElementById('history');
+                    if (!pane) return;
+                    
+                    const table = pane.querySelector('table');
+                    if (!table) return;
+                    const tr = table.getElementsByTagName("tr");
+                    
+                    for (let i = 1; i < tr.length; i++) {
+                        let rowText = tr[i].textContent.toLowerCase();
+                        let rowStatusEl = tr[i].querySelector('.status-pill');
+                        let rowStatus = rowStatusEl ? rowStatusEl.textContent.toLowerCase().trim() : '';
+                        
+                        let tds = tr[i].getElementsByTagName("td");
+                        let rowService = tds.length > 1 ? tds[1].textContent.toLowerCase().trim() : '';
+                        let rowDateCell = tds.length > 2 ? tds[2].textContent.toLowerCase().trim() : '';
+                        
+                        let matchSearch = rowText.indexOf(searchTerm) > -1;
+                        let matchStatus = (statusFilter === 'all' || rowStatus === statusFilter);
+                        let matchService = (serviceFilter === 'all' || rowService.includes(serviceFilter));
+                        let matchDate = (targetDateString === '' || rowDateCell.includes(targetDateString));
+                        
+                        if (matchSearch && matchStatus && matchService && matchDate) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+                
+                // Add listener to global search to trigger history filters when active
+                document.addEventListener('DOMContentLoaded', function() {
+                    const searchInput = document.getElementById('global-search');
+                    if(searchInput) {
+                        searchInput.addEventListener('keyup', function() {
+                            const activePane = document.querySelector('.pane.active');
+                            if(activePane && activePane.id === 'history') {
+                                applyHistoryFilters();
+                            }
+                        });
+                    }
+                });
+            </script>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>Client Info</th><th>Schedule</th><th>Notes</th><th>Status</th><th>Actions</th>
+                            <th>Client Info</th><th>Service Type</th><th>Schedule</th><th>Notes</th><th>Status</th><th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1376,6 +1490,9 @@
                             <td>
                                 <strong>{{ $row->name }}</strong><br>
                                 <span style="color:var(--grey-text); font-size: 0.85rem;">{{ $row->email }}</span>
+                            </td>
+                            <td>
+                                <span style="background: #e2e8f0; color: var(--black); padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">{{ $row->service_type ?? 'Fitting / Consultation' }}</span>
                             </td>
                             <td>
                                 <div style="font-weight: 600; font-family: var(--font-playfair); font-size: 1rem;">
@@ -1751,76 +1868,137 @@
 
         <!-- Reports Pane -->
         <div class="pane" id="reports">
-            <div class="unified-filter-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                    <select id="report-filter-service" onchange="filterReports()" style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem; background-color: #ffffff; color: #333; height: 38px; outline: none; box-sizing: border-box;">
-                        <option value="">All Services</option>
-                        <option value="Wedding Gown">Wedding Gown</option>
-                        <option value="Prom Dress">Prom Dress</option>
-                        <option value="Suit/Tuxedo">Suit/Tuxedo</option>
-                        <option value="Custom Wear">Custom Wear</option>
-                    </select>
-                    
-                    <input type="date" id="report-filter-date" onchange="filterReports()" style="padding: 8px 12px; margin-bottom: 0; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem; background-color: #ffffff; color: #333; height: 38px; outline: none; box-sizing: border-box;" title="Date Completed">
-                    
-                    <select id="report-filter-status" onchange="filterReports()" style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem; background-color: #ffffff; color: #333; height: 38px; outline: none; box-sizing: border-box;">
-                        <option value="">All Payment Statuses</option>
-                        <option value="Fully Paid">Fully Paid</option>
-                        <option value="Partially Paid">Partially Paid</option>
-                    </select>
+            @php
+                $totalCollected = $paidQuotes->sum('amount_paid');
+                $totalTransactions = $paidQuotes->count();
+                $fullyPaidCount = $paidQuotes->where('status', 'Paid')->count();
+                $partialCount = $paidQuotes->where('status', '!=', 'Paid')->count();
+            @endphp
 
-                    <button class="btn btn-secondary" onclick="clearReportFilters()" style="padding: 0 15px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem; background-color: #f8fafc; color: #475569; height: 38px; cursor: pointer; outline: none; box-sizing: border-box;">Clear Filters</button>
+            <!-- Summary Cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                <div style="background: #111827; padding: 20px; border-radius: 12px; border: 1px solid #374151; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <div style="color: #9ca3af; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Total Collected</div>
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #ffffff;">₱{{ number_format($totalCollected, 2) }}</div>
                 </div>
-                <div style="display: flex; gap: 15px; align-items: center;" class="report-actions">
-                    <button class="btn btn-primary" onclick="exportSalesPDF()" style="padding: 10px 20px;"><i class="fas fa-file-pdf"></i> Export to PDF</button>
-                    <button class="btn btn-success" onclick="exportSalesExcel()" style="padding: 10px 20px; background-color: #10b981; border:none;"><i class="fas fa-file-excel"></i> Export to Excel</button>
+                <div style="background: #111827; padding: 20px; border-radius: 12px; border: 1px solid #374151; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <div style="color: #9ca3af; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Total Transactions</div>
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #ffffff;">{{ $totalTransactions }}</div>
+                </div>
+                <div style="background: #111827; padding: 20px; border-radius: 12px; border: 1px solid #374151; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <div style="color: #9ca3af; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Fully Paid</div>
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #10b981;">{{ $fullyPaidCount }}</div>
+                </div>
+                <div style="background: #111827; padding: 20px; border-radius: 12px; border: 1px solid #374151; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <div style="color: #9ca3af; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Partially Paid</div>
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #f59e0b;">{{ $partialCount }}</div>
+                </div>
+            </div>
+
+            <!-- Enhanced Filter Bar -->
+            <div class="unified-filter-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; background: #fff; padding: 15px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #64748b; text-transform: uppercase;">Service Type</label>
+                        <select id="report-filter-service" onchange="filterReports()" style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; background-color: #f8fafc; color: #334155; min-width: 150px; outline: none;">
+                            <option value="">All Services</option>
+                            <option value="Wedding Gown">Wedding Gown</option>
+                            <option value="Prom Dress">Prom Dress</option>
+                            <option value="Suit/Tuxedo">Suit/Tuxedo</option>
+                            <option value="Custom Wear">Custom Wear</option>
+                        </select>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #64748b; text-transform: uppercase;">Date Completed</label>
+                        <input type="date" id="report-filter-date" onchange="filterReports()" style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; background-color: #f8fafc; color: #334155; min-width: 150px; outline: none;">
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #64748b; text-transform: uppercase;">Payment Status</label>
+                        <select id="report-filter-status" onchange="filterReports()" style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; background-color: #f8fafc; color: #334155; min-width: 150px; outline: none;">
+                            <option value="">All Payment Statuses</option>
+                            <option value="Fully Paid">Fully Paid</option>
+                            <option value="Partially Paid">Partially Paid</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <label style="font-size: 0.75rem; color: transparent;">Action</label>
+                        <button class="btn" onclick="clearReportFilters()" style="padding: 8px 16px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; background-color: #fff; color: #64748b; font-weight: 500; cursor: pointer; transition: all 0.2s;"><i class="fas fa-times-circle" style="margin-right: 5px;"></i> Clear</button>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 10px; align-items: center;" class="report-actions">
+                    <button class="btn btn-secondary" onclick="exportSalesPDF()" style="padding: 10px 20px; font-weight: 600; display: flex; align-items: center; gap: 8px; border: 1px solid #e2e8f0; background: #fff; color: #334155;"><i class="fas fa-file-pdf" style="color: #ef4444;"></i> Export PDF</button>
+                    <button class="btn btn-success" onclick="exportSalesExcel()" style="padding: 10px 20px; font-weight: 600; display: flex; align-items: center; gap: 8px; background-color: #10b981; border:none; color: white;"><i class="fas fa-file-excel"></i> Export Excel</button>
                 </div>
             </div>
             
-            <div class="table-container" style="margin-top: 20px;" id="reports-table-container">
-                <div id="pdf-header" style="display:none; text-align:center; margin-bottom: 20px;">
-                    <h2 style="font-family: serif; margin-bottom: 5px;">RUSS CUEVAS</h2>
-                    <h4 style="margin: 0; color: #555;">Official Sales Report</h4>
-                    <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">Generated on: {{ now()->format('F d, Y') }}</p>
+            <div id="pdf-export-wrapper" style="background: white;">
+                <div id="pdf-header" style="display:none; margin-bottom: 20px; padding: 20px; border-bottom: 2px solid #e2e8f0;">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <img src="/images/RC_logo.jpg" alt="Russ Cuevas Logo" style="height: 70px; width: auto; object-fit: contain;">
+                            <div style="text-align: left;">
+                                <h2 style="font-family: serif; margin: 0 0 5px 0; color: #0f172a; font-size: 1.6rem; letter-spacing: 1px;">RUSS CUEVAS</h2>
+                                <h4 style="margin: 0; color: #475569; font-weight: 500;">Official Sales Report</h4>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 5px 0;"><strong>Date:</strong> {{ now()->format('F d, Y') }}</p>
+                            <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 5px 0;"><strong>Time:</strong> {{ now()->format('g:i A') }}</p>
+                            <p style="font-size: 0.85rem; color: #64748b; margin: 0;"><strong>Generated By:</strong> Administrator</p>
+                        </div>
+                    </div>
                 </div>
-                <table id="salesReportTable">
+
+                <div class="table-container" style="margin-top: 0; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); overflow: hidden;" id="reports-table-container">
+                <table id="salesReportTable" style="width: 100%; border-collapse: collapse;">
                     <thead>
-                        <tr>
-                            <th>CLIENT INFO</th>
-                            <th>SERVICE TYPE</th>
-                            <th>DATE COMPLETED</th>
-                            <th>AMOUNT COLLECTED</th>
-                            <th>PAYMENT STATUS</th>
+                        <tr style="background-color: #f8fafc; border-bottom: 2px solid #e2e8f0;">
+                            <th style="padding: 15px 20px; text-align: left; font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Client Info</th>
+                            <th style="padding: 15px 20px; text-align: left; font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Service Type</th>
+                            <th style="padding: 15px 20px; text-align: left; font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Date Completed</th>
+                            <th style="padding: 15px 20px; text-align: right; font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Amount Collected</th>
+                            <th style="padding: 15px 20px; text-align: center; font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Payment Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($paidQuotes as $quote)
-                        <tr class="report-row" data-service="{{ $quote->service_type }}" data-date="{{ \Carbon\Carbon::parse($quote->updated_at)->format('Y-m-d') }}" data-status="{{ $quote->status === 'Paid' ? 'Fully Paid' : 'Partially Paid' }}">
-                            <td>
-                                <div><strong>{{ $quote->name }}</strong></div>
-                                <div style="font-size: 0.8rem; color: var(--grey-text);">{{ $quote->email }}</div>
+                        <tr class="report-row" data-service="{{ $quote->service_type }}" data-date="{{ \Carbon\Carbon::parse($quote->updated_at)->format('Y-m-d') }}" data-status="{{ $quote->status === 'Paid' ? 'Fully Paid' : 'Partially Paid' }}" style="border-bottom: 1px solid #f1f5f9; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#f8fafc'" onmouseout="this.style.backgroundColor='transparent'">
+                            <td style="padding: 15px 20px;">
+                                <div style="font-weight: 600; color: #1e293b;">{{ $quote->name }}</div>
+                                <div style="font-size: 0.8rem; color: #64748b;">{{ $quote->email }}</div>
                             </td>
-                            <td>{{ $quote->service_type }}</td>
-                            <td>{{ \Carbon\Carbon::parse($quote->updated_at)->format('M d, Y g:i A') }}</td>
-                            <td style="font-weight: 600; color: #10b981;">P{{ number_format($quote->amount_paid, 2) }}</td>
-                            <td>
+                            <td style="padding: 15px 20px; color: #475569; font-weight: 500;">{{ $quote->service_type }}</td>
+                            <td style="padding: 15px 20px; color: #475569;">{{ \Carbon\Carbon::parse($quote->updated_at)->format('M d, Y g:i A') }}</td>
+                            <td style="padding: 15px 20px; text-align: right; font-weight: 700; color: #0f172a;">₱{{ number_format($quote->amount_paid, 2) }}</td>
+                            <td style="padding: 15px 20px; text-align: center;">
                                 @if($quote->status === 'Paid')
-                                    <span style="color: #10b981; font-weight: 500;">Fully Paid</span>
+                                    <span style="display: inline-block; padding: 4px 12px; border-radius: 999px; background-color: #dcfce7; color: #166534; font-size: 0.75rem; font-weight: 600;">Fully Paid</span>
                                 @else
-                                    <span style="color: #f59e0b; font-weight: 500;">Partially Paid</span>
+                                    <span style="display: inline-block; padding: 4px 12px; border-radius: 999px; background-color: #fef3c7; color: #92400e; font-size: 0.75rem; font-weight: 600;">Partially Paid</span>
                                 @endif
                             </td>
                         </tr>
                         @empty
                         <tr id="reports-empty-row-original">
-                            <td colspan="5" style="text-align: center; padding: 20px;">No sales data available.</td>
+                            <td colspan="5" style="text-align: center; padding: 40px 20px; color: #64748b;">
+                                <i class="fas fa-inbox" style="font-size: 2rem; color: #cbd5e1; margin-bottom: 10px;"></i>
+                                <div>No sales data available.</div>
+                            </td>
                         </tr>
                         @endforelse
                         <tr id="reports-empty-row" style="display: none;">
-                            <td colspan="5" style="text-align: center; padding: 20px;">No records match the selected filters.</td>
+                            <td colspan="5" style="text-align: center; padding: 40px 20px; color: #64748b;">
+                                <i class="fas fa-search" style="font-size: 2rem; color: #cbd5e1; margin-bottom: 10px;"></i>
+                                <div>No records match the selected filters.</div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
             </div>
         </div>
 
@@ -1903,7 +2081,7 @@
                         <input type="text" id="modal-price-input" class="price-quote-input" style="width: 100%; max-width: none; font-size: 1.1rem; font-weight: 600; padding: 12px;" placeholder="Enter amount (e.g. 40,000.00)">
                     </div>
 
-                    <div style="margin-top: 30px; text-align: center;">
+                    <div id="modal-send-quote-btn-container" style="margin-top: 30px; text-align: center;">
                         <input type="hidden" id="modal-quote-id">
                         <button class="btn btn-primary" style="padding: 15px 50px; font-size: 0.9rem; width: 100%;" onclick="sendModalQuote()">Send Quotation</button>
                     </div>
@@ -2329,6 +2507,9 @@
             imageContainer.innerHTML = '<span style="color: var(--grey-text); font-style: italic;">No inspiration image provided.</span>';
         }
 
+        const messageInput = document.getElementById('modal-message-input');
+        messageInput.value = quote.message_to_client || '';
+
         const priceInput = document.getElementById('modal-price-input');
         const priceVal = quote.price_quote || '';
         priceInput.value = priceVal;
@@ -2340,6 +2521,33 @@
         }
 
         document.getElementById('modal-quote-id').value = quote.id;
+
+        const isLocked = quote.status !== 'Pending';
+
+        if (isLocked) {
+            priceInput.disabled = true;
+            priceInput.style.background = '#f3f4f6';
+            priceInput.title = 'Cannot edit after quote is sent';
+            
+            messageInput.disabled = true;
+            messageInput.style.background = '#f3f4f6';
+            messageInput.title = 'Cannot edit after quote is sent';
+
+            document.getElementById('modal-send-quote-btn-container').style.display = 'none';
+        } else {
+            priceInput.disabled = false;
+            priceInput.style.background = 'transparent';
+            priceInput.title = '';
+            
+            messageInput.disabled = false;
+            messageInput.style.background = 'transparent';
+            messageInput.title = '';
+
+            document.getElementById('modal-send-quote-btn-container').style.display = 'block';
+        }
+
+        // Always show the action box so the Price and Message are visible
+        document.getElementById('modal-quote-action-box').style.display = 'flex';
 
         // Payment History Logic
         if (quote.amount_paid && parseFloat(quote.amount_paid) > 0) {
@@ -2368,21 +2576,8 @@
                     <div style="font-size: 1.1rem; color: #059669;"><i class="fas fa-check-circle"></i> Paid in Full</div>
                 `;
             }
-            
-            if (quote.payment_type === 'full' || quote.status === 'Paid') {
-                 document.getElementById('modal-quote-action-box').style.display = 'none';
-            } else {
-                 document.getElementById('modal-quote-action-box').style.display = 'flex';
-                 document.getElementById('modal-price-input').disabled = true;
-                 document.getElementById('modal-price-input').style.background = '#f3f4f6';
-                 document.getElementById('modal-price-input').title = 'Cannot change price after partial payment';
-            }
         } else {
             document.getElementById('modal-payment-history-container').style.display = 'none';
-            document.getElementById('modal-quote-action-box').style.display = 'flex';
-            document.getElementById('modal-price-input').disabled = false;
-            document.getElementById('modal-price-input').style.background = 'transparent';
-            document.getElementById('modal-price-input').title = '';
         }
 
         quoteModalOverlay.classList.add('active');
@@ -3221,11 +3416,16 @@
 
     // Export Functions
     function exportSalesPDF() {
+        const wrapper = document.getElementById('pdf-export-wrapper');
         const tableContainer = document.getElementById('reports-table-container');
         const header = document.getElementById('pdf-header');
         
-        // Show header for PDF
+        // Show header for PDF and remove table container styling for clean export
         header.style.display = 'block';
+        const originalBoxShadow = tableContainer.style.boxShadow;
+        const originalBorder = tableContainer.style.border;
+        tableContainer.style.boxShadow = 'none';
+        tableContainer.style.border = 'none';
         
         // Configuration for html2pdf
         const opt = {
@@ -3237,9 +3437,11 @@
         };
 
         // Generate PDF
-        html2pdf().set(opt).from(tableContainer).save().then(() => {
-            // Hide header again after export
+        html2pdf().set(opt).from(wrapper).save().then(() => {
+            // Restore styles after export
             header.style.display = 'none';
+            tableContainer.style.boxShadow = originalBoxShadow;
+            tableContainer.style.border = originalBorder;
         });
     }
 

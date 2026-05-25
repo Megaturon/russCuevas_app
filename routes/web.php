@@ -85,6 +85,11 @@ Route::middleware('auth')->prefix('portal')->group(function () {
     Route::get('/appointments', [ClientPortalController::class, 'appointments'])->name('portal.appointments');
     Route::get('/quotes', [ClientPortalController::class, 'quotes'])->name('portal.quotes');
     Route::get('/receipts', [ClientPortalController::class, 'receipts'])->name('portal.receipts');
+    
+    // Settings Routes
+    Route::get('/settings', [ClientPortalController::class, 'settings'])->name('portal.settings');
+    Route::post('/settings/profile', [ClientPortalController::class, 'updateProfile'])->name('portal.settings.profile');
+    Route::post('/settings/password', [ClientPortalController::class, 'changePassword'])->name('portal.settings.password');
 });
 
 // Formal Receipt Route (Public for seamless demo flow)
@@ -116,7 +121,5 @@ Route::post('/chatbot/send', function (\Illuminate\Http\Request $request) {
         $reply = "Our prices vary depending on the design. Please submit a quote request or book a consultation.";
     }
     
-    broadcast(new \App\Events\ChatMessageEvent($reply, 'Bot'));
-    
-    return response()->json(['status' => 'success']);
+    return response()->json(['status' => 'success', 'reply' => $reply]);
 });

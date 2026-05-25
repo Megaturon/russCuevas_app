@@ -190,7 +190,7 @@ class AuthController extends Controller
                     'name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
-                    'password' => null, // Password is not required for Google login
+                    'password' => Hash::make(Str::random(24)), // Random password for Google signup
                     // Address and contact are required in standard registration, 
                     // but nullable in DB based on standard Laravel, wait, our standard registration validates them
                     // Let's leave them null, the user can update their profile later

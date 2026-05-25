@@ -16,6 +16,11 @@ return new class extends Migration
             $table->string('service_type');
             $table->text('details');
             $table->text('selected_materials')->nullable();
+            
+            $table->decimal('price_quote', 10, 2)->nullable();
+            $table->decimal('amount_paid', 10, 2)->default(0.00);
+            $table->string('status')->nullable()->default('Pending'); 
+            
             $table->timestamps();
         });
     }

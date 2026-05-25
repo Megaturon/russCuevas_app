@@ -309,13 +309,13 @@
   <div class="slider">
     <div class="list">
       <div class="item">
-        <img src="/img/4.jpg" alt="Slide 1">
+        <img src="/img/orange.png" alt="Slide 1" style="object-position: center top;">
       </div>
       <div class="item">
-        <img src="/img/5.jpg" alt="Slide 2">
+        <img src="/img/model2.jpg" alt="Slide 2" style="object-position: center top;">
       </div>
       <div class="item">
-        <img src="/img/model3.jpg" alt="Slide 3">
+        <img src="/img/whitem.png" alt="Slide 3" style="object-position: center 20%;">
       </div>
     </div>
     <ul class="dots">
@@ -731,28 +731,22 @@
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
       },
       body: JSON.stringify({ message: msg })
-    }).catch(err => console.error(err));
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.reply) {
+            appendMessage(data.reply, 'bot');
+        }
+    })
+    .catch(err => console.error(err));
   }
   
   chatInput.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') sendChatMessage();
   });
 
-  // Laravel Echo Websocket Listener
   document.addEventListener('DOMContentLoaded', () => {
     renderStarterQuestions();
-
-    setTimeout(() => {
-      if (window.Echo) {
-        window.Echo.channel('chatbot')
-          .listen('ChatMessageEvent', (e) => {
-             // Only append if it's from Bot (our route sends as 'Bot')
-             if(e.user === 'Bot') {
-               appendMessage(e.message, 'bot');
-             }
-          });
-      }
-    }, 1000); // slight delay to ensure Echo is initialized
   });
 
 </script>

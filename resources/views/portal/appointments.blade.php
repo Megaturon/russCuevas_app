@@ -22,7 +22,7 @@
                 @foreach($appointments as $app)
                 <tr>
                     <td>
-                        <div style="font-weight: 600;">Fitting / Consultation</div>
+                        <div style="font-weight: 600;">{{ $app->service_type ?? 'Fitting / Consultation' }}</div>
                         @if($app->notes)
                         <div style="font-size: 0.75rem; color: #888; margin-top: 4px; max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $app->notes }}</div>
                         @endif
@@ -33,7 +33,11 @@
                     </td>
                     <td>
                         <span class="status-pill status-{{ strtolower($app->status ?? 'pending') }}">
-                            {{ $app->status ?? 'Pending' }}
+                            @if(strtolower($app->status ?? 'pending') === 'pending')
+                                To Review
+                            @else
+                                {{ $app->status }}
+                            @endif
                         </span>
                     </td>
                     <td>
@@ -41,11 +45,11 @@
                             @php
                                 $ref = 'RC-APP-' . str_pad($app->id, 5, '0', STR_PAD_LEFT);
                             @endphp
-                            <a href="{{ route('receipts.show', $ref) }}" class="btn-secondary">View Receipt</a>
+                            <a href="{{ route('receipts.show', $ref) }}" class="btn-secondary">View Appointment Form</a>
                         @elseif(($app->status ?? 'Pending') === 'Cancelled')
                             <span style="font-size: 0.75rem; color: #aaa; font-style: italic;">No actions available</span>
                         @else
-                            <span style="font-size: 0.75rem; color: #aaa; font-style: italic;">Pending Admin Review</span>
+                            <span style="font-size: 0.75rem; color: #aaa; font-style: italic;">Appointment is under review of the admin.</span>
                         @endif
                     </td>
                 </tr>

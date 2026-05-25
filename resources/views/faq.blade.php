@@ -27,7 +27,7 @@
                     </button>
                     <div class="faq-answer overflow-hidden transition-all duration-400 ease-in-out opacity-0" style="max-height: 0px;">
                         <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                            <p>Yes, we do! Please email us at <a href="mailto:custom@russcuevascouture.com" class="text-blue-600 hover:underline">custom@russcuevascouture.com</a> for more information.</p>
+                            <p>Yes, we do! Please email us at <a href="mailto:cuevas.russ01@gmail.com" class="text-blue-600 hover:underline">cuevas.russ01@gmail.com</a> for more information.</p>
                         </div>
                     </div>
                 </div>

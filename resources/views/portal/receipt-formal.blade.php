@@ -4,7 +4,7 @@
     <link rel="icon" href="{{ asset('images/RC_logo.jpg') }}" type="image/jpeg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receipt {{ $receiptData['reference'] }} - Russ Cuevas</title>
+    <title>{{ Str::startsWith($receiptData['reference'], 'RC-APP-') ? 'Appointment Form' : 'Receipt' }} {{ $receiptData['reference'] }} - Russ Cuevas</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
@@ -232,11 +232,11 @@
     
     <div class="r-header">
         <div>
-            <div class="r-logo">R.C.</div>
+            <img src="{{ asset('images/RC_logo.jpg') }}" alt="Russ Cuevas Logo" style="height: 50px; margin-bottom: 8px;">
             <div class="r-subtitle">Russ Cuevas Atelier</div>
         </div>
         <div class="r-ref">
-            <h2>Receipt</h2>
+            <h2>{{ Str::startsWith($receiptData['reference'], 'RC-APP-') ? 'Appointment Form' : 'Receipt' }}</h2>
             <div class="r-ref-number">{{ $receiptData['reference'] }}</div>
             <div class="r-date">Issued: {{ \Carbon\Carbon::parse($receiptData['date_issued'])->format('M d, Y') }}</div>
         </div>
@@ -246,7 +246,7 @@
 
     <div class="r-grid">
         <div class="r-info">
-            <div class="r-section-title">Billed To</div>
+            <div class="r-section-title">{{ Str::startsWith($receiptData['reference'], 'RC-APP-') ? 'Client Details' : 'Billed To' }}</div>
             <p class="strong">{{ $receiptData['client_name'] }}</p>
             <p>{{ $receiptData['client_email'] }}</p>
             @if($receiptData['client_phone'])
@@ -267,7 +267,9 @@
         <thead>
             <tr>
                 <th>Description</th>
+                @if(!Str::startsWith($receiptData['reference'], 'RC-APP-'))
                 <th class="right">Amount</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -278,6 +280,7 @@
                     <div style="font-size: 0.85rem; color: #6b7280; margin-top: 4px;">{{ Str::limit($receiptData['client_notes'], 80) }}</div>
                     @endif
                 </td>
+                @if(!Str::startsWith($receiptData['reference'], 'RC-APP-'))
                 <td class="right">
                     @if($receiptData['amount'])
                         ₱{{ number_format($receiptData['amount'], 2) }}
@@ -285,10 +288,12 @@
                         No Charge
                     @endif
                 </td>
+                @endif
             </tr>
         </tbody>
     </table>
 
+    @if(!Str::startsWith($receiptData['reference'], 'RC-APP-'))
     <div class="r-totals">
         <div class="r-total-row">
             <span>Subtotal</span>
@@ -338,6 +343,7 @@
         </div>
         @endif
     </div>
+    @endif
 
     <div class="r-divider-light"></div>
 

@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('address')->nullable()->after('email');
-            $table->string('contact')->nullable()->after('address');
+        Schema::table('appointments', function (Blueprint $table) {
+            if (!Schema::hasColumn('appointments', 'service_type')) {
+                $table->string('service_type')->default('Fitting / Consultation')->after('email');
+            }
         });
     }
 
@@ -22,8 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['address', 'contact']);
+        Schema::table('appointments', function (Blueprint $table) {
+            $table->dropColumn('service_type');
         });
     }
 };

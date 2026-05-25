@@ -62,7 +62,7 @@
         <div class="form-group">
           <label for="password_confirmation">Confirm New Password <span class="required-asterisk">*</span></label>
           <div class="password-confirm-field" style="position: relative">
-            <input type="password" id="password-confirmation" name="password-confirmation" placeholder="Confirm your new password" required>
+            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm your new password" required>
             <button type="button" id="toggle-pass-confirm"
               style="position: absolute; inset-block: 0; right: 0; display: grid; place-items: center; padding-inline: 3; margin-right: 15px; font-size:var(--text-sm); overflow: hidden; outline: none; background-color: transparent; border: none; opacity: 0.5;"
               aria-label="Toggle password visibility" style="color: var(--muted-foreground);"><i
@@ -79,7 +79,7 @@
 
     const loginPassword = document.querySelector('#password');
     const togglePass = document.querySelector('#toggle-pass');
-    const confirmPassword = document.querySelector('#password-confirmation');
+    const confirmPassword = document.querySelector('#password_confirmation');
     const togglePassConfirm = document.querySelector('#toggle-pass-confirm');
 
     if (togglePass && loginPassword) {
@@ -102,7 +102,7 @@
             confirmPassword.setAttribute('type', nextType_confirm);
 
             const icon_confirm = togglePassConfirm.querySelector('i');
-            if (icon) {
+            if (icon_confirm) {
                 const isText = nextType_confirm === 'text';
                 icon_confirm.classList.toggle('fa-eye', !isText);
                 icon_confirm.classList.toggle('fa-eye-slash', isText);

@@ -60,7 +60,7 @@ class ReceiptController extends Controller
             $receiptData['date_issued'] = $model->created_at;
             $receiptData['client_name'] = $model->name;
             $receiptData['client_email'] = $model->email;
-            $receiptData['service_type'] = 'Fitting / Consultation';
+            $receiptData['service_type'] = $model->service_type ?? 'Fitting / Consultation';
             $receiptData['service_date'] = \Carbon\Carbon::parse($model->date)->format('F j, Y') . ' at ' . \Carbon\Carbon::parse($model->time)->format('g:i A');
             $receiptData['client_notes'] = $model->notes;
         } elseif ($type === 'QTE') {

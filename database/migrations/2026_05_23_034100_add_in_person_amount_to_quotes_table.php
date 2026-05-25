@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('quotes', function (Blueprint $table) {
-            $table->decimal('in_person_amount', 10, 2)->default(0)->after('amount_paid');
+            if (!Schema::hasColumn('quotes', 'in_person_amount')) {
+                $table->decimal('in_person_amount', 10, 2)->default(0)->after('amount_paid');
+            }
         });
     }
 

@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('quotes', function (Blueprint $table) {
-            $table->string('status')->default('Received')->after('selected_materials');
+            if (!Schema::hasColumn('quotes', 'status')) {
+                $table->string('status')->default('Received')->after('selected_materials');
+            }
         });
     }
 

@@ -408,7 +408,7 @@ class AdminController extends Controller
             $data = [
                 'title' => 'Your Price Quotation',
                 'name' => $quote->name,
-                'intro' => 'Hi ' . strtok($quote->name, ' ') . ', your quote is ready.<br><br>We have carefully reviewed your inspiration and details for your <strong>' . $quote->service_type . '</strong>.' . ($messageToClient ? '<br><br><i>"' . e($messageToClient) . '"</i>' : ''),
+                'intro' => 'Hi ' . strtok($quote->name, ' ') . ', your quote is ready.<br><br>We have carefully reviewed your inspiration and details for your <strong>' . $quote->service_type . '</strong>.' . ($messageToClient ? '<br><br><div style="font-family: \'Courier New\', Courier, monospace; background-color: #1a1a1a; padding: 15px; border-left: 4px solid #ffffff; margin-top: 15px; color: #cccccc; font-style: normal; font-size: 14px;">' . nl2br(e($messageToClient)) . '</div>' : ''),
                 'details' => [
                     'Project' => $quote->service_type,
                     'Estimated Timeline' => '4 - 6 Weeks',

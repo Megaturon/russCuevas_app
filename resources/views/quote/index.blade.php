@@ -24,8 +24,15 @@
     <x-nav-bar></x-nav-bar>
 </header>
 
-    <main class="quote-page">
-        <div class="quote-container">
+    <main class="quote-page" style="position: relative; overflow: hidden; background-image: none; background-color: #000;">
+        <div class="auth-bg-carousel">
+            <div class="carousel-item active" style="background-image: url('/img/orange.png'); background-position: center top;"></div>
+            <div class="carousel-item" style="background-image: url('/img/model2.png'); background-position: center top;"></div>
+            <div class="carousel-item" style="background-image: url('/img/whitem.png'); background-position: center 20%;"></div>
+            <div class="auth-overlay"></div>
+        </div>
+
+        <div class="quote-container" style="position: relative; z-index: 10;">
             <div class="quote-content">
                 <h1>Get a Custom Quote</h1>
                 <p>Fill out the form below and we'll get back to you with a personalized estimate.</p>
@@ -194,6 +201,8 @@
             setSelectedMaterials(prev => prev.includes(materialId) ? prev.filter(id => id !== materialId) : [...prev, materialId]);
         };
 
+        const displayMat = hoveredMaterial || (selectedMaterials.length > 0 ? materialData.find(m => m.id === selectedMaterials[selectedMaterials.length - 1]) : null);
+
         return (
             <div className="mt-2">
                 <input type="hidden" name="selected_materials" value={selectedMaterials.join(', ')} />
@@ -213,11 +222,11 @@
                         ))}
                     </div>
                     <div className="w-full md:w-1/2 bg-white p-6 border-l border-gray-200 flex flex-col justify-center min-h-[250px] shadow-xl z-10 relative">
-                        {hoveredMaterial ? (
-                            <div className="animate-fade-in">
-                                <img src={hoveredMaterial.image} alt={hoveredMaterial.name} className="w-full h-32 object-cover rounded-lg mb-3 shadow-sm" />
-                                <h4 className="text-xs font-bold uppercase tracking-widest mb-1">{hoveredMaterial.name}</h4>
-                                <p className="text-[10px] text-gray-500 leading-relaxed">{hoveredMaterial.description}</p>
+                        {displayMat ? (
+                            <div className="animate-fade-in" key={displayMat.id}>
+                                <img src={displayMat.image} alt={displayMat.name} className="w-full h-32 object-cover rounded-lg mb-3 shadow-sm" />
+                                <h4 className="text-xs font-bold uppercase tracking-widest mb-1">{displayMat.name}</h4>
+                                <p className="text-[10px] text-gray-500 leading-relaxed">{displayMat.description}</p>
                             </div>
                         ) : (
                             <div className="text-center text-gray-300 text-xs italic">Hover "Materials" for details</div>
@@ -306,5 +315,18 @@
     </script>
 @endif
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const items = document.querySelectorAll('.carousel-item');
+            if (items.length > 0) {
+                let current = 0;
+                setInterval(() => {
+                    items[current].classList.remove('active');
+                    current = (current + 1) % items.length;
+                    items[current].classList.add('active');
+                }, 5000);
+            }
+        });
+    </script>
 </body>
 </html>

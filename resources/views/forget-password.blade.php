@@ -20,7 +20,7 @@
 
   <div class="auth-centered-wrapper">
     <div class="auth-bg-carousel">
-      <div class="carousel-item active" style="background-image: url('/img/slide2.webp');"></div>
+      <div class="carousel-item active" style="background-image: url('/img/orange.png');"></div>
       <div class="auth-overlay"></div>
     </div>
 
