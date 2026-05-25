@@ -1,10 +1,10 @@
 @extends('layouts.portal')
 
-@section('title', 'My Receipts')
+@section('title', 'To Review')
 
 @section('content')
 <div class="portal-header" style="margin-top: 30px">
-    My Receipts
+    To Review
 </div>
 
 <div class="portal-card">
