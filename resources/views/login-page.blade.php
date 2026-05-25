@@ -20,9 +20,9 @@
 
   <div class="auth-centered-wrapper">
     <div class="auth-bg-carousel">
-      <div class="carousel-item active" style="background-image: url('/img/slide1.jpg');"></div>
-      <div class="carousel-item" style="background-image: url('/img/slide2.webp');"></div>
-      <div class="carousel-item" style="background-image: url('/img/slide3.jpg');"></div>
+      <div class="carousel-item active" style="background-image: url('/img/4.jpg');"></div>
+      <div class="carousel-item" style="background-image: url('/img/5.jpg');"></div>
+      <div class="carousel-item" style="background-image: url('/img/model3.jpg');"></div>
       <div class="auth-overlay"></div>
     </div>
 
