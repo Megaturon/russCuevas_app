@@ -55,7 +55,7 @@
               <li class="user-name-header" style="font-size: 0.75rem; color: var(--grey); cursor: default; pointer-events: none; padding-bottom: 5px;">HELLO, {{ strtoupper(auth()->user()->name) }}</li>
               <a href="{{ route('portal.appointments') }}"><li>My Appointments</li></a>
               <a href="{{ route('portal.quotes') }}"><li>My Quotes</li></a>
-              <a href="{{ route('portal.receipts') }}"><li>My Receipts</li></a>
+              <a href="{{ route('portal.receipts') }}"><li>To Review</li></a>
               <hr style="border: 0; border-top: 1px solid var(--grey-border); margin: 5px 0;">
               @if(auth()->user()->is_admin)
               <a href="/admin"><li>Admin Dashboard</li></a>

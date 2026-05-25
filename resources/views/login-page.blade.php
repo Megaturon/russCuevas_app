@@ -93,8 +93,7 @@
     const loginPassword = document.querySelector('#password');
     const togglePass = document.querySelector('#toggle-pass');
 
-    if (togglePass && loginPassword && togglePass.dataset.bound !== 'true') {
-        togglePass.dataset.bound = 'true';
+    if (togglePass && loginPassword) {
         togglePass.addEventListener('click', () => {
             const nextType = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
             loginPassword.setAttribute('type', nextType);

@@ -64,12 +64,24 @@
 
             <div class="form-group">
                 <label for="password">Password <span class="required-asterisk">*</span></label>
-                <input type="password" id="password" name="password" required placeholder="Create a password">
+                <div class="password-field" style="position: relative">
+                    <input type="password" id="password" name="password" required placeholder="Create a password">
+                    <button type="button" id="toggle-pass"
+                        style="position: absolute; inset-block: 0; right: 0; display: grid; place-items: center; padding-inline: 3; margin-right: 15px; font-size:var(--text-sm); overflow: hidden; outline: none; background-color: transparent; border: none; opacity: 0.5;"
+                        aria-label="Toggle password visibility" style="color: var(--muted-foreground);"><i
+                        class="fa-solid fa-eye"></i></button>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="password_confirmation">Confirm Password <span class="required-asterisk">*</span></label>
-                <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Confirm your password">
+                <label for="password-confirmation">Confirm Password <span class="required-asterisk">*</span></label>
+                <div class="confirm-field" style="position: relative">
+                    <input type="password" id="password-confirmation" name="password-confirmation" required placeholder="Confirm your password">
+                    <button type="button" id="toggle-pass-confirm"
+                        style="position: absolute; inset-block: 0; right: 0; display: grid; place-items: center; padding-inline: 3; margin-right: 15px; font-size:var(--text-sm); overflow: hidden; outline: none; background-color: transparent; border: none; opacity: 0.5;"
+                        aria-label="Toggle password visibility" style="color: var(--muted-foreground);"><i
+                        class="fa-solid fa-eye"></i></button>
+                </div>
             </div>
         </div>
 
@@ -104,6 +116,40 @@
             items[current].classList.add('active');
         }, 5000);
     });
+
+    const loginPassword = document.querySelector('#password');
+    const togglePass = document.querySelector('#toggle-pass');
+    const confirmPassword = document.querySelector('#password-confirmation');
+    const togglePassConfirm = document.querySelector('#toggle-pass-confirm');
+
+    if (togglePass && loginPassword) {
+        togglePass.addEventListener('click', () => {
+            const nextType = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            loginPassword.setAttribute('type', nextType);
+
+            const icon = togglePass.querySelector('i');
+            if (icon) {
+                const isText = nextType === 'text';
+                icon.classList.toggle('fa-eye', !isText);
+                icon.classList.toggle('fa-eye-slash', isText);
+            }
+        });
+    }
+
+    if (togglePassConfirm && confirmPassword) {
+        togglePassConfirm.addEventListener('click', () => {
+            const nextType_confirm = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPassword.setAttribute('type', nextType_confirm);
+
+            const icon_confirm = togglePassConfirm.querySelector('i');
+            if (icon) {
+                const isText = nextType_confirm === 'text';
+                icon_confirm.classList.toggle('fa-eye', !isText);
+                icon_confirm.classList.toggle('fa-eye-slash', isText);
+            }
+        });    
+    }
+
   </script>
 </body>
 </html>
