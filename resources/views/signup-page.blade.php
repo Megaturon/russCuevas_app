@@ -64,23 +64,16 @@
 
             <div class="form-group">
                 <label for="password">Password <span class="required-asterisk">*</span></label>
-<<<<<<< HEAD
                 <div class="password-field" style="position: relative">
                     <input type="password" id="password" name="password" required placeholder="Create a password">
                     <button type="button" id="toggle-pass"
                         style="position: absolute; inset-block: 0; right: 0; display: grid; place-items: center; padding-inline: 3; margin-right: 15px; font-size:var(--text-sm); overflow: hidden; outline: none; background-color: transparent; border: none; opacity: 0.5;"
                         aria-label="Toggle password visibility" style="color: var(--muted-foreground);"><i
                         class="fa-solid fa-eye"></i></button>
-=======
-                <div style="position: relative;">
-                    <input type="password" id="password" name="password" required placeholder="Create a password" style="width: 100%; padding-right: 40px; box-sizing: border-box;">
-                    <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('password', this)" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #666;"></i>
->>>>>>> a3c12aa2d98023736a1e949814fb4b6190a5110e
                 </div>
             </div>
 
             <div class="form-group">
-<<<<<<< HEAD
                 <label for="password-confirmation">Confirm Password <span class="required-asterisk">*</span></label>
                 <div class="confirm-field" style="position: relative">
                     <input type="password" id="password-confirmation" name="password-confirmation" required placeholder="Confirm your password">
@@ -88,12 +81,6 @@
                         style="position: absolute; inset-block: 0; right: 0; display: grid; place-items: center; padding-inline: 3; margin-right: 15px; font-size:var(--text-sm); overflow: hidden; outline: none; background-color: transparent; border: none; opacity: 0.5;"
                         aria-label="Toggle password visibility" style="color: var(--muted-foreground);"><i
                         class="fa-solid fa-eye"></i></button>
-=======
-                <label for="password_confirmation">Confirm Password <span class="required-asterisk">*</span></label>
-                <div style="position: relative;">
-                    <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Confirm your password" style="width: 100%; padding-right: 40px; box-sizing: border-box;">
-                    <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('password_confirmation', this)" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #666;"></i>
->>>>>>> a3c12aa2d98023736a1e949814fb4b6190a5110e
                 </div>
             </div>
         </div>
