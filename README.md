@@ -1,59 +1,126 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Developer Contributions
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Cuevas, Renzo
+* **Core Backend & System Setup**
+* Initial Page Setup for:
+    * Login Page
+    * Sign up Page
+    * Home Page
+    * Forget/Reset Password Page
+    * FAQ
+    * Privacy Policy
+    * Appointments
+* Password Button Implementation
+* System Finalizations
+* Manual
 
-## About Laravel
+### Dela Cruz, Denise J.
+* **UI Foundation**
+* Footer
+* Navbar
+* **Admin Dashboard & Panel**
+  * User Management
+  * Appointment Management
+  * Quotes Management
+  * Order Notifications Hub
+  * Sales & Analytics Report
+  * Invoice Report
+  * Export Report PDF
+* **Authentication & Security**
+  * Login & Sign-up
+  * Google OAuth Login
+  * Forgot Password & Reset Password
+* **Consumer Experience**
+* Receipt Form
+* Payment Options (Downpayment)
+* E-mail Appointment Confirmation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Gapol, Francis Adrian H.
+* **UI Foundation**
+* **Main UI & Experience Design**
+  * Landing / Home Page
+  * Gallery Section
+  * Our Story
+  * Terms and Conditions
+  * Frequently Asked Questions
+  * Privacy Policy
+  * Footer
+  * Embedded Map for Exact Location
+* * **Quote Request Form**
+  * Request Quote Form
+  * Interactive Materials Selection
+* * **Customer Support**
+  * Chatbot Integration
+* **Authentication & Security**
+  * Google OAuth Login
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+* **Russ Cuveas Atelier — E-commerce**
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Project Overview
+A Laravel-based e-commerce project featuring:
+* **Client-Facing Features:** Dynamic pages, interactive quotes, and seamless client booking.
+* **Admin Management:** Centralized management for users, appointments, and project requests.
+* **Authentication:** Google OAuth login integration.
+* **Reporting:** PDF invoice and analytics generation.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
+## Per-Member Grading
+### Cuevas, Renzo  - 100/100
+* 18,027 Lines Added, 499 Removed
+* 8 Commits
+* Justifications:
+* *Handled the creation of the GitHub repository of the site.
+* *Did most of the frontend implementation, implemented most of the pages in the application.
+* *Project Finalizations
 
-## Laravel Sponsors
+### Dela Cruz, Denise J. - 100/100
+* 15,223 Lines Added, 3,915 Removed
+* 49 Commits
+* Justifications:
+* *Did most of the front-end adjustments of the site. 
+* *Handled the Administrator Page. Both Frontend and Backend.
+* *Handled most of the Backend functionalities: Payment, Authentication, Payment flow
+* *Does updates weekly as much as possible.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Gapol, Francis Adrian H. - 100/100
+* 6,274 Lines Added, 1,130 Removed
+* 48 Commits
+* Justifications:
+* *Did most of the front-end adjustments of the site.
+* *Is responsible for the creation of the Chatbot feature of the site.
+* *Handled most of the Quotation features.
+* *Does updates weekly as much as possible.
 
-### Premium Partners
+### Peer Evaluation Grades (Renzo Cuevas')
+| Team Member 	        | Grade      |
+| --------------------- | ---------- |
+| Megaturon             | 100 / 100  |
+| francisshere 	        | 100 / 100  |
+| dnsdcz  	            | 100 / 100  |
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+==========================================
 
-## Contributing
+### Peer Evaluation Grades (Francis Gapol's)
+| Team Member 	        | Grade      |
+| --------------------- | ---------- |
+| Megaturon             | 100 / 100  |
+| francisshere 	        | 100 / 100  |
+| dnsdcz  	            | 100 / 100  |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+==========================================
 
-## Code of Conduct
+### Peer Evaluation Grades (Denise Dela Cruz's)
+| Team Member 	        | Grade     |
+| --------------------- | ----------|
+| Megaturon             | 100 / 100 |
+| francisshere 	        | 100 / 100 |
+| dnsdcz  	            | 100 / 100 |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Evaluation Basis
+* Contribution evidence sourced from GitHub commit history and repository activity (last 3 months)
+* Branch activity screenshots provided by the team as supplementary evidence
+* Equal final peer-evaluation grade applied to all listed members per team grading policy
