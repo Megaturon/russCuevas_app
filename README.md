@@ -110,6 +110,15 @@ A Laravel-based e-commerce project featuring:
 | francisshere 	        | 100 / 100  |
 | dnsdcz  	            | 100 / 100  |
 
+==========================================
+
+### Peer Evaluation Grades (Denise Dela Cruz's)
+| Team Member 	        | Grade     |
+| --------------------- | ----------|
+| Megaturon             | 100 / 100 |
+| francisshere 	        | 100 / 100 |
+| dnsdcz  	            | 100 / 100 |
+
 
 Evaluation Basis
 * Contribution evidence sourced from GitHub commit history and repository activity (last 3 months)
