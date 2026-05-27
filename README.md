@@ -43,6 +43,7 @@
   * Our Story
   * Terms and Conditions
   * Frequently Asked Questions
+  * Privacy Policy
   * Footer
   * Embedded Map for Exact Location
 * * **Quote Request Form**
@@ -50,6 +51,8 @@
   * Interactive Materials Selection
 * * **Customer Support**
   * Chatbot Integration
+* **Authentication & Security**
+  * Google OAuth Login
 
 
 
