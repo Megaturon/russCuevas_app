@@ -94,12 +94,22 @@ A Laravel-based e-commerce project featuring:
 * *Handled most of the Quotation features.
 * *Does updates weekly as much as possible.
 
-### Peer Evaluation Grades
+### Peer Evaluation Grades (Renzo Cuevas')
 | Team Member 	        | Grade      |
 | --------------------- | ---------- |
 | Megaturon             | 100 / 100  |
 | francisshere 	        | 100 / 100  |
 | dnsdcz  	            | 100 / 100  |
+
+==========================================
+
+### Peer Evaluation Grades (Francis Gapol's)
+| Team Member 	        | Grade      |
+| --------------------- | ---------- |
+| Megaturon             | 100 / 100  |
+| francisshere 	        | 100 / 100  |
+| dnsdcz  	            | 100 / 100  |
+
 
 Evaluation Basis
 * Contribution evidence sourced from GitHub commit history and repository activity (last 3 months)
