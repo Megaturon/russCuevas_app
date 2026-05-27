@@ -62,3 +62,42 @@ A Laravel-based e-commerce project featuring:
 * **Admin Management:** Centralized management for users, appointments, and project requests.
 * **Authentication:** Google OAuth login integration.
 * **Reporting:** PDF invoice and analytics generation.
+
+---
+## Per-Member Grading
+### Cuevas, Renzo  - 100/100
+* 18,027 Lines Added, 499 Removed
+* 8 Commits
+* Justifications:
+* *Handled the creation of the GitHub repository of the site.
+* *Did most of the frontend implementation, implemented most of the pages in the application.
+* *Project Finalizations
+
+### Dela Cruz, Denise J. - 100/100
+* 15,223 Lines Added, 3,915 Removed
+* 49 Commits
+* Justifications:
+* *Did most of the front-end adjustments of the site. 
+* *Handled the Administrator Page. Both Frontend and Backend.
+* *Handled most of the Backend functionalities: Payment, Authentication, Payment flow
+* *Does updates weekly as much as possible.
+
+### Gapol, Francis Adrian H. - 100/100
+* 6,274 Lines Added, 1,130 Removed
+* 48 Commits
+* Justifications:
+* *Did most of the front-end adjustments of the site.
+* *Is responsible for the creation of the Chatbot feature of the site.
+* *Handled most of the Quotation features.
+* *Does updates weekly as much as possible.
+
+### Peer Evaluation Grades
+Team Member 	        Grade
+Megaturon             	100 / 100
+francisshere 	        100 / 100
+dnsdcz  	            100 / 100
+
+Evaluation Basis
+* Contribution evidence sourced from GitHub commit history and repository activity (last 3 months)
+* Branch activity screenshots provided by the team as supplementary evidence
+* Equal final peer-evaluation grade applied to all listed members per team grading policy
