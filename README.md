@@ -92,10 +92,11 @@ A Laravel-based e-commerce project featuring:
 * *Does updates weekly as much as possible.
 
 ### Peer Evaluation Grades
-Team Member 	        Grade
-Megaturon             	100 / 100
-francisshere 	        100 / 100
-dnsdcz  	            100 / 100
+| Team Member 	        | Grade      |
+| --------------------- | ---------- |
+| Megaturon             | 100 / 100  |
+| francisshere 	        | 100 / 100  |
+| dnsdcz  	            | 100 / 100  |
 
 Evaluation Basis
 * Contribution evidence sourced from GitHub commit history and repository activity (last 3 months)
